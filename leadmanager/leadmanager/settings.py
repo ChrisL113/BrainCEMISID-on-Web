@@ -85,13 +85,12 @@ WSGI_APPLICATION = 'leadmanager.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'BC_DB',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'braincemisid_db',
+        'USER': 'postgres',
+        'PASSWORD': '1234',
         'HOST': '127.0.0.1',
-        'PORT': 27017,
-        'USER': 'admin',
-        'PASSWORD': 'admin',
-        'AUTH_SOURCE': 'BC_DB'
+        'PORT': 5432,
     }
 }
 

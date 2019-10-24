@@ -9,7 +9,7 @@ verify_ssl = true
 django = "*"
 djangorestframework = "*"
 django-rest-knox = "*"
-djongo = "*"
+psycopg2 ="*"
 
 [requires]
 python_version = "3.7"
