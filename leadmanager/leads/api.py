@@ -1,5 +1,5 @@
 from rest_framework import  viewsets, permissions
-from .serializers import LeadSerializer, BrainStateSerializer, SightNetworkSerializer, HearingNetworkSerializer, testSerializer
+from .serializers import LeadSerializer, BrainStateSerializer, SightNetworkSerializer, HearingNetworkSerializer, testSerializer, ProjectSerializer
 from .classes import brain_state, SightNetworkClass, HearingNetworkClass # classes
 from rest_framework.response import Response
 
@@ -32,6 +32,17 @@ for i in  kernel.snb.snb_h.neuron_list:
         hearing_network.append(HearingNetworkClass(i._has_knowledge,i._radius,i._degraded,None))
 
 
+class ProjectViewset(viewsets.ModelViewSet):
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+    serializer_class = ProjectSerializer
+
+    def get_queryset(self):
+        return self.request.user.projects.all()
+    
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 # Lead Viewset
 class LeadViewSet(viewsets.ModelViewSet):
@@ -46,7 +57,7 @@ class LeadViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-
+# Brain Viewset
 class StatusViewSet(viewsets.ViewSet):
     serializer_class = BrainStateSerializer
     def list(self, request):

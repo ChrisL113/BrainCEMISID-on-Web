@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from leads.models import Lead
+from leads.models import Lead,Project
 
 from .classes import brain_state, SightNetworkClass, HearingNetworkClass,testClass
 
@@ -7,6 +7,11 @@ from .classes import brain_state, SightNetworkClass, HearingNetworkClass,testCla
 class LeadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lead
+        fields = '__all__'
+
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
         fields = '__all__'
 
 class SignalSerializer(serializers.Serializer):
