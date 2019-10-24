@@ -20,5 +20,6 @@ urlpatterns = [
     path('', include('frontend.urls')),
     path('', include('leads.urls')),
     path('', include('accounts.urls')),
+    path('', include('brain.urls')),
     #path('admin/', admin.site.urls),
 ]

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'frontend',
     'knox',
     'accounts',
+    'brain',
 ]
 
 REST_FRAMEWORK = {
