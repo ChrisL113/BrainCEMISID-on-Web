@@ -1,0 +1,150 @@
+####################################################### CLASSES.PY ###############################################
+
+class SightNetworkClass(object):
+    def __init__(self,_has_knowledge,_radius,_degraded,_knowledge):
+        self._has_knowledge = _has_knowledge
+        self._radius = _radius
+        self._degraded = _degraded
+        self._knowledge = _knowledge
+
+class HearingNetworkClass(object):
+    def __init__(self,_has_knowledge,_radius,_degraded,_knowledge):
+        self._has_knowledge = _has_knowledge
+        self._radius = _radius
+        self._degraded = _degraded
+        self._knowledge = _knowledge
+
+
+class KernelSerializedClass():
+    status = None
+    sight_network = []
+    hearing_network = []
+    def __init__(self):
+        pass
+
+
+class Task(object):
+    def __init__(self, **kwargs):
+        for field in ('id', 'name', 'owner', 'status'):
+            setattr(self, field, kwargs.get(field, None))
+
+tasks = {
+    1: Task(id=1, name='Demo', owner='xordoquy', status='Done'),
+    2: Task(id=2, name='Model less demo', owner='xordoquy', status='Ongoing'),
+    3: Task(id=3, name='Sleep more', owner='xordoquy', status='New'),
+}
+
+
+class TaskSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    name = serializers.CharField(max_length=256)
+    owner = serializers.CharField(max_length=256)
+
+    def create(self, validated_data):
+        return Task(id=None, **validated_data)
+
+    def update(self, instance, validated_data):
+        for field, value in validated_data.items():
+            setattr(instance, field, value)
+        return instance 
+        
+class TaskViewSet(viewsets.ViewSet):
+    # Required for the Browsable API renderer to have a nice form.
+    serializer_class = TaskSerializer
+
+    def list(self, request):
+        serializer = TaskSerializer(
+            instance=tasks.values(), many=True)
+        return Response(serializer.data)
+        
+
+
+
+########################################### API.PY version 1 ###########################################
+kernel = KernelBrainCemisid()
+kernel_internal_state = kernel.get_internal_state().get_state()
+
+status= brain_state(kernel_internal_state[0],kernel_internal_state[1],kernel_internal_state[2])
+
+
+sight_network = []
+hearing_network = []
+
+for i in  kernel.snb.snb_s.neuron_list:
+    if i._knowledge!=None:
+        sight_network.append(SightNetworkClass(i._has_knowledge,i._radius,i._degraded,json.dumps(i._knowledge.__dict__)))
+    else:
+        sight_network.append(SightNetworkClass(i._has_knowledge,i._radius,i._degraded,None))
+
+for i in  kernel.snb.snb_h.neuron_list:
+    if i._knowledge!=None:
+        hearing_network.append(HearingNetworkClass(i._has_knowledge,i._radius,i._degraded,json.dumps(i._knowledge.__dict__)))
+    else:
+        hearing_network.append(HearingNetworkClass(i._has_knowledge,i._radius,i._degraded,None))
+
+
+########################################### version 2 ###########################################
+class KernelViewset(viewsets.ViewSet):
+    kernel = None
+    kernel_serialized = KernelSerializedClass
+
+    def create(self, request):
+        self.kernel = KernelBrainCemisid(1,1)
+ 
+        aux = self.kernel.get_internal_state().get_state()
+        self.kernel_serialized.status = json.dumps(aux) 
+
+        for i in  self.kernel.snb.snb_s.neuron_list:
+            if i._knowledge!=None:
+                self.kernel_serialized.sight_network.append(i._has_knowledge,i._radius,i._degraded,json.dumps(i._knowledge.__dict__))
+            else:
+                self.kernel_serialized.sight_network.append(json.dumps(i._has_knowledge,i._radius,i._degraded,None))
+
+        for i in  self.kernel.snb.snb_h.neuron_list:
+            if i._knowledge!=None:
+                self.kernel_serialized.hearing_network.append(HearingNetworkClass(i._has_knowledge,i._radius,i._degraded,json.dumps(i._knowledge.__dict__)))
+            else:
+                self.kernel_serialized.hearing_network.append(HearingNetworkClass(i._has_knowledge,i._radius,i._degraded,None))
+        self.kernel_serialized.sight_network=json.dumps(self.kernel_serialized.sight_network.__dict__)
+        self.kernel_serialized.hearing_network=json.dumps(self.kernel_serialized.hearing_network.__dict__)
+
+        print(self.kernel_serialized.sight_network)
+ 
+    def list(self, request):
+        serializer = KernelSerializer(self.kernel_serialized)
+        return Response(serializer.data)
+ 
+############################################ SERIALIZER.PY ###########################
+ 
+class SightNetworkSerializer(serializers.Serializer):
+    _has_knowledge = serializers.BooleanField()
+    _radius = serializers.FloatField()
+    _degraded = serializers.BooleanField()
+    _knowledge = serializers.JSONField(default='')
+
+    def create(self, validated_data):
+        return SightNetworkClass(**validated_data)
+    
+    def update(self, instance, validated_data):
+        instance._has_knowledge = validated_data.get('_has_knowledge', instance._has_knowledge)
+        instance._radius = validated_data.get('_radius', instance._radius)
+        instance._degraded = validated_data.get('_degraded', instance._degraded)
+        instance._knowledge = validated_data.get('_knowledge', instance._knowledge)
+        return instance
+
+class HearingNetworkSerializer(serializers.Serializer):
+    _has_knowledge = serializers.BooleanField()
+    _radius = serializers.FloatField()
+    _degraded = serializers.BooleanField()
+    _knowledge = serializers.JSONField(default='')
+
+    def create(self, validated_data):
+        return HearingNetworkClass(**validated_data)
+    
+    def update(self, instance, validated_data):
+        instance._has_knowledge = validated_data.get('_has_knowledge', instance._has_knowledge)
+        instance._radius = validated_data.get('_radius', instance._radius)
+        instance._degraded = validated_data.get('_degraded', instance._degraded)
+        instance._knowledge = validated_data.get('_knowledge', instance._knowledge)
+        return instance 
+

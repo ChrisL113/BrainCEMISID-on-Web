@@ -1,45 +1,46 @@
 from rest_framework import serializers
-from .models import Project
+from .models import Projects
 
-from .classes import brain_state, SightNetworkClass, HearingNetworkClass,testClass
+from .classes import StatusClass, NeuronNetworkClass, KernelClass,testClass
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Project
+        model = Projects
         fields = '__all__'
 
-class SignalSerializer(serializers.Serializer):
-    signal_wihout_ouput = serializers.CharField(max_length=200)
-    signal_with_ouput = serializers.CharField(max_length=200)
-    working_domain = serializers.CharField(max_length=200)
+class KernelSerializer(serializers.Serializer):
+    status = serializers.JSONField(default='')
+    sight_network = serializers.JSONField(default='')
+    hearing_network = serializers.JSONField(default='')
 
-class PayLoadSerializer(serializers.Serializer):
-    hearing_class = serializers.CharField(max_length=200)
-    hearing_pattern = serializers.ListField(
-         child=serializers.IntegerField(max_value=64)
-    ) 
-    sight_pattern = serializers.ListField(
-         child=serializers.IntegerField(max_value=64)
-    )
+    def create(self, validated_data):
+        return kernelClass(**validated_data)
+    
+    def update(self, instance, validated_data):
+        instance.status = validated_data.get('status', instance.status)
+        instance.sight_network = validated_data.get('sight_network',instance.sight_network)
+        instance.hearing_network = validated_data.get('hearing_network',instance.hearing_network)
+        return instance
 
-class BrainStateSerializer(serializers.Serializer):
+############################################## kernel ###########################################
+
+class StatusSerializer(serializers.Serializer):
     biology = serializers.FloatField(min_value=0,max_value=1)
-    cultural = serializers.FloatField(min_value=0,max_value=1)
+    culture = serializers.FloatField(min_value=0,max_value=1)
     feelings = serializers.FloatField(min_value=0,max_value=1)
 
     def create(self, validated_data):
-        return brain_state(**validated_data)
+        return StatusClass(**validated_data)
     
     def update(self, instance, validated_data):
         instance.biology = validated_data.get('biology', instance.biology)
-        instance.cultural = validated_data.get('cultural',instance.cultural)
+        instance.culture = validated_data.get('cultural',instance.culture)
         instance.feelings = validated_data.get('feelings',instance.feelings)
         return instance
 
 class testSerializer(serializers.Serializer):
     test = serializers.JSONField(default='')
     
-
     def create(self, validated_data):
         return testClass(**validated_data)
     
@@ -47,14 +48,14 @@ class testSerializer(serializers.Serializer):
         instance.test = validated_data.get('test', instance.test)
         return instance
 
-class SightNetworkSerializer(serializers.Serializer):
+class NeuronNetworkSerializer(serializers.Serializer):
     _has_knowledge = serializers.BooleanField()
     _radius = serializers.FloatField()
     _degraded = serializers.BooleanField()
     _knowledge = serializers.JSONField(default='')
 
     def create(self, validated_data):
-        return SightNetworkClass(**validated_data)
+        return NeuronNetworkClass(**validated_data)
     
     def update(self, instance, validated_data):
         instance._has_knowledge = validated_data.get('_has_knowledge', instance._has_knowledge)
@@ -62,22 +63,3 @@ class SightNetworkSerializer(serializers.Serializer):
         instance._degraded = validated_data.get('_degraded', instance._degraded)
         instance._knowledge = validated_data.get('_knowledge', instance._knowledge)
         return instance
-
-class HearingNetworkSerializer(serializers.Serializer):
-    _has_knowledge = serializers.BooleanField()
-    _radius = serializers.FloatField()
-    _degraded = serializers.BooleanField()
-    _knowledge = serializers.JSONField(default='')
-
-    def create(self, validated_data):
-        return HearingNetworkClass(**validated_data)
-    
-    def update(self, instance, validated_data):
-        instance._has_knowledge = validated_data.get('_has_knowledge', instance._has_knowledge)
-        instance._radius = validated_data.get('_radius', instance._radius)
-        instance._degraded = validated_data.get('_degraded', instance._degraded)
-        instance._knowledge = validated_data.get('_knowledge', instance._knowledge)
-        return instance
-
-class Serializer(serializers.Serializer):
-    pass
