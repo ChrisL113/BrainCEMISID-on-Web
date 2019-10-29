@@ -30,12 +30,10 @@ class KernelViewSet(viewsets.ViewSet):
     #serializer_class=KernelSerializer
     def create(self,request):
         if "user_id" in request.data and "project_id" in request.data and "exists" in request.data:
-            try:
-                kernel=KernelBrainCemisid(request.data['user_id'],request.data['project_id'],request.data['exists'])
-            except:    
-                return Response({'message':'NOT FOUND'})
-            
-            return Response({'message':'BRAIN IS ALREADY LOADED'})
+    
+            kernel=KernelBrainCemisid(request.data['user_id'],request.data['project_id'],request.data['exists'])
+            if kernel.message!=None:    
+                return Response({'message': kernel.message })
         else:    
             return Response({'message':'NOT SUFFICIENT OR ANY DATA SUPPLIED, PLEASE PASS THE ARGUMENTS project_id AND user_id'})
     pass
