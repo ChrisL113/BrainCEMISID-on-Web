@@ -27,16 +27,31 @@ class ProjectViewset(viewsets.ModelViewSet):
 
 class KernelViewSet(viewsets.ViewSet):
     kernel=None
-    #serializer_class=KernelSerializer
     def create(self,request):
-        if "user_id" in request.data and "project_id" in request.data and "exists" in request.data:
-    
-            kernel=KernelBrainCemisid(request.data['user_id'],request.data['project_id'],request.data['exists'])
-            if kernel.message!=None:    
-                return Response({'message': kernel.message })
+        if "user_id" in request.data:
+            frontend_request="POST"
+            kernel=KernelBrainCemisid(request.data['user_id'],None,frontend_request)
+            return Response({'message': kernel.message})
+
+    def get(self,request):
+        if "user_id" in request.data and "project_id" in request.data:
+            frontend_request="GET"
+            kernel=KernelBrainCemisid(request.data['user_id'],request.data['project_id'],frontend_request)
+            return Response({'message': kernel.message })
         else:    
             return Response({'message':'NOT SUFFICIENT OR ANY DATA SUPPLIED, PLEASE PASS THE ARGUMENTS project_id AND user_id'})
-    pass
+    
+    def put(self,request):
+        return Response({'message':'IM GETTING THE UPDATE REQUEST'})
+    
+    def delete(self, request):
+        if "user_id" in request.data and "project_id" in request.data:
+            frontend_request="DELETE"
+            kernel=KernelBrainCemisid(request.data['user_id'],request.data['project_id'],frontend_request)
+            return Response({'message':kernel.message})
+        else:    
+            return Response({'message':'NOT SUFFICIENT OR ANY DATA SUPPLIED, PLEASE PASS THE ARGUMENTS project_id AND user_id'})
+    
 
 class InternalStatusViewSet(viewsets.ViewSet):
     #permission_classes = [
@@ -80,7 +95,7 @@ class DesiredStatusViewSet(viewsets.ViewSet):
         else:
             return Response({'message':'NOT SUFFICIENT OR ANY DATA SUPPLIED, PLEASE PASS THE ARGUMENTS project_id AND user_id'})
 
-class SightNetworkViewSet(mixins.ListModelMixin,viewsets.GenericViewSet):
+class SightNetworkViewSet(viewsets.ViewSet):
     #permission_classes = [
     #    permissions.IsAuthenticated
     #]
@@ -108,7 +123,7 @@ class SightNetworkViewSet(mixins.ListModelMixin,viewsets.GenericViewSet):
             return Response({'message':'NOT SUFFICIENT OR ANY DATA SUPPLIED PLEASE, PASS THE ARGUMENTS project_id AND user_id'})
 
 
-class HearingNetworkViewSet(mixins.ListModelMixin,viewsets.GenericViewSet):
+class HearingNetworkViewSet(viewsets.ViewSet):
     #permission_classes = [
     #    permissions.IsAuthenticated
     #]
