@@ -17,6 +17,22 @@ class StatusClass(object):
         self.culture = culture 
         self.feelings = feelings
 
+class BrainOutputClass(object):
+    def __init__(self, h_knowledge,s_knowledge,state,internal_status):
+        self.h_has_knowledge = h_knowledge._has_knowledge
+        self.h_radius = h_knowledge._radius
+        self.h_degraded = h_knowledge._degraded
+        self.h_knowledge = h_knowledge._knowledge
+        self.s_has_knowledge = s_knowledge._has_knowledge
+        self.s_radius = s_knowledge._radius
+        self.s_degraded = s_knowledge._degraded
+        self.s_knowledge = s_knowledge._knowledge
+        self.biology =  internal_status[0]
+        self.culture = internal_status[1] 
+        self.feelings = internal_status[2]
+        self.state= state
+
+""" 
 class testClass(object):
     def __init__(self,test):
-        self.test =  test
+        self.test =  test """

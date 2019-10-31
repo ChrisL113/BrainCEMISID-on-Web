@@ -1,6 +1,6 @@
 from rest_framework import  viewsets, permissions,mixins
-from .serializers import  NeuronNetworkSerializer,ProjectSerializer, KernelSerializer,StatusSerializer,testSerializer
-from .classes import NeuronNetworkClass # classes
+from .serializers import  NeuronNetworkSerializer,ProjectSerializer,StatusSerializer,BrainOutputSerializer
+from .classes import NeuronNetworkClass,BrainOutputClass # classes
 from rest_framework.response import Response
 
 from django.db import connection
@@ -11,6 +11,7 @@ import json
 #################################### kernel################################################
 sys.path.append('D:\Desktop\BrainCEMISID on Web\leadmanager\kernel')
 from kernel_braincemisid import KernelBrainCemisid 
+from sensory_neural_block import RbfKnowledge
 
 #Project Viewset
 class ProjectViewset(viewsets.ModelViewSet):
@@ -26,7 +27,68 @@ class ProjectViewset(viewsets.ModelViewSet):
         serializer.save(owner=self.request.user)
 
 class KernelViewSet(viewsets.ViewSet):
-    kernel=None
+    kernel= None
+    brain_output_serializer= None
+    def pass_kernel_inputs(self, hearing_pattern, sight_pattern, hearing_class, intentions_input):
+        # Set working domain
+        if self.episodes_tgl_btn.state == "down":
+            self.kernel.set_working_domain("EPISODES")
+        else:
+            self.kernel.set_working_domain("INTENTIONS")
+            
+        biology_in = intentions_input[0]
+        culture_in = intentions_input[1]
+        feelings_in= intentions_input[2]
+        hearing_knowledge = RbfKnowledge(hearing_pattern, hearing_class)
+        sight_knowledge = RbfKnowledge(sight_pattern, "NoClass")
+        self.kernel.set_hearing_knowledge_in(hearing_knowledge)
+        self.kernel.set_sight_knowledge_in(sight_knowledge)
+        self.kernel.set_internal_state_in([biology_in, culture_in, feelings_in])
+        self.kernel.set_desired_state([biology_in, culture_in, feelings_in])
+
+    def show_kernel_outputs(self):
+        internal_status = self.kernel.get_internal_state().get_state()
+        if self.kernel.state == "HIT":
+            h_knowledge = self.kernel.get_hearing_knowledge_out()
+            s_knowledge = self.kernel.get_sight_knowledge_out()
+            serializer_class = BrainOutputSerializer
+            self.brain_output_serializer=BrainOutputClass(h_knowledge,s_knowledge,self.kernel.state,internal_status)
+
+############################################### BBCC Protocole ###############################################
+
+    def bum(self,hearing_pattern, sight_pattern, hearing_class, intentions_input):
+        self.pass_kernel_inputs(hearing_pattern, sight_pattern, hearing_class, intentions_input)
+        self.kernel.bum()
+
+    def bip(self,hearing_pattern, sight_pattern, hearing_class, intentions_input):
+        self.pass_kernel_inputs(hearing_pattern, sight_pattern, hearing_class, intentions_input)
+        self.kernel.bip()
+        self.show_kernel_outputs()
+
+    def check(self,hearing_pattern, sight_pattern, hearing_class, intentions_input):
+        self.pass_kernel_inputs(hearing_pattern, sight_pattern, hearing_class, intentions_input)
+        self.kernel.check()
+        self.show_kernel_outputs()
+
+    def clack(self,hearing_pattern, sight_pattern, hearing_class, intentions_input):
+        self.pass_kernel_inputs(hearing_pattern, sight_pattern, hearing_class, intentions_input)
+        self.kernel.clack()
+        self.show_kernel_outputs()
+
+############################################## OTHER SIGNALS #############################################
+
+    def set_zero(self,hearing_pattern, sight_pattern, hearing_class, intentions_input):
+        self.pass_kernel_inputs(hearing_pattern, sight_pattern, hearing_class, intentions_input)
+        self.kernel.set_zero()
+
+    def set_add_operator(self,hearing_pattern, sight_pattern, hearing_class, intentions_input):
+        self.pass_kernel_inputs(hearing_pattern, sight_pattern, hearing_class, intentions_input)
+        self.kernel.set_add_operator()
+
+    def set_equal_sign(self,hearing_pattern, sight_pattern, hearing_class, intentions_input):
+        self.pass_kernel_inputs(hearing_pattern, sight_pattern, hearing_class, intentions_input)
+        self.kernel.set_equal_sign()
+
     def create(self,request):
         if "user_id" in request.data:
             frontend_request="POST"
@@ -42,7 +104,42 @@ class KernelViewSet(viewsets.ViewSet):
             return Response({'message':'NOT SUFFICIENT OR ANY DATA SUPPLIED, PLEASE PASS THE ARGUMENTS project_id AND user_id'})
     
     def put(self,request):
-        return Response({'message':'IM GETTING THE UPDATE REQUEST'})
+        ####################################### LEARNING #########################################
+        if "action" in request.data and "hearing_pattern" in request.data and "sight_pattern" in request.data and "itentions_input" in request.data and "hearing_class" in request.data:
+            if self.kernel==None
+                return Response({'message': 'KERNEL IS NOT LOADED'})
+            
+            if request.data['action'] == 'bum':
+                self.bum(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'])
+                return Response({'message':'BBCC Protocole Initialized'})
+
+            elif request.data['action'] == 'bip':
+                self.bip(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'])
+                class_serializer
+                return Response(brain_output_serializer.data)
+            
+            elif request.data['action'] == 'check':
+                self.check(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'])
+                return Response(brain_output_serializer.data)
+            
+            elif request.data['action'] == 'clack':
+                self.clack(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'])
+                return Response(brain_output_serializer.data)
+            
+            elif request.data['action'] == 'set_zero':
+                self.set_zero(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'])
+                return Response({'message':'SET_ZERO WAS SET IN BRAIN'})
+
+            elif request.data['action'] == 'set_add_operator':
+                self.set_add_operator(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'])
+                return Response({'message':'SET_ADD_OPERATOR WAS SET IN BRAIN'})
+
+            elif request.data['action'] == 'set_equal_sign':
+                self.set_equal_sign(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'])
+                return Response({'message':'SET_EQUAL WAS SET IN BRAIN'})
+            
+
+        return Response({'message':'Missed'})
     
     def delete(self, request):
         if "user_id" in request.data and "project_id" in request.data:
