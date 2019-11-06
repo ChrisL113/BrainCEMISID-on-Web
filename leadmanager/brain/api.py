@@ -105,39 +105,40 @@ class KernelViewSet(viewsets.ViewSet):
     
     def put(self,request):
         ####################################### LEARNING #########################################
-        if "action" in request.data and "hearing_pattern" in request.data and "sight_pattern" in request.data and "itentions_input" in request.data and "hearing_class" in request.data:
-            if self.kernel==None
+        if "action" in request.data and "hearing_pattern" in request.data and "sight_pattern" in request.data and "intentions_input" in request.data and "hearing_class" in request.data:
+            print(request.data['hearing_pattern'])
+            return Response({'message':'check bash'})
+            if self.kernel==None:
                 return Response({'message': 'KERNEL IS NOT LOADED'})
             
-            if request.data['action'] == 'bum':
+            if request.data['action'] == 'BUM':
                 self.bum(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'])
                 return Response({'message':'BBCC Protocole Initialized'})
 
-            elif request.data['action'] == 'bip':
+            elif request.data['action'] == 'BIP':
                 self.bip(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'])
                 class_serializer
                 return Response(brain_output_serializer.data)
             
-            elif request.data['action'] == 'check':
+            elif request.data['action'] == 'CHECK':
                 self.check(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'])
                 return Response(brain_output_serializer.data)
             
-            elif request.data['action'] == 'clack':
+            elif request.data['action'] == 'CLACK':
                 self.clack(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'])
                 return Response(brain_output_serializer.data)
             
-            elif request.data['action'] == 'set_zero':
+            elif request.data['action'] == 'SET_ZERO':
                 self.set_zero(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'])
                 return Response({'message':'SET_ZERO WAS SET IN BRAIN'})
 
-            elif request.data['action'] == 'set_add_operator':
+            elif request.data['action'] == 'SET_ADD_OPERATOR':
                 self.set_add_operator(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'])
                 return Response({'message':'SET_ADD_OPERATOR WAS SET IN BRAIN'})
 
-            elif request.data['action'] == 'set_equal_sign':
+            elif request.data['action'] == 'SET_EQUAL_SIGN':
                 self.set_equal_sign(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'])
                 return Response({'message':'SET_EQUAL WAS SET IN BRAIN'})
-            
 
         return Response({'message':'Missed'})
     

@@ -1,0 +1,79 @@
+3.2.1 KernelBrainCemisid
+3.2.1.1 Constructor __init__
+	En el constructor de la clase, se hace cargo de la carga inicial de la memoria persistente de las distintas 	
+    redes neuronales del núcleo,  las cuales son operaciones de entrada/salida de almacenamiento secundario.
+
+	Dicha carga de cada clase o módulo es totalmente independiente de las otras, por lo que es 	
+    posible llevar a cabo el proceso de forma paralela sin enfrentar problemas de carreras en la data cargada.
+
+
+3.2.1.2 _bip_addition
+	En el método privado bip de adición del protocolo ‘Bum-Bip-Check-Clack’, la carga del 	
+    conocimiento de los sensores visuales y de oídos se hace de forma secuencial (ciclo de repetición), 
+    y el resultado de cada conocimiento se guarda en un arreglo.
+
+3.2.1.3  sight_recognize
+	En el método publico del reconocimiento de vista, específicamente al encontrar un estado de 
+    confusión estos reconocen dos o mas figuras parecidas la obtención de las relaciones de 	
+    vista se hace de forma secuencial para cada identificador del conjunto de neuronas reconocidas.      
+
+
+3.2.2 RelNetwork
+3.2.2.1 Constructor __init__
+	En el constructor de la clase, la lista de neuronas se genera de forma secuencial, la longitud de 	
+    la lista lo define el parámetro de entrada del constructor ‘neuron_count’.
+
+3.2.2.2 learn
+	Es un método público que permite adquirir nuevo conocimiento listo para aprender, de forma 
+    análoga a 3.2.2.1 la lista se genera de forma secuencial, sólo que la cantidad de neuronas a 	
+    generar lo define la longitud de la lista de neuronas.
+
+
+3.2.2.3 get_hearing_rels     get_sight_rels
+	Éstos dos métodos son muy similares, obtienen las relaciones de oído y vista respectivamente, 
+    en ambos métodos se hace de forma secuencial; pero se verifica primero que se reconoce el 
+    sonido o la vista respectivamente y luego se obtiene y se agrega el conocimiento a la lista correspondiente.
+
+
+3.2.3 UncosciousFilteringblock
+3.2.3.1 _filter_biology
+	Es un método privado, permite seleccionar la mejor entrada para la parte biológica.
+	Se calcula de forma secuencia cada entrada en búsqueda de la distancia mínima entre la suma 
+    del estado interno biológico con el estado biológico de cada entrada, dividida por el estado biológico deseado.
+
+3.2.3.2 	_filter_culture
+	En éste método privado se presenta una lógica de programación análoga a 3.2.3.1, a diferencia
+    que no se calcula una distancia, sino se busca la memoria con el estado cultural máximo.
+
+3.2.3.3  _filter_feelings
+	 Éste método privado es análoga a 3.2.3.2, a diferencia que se busca la memoria con el mejor sentimiento (máximo).
+
+
+3.2.4 CosciousDecisionsblock
+3.2.4.1 Constructor __init__
+	En el constructor de la clase, se prepara un conjunto de entrenamiento, el cual usa valores 
+    aleatorios en tres etapas para generar de forma secuencial el valor de elección de estado biológico, 
+    cultural y sentimental y el de predicción.
+
+
+3.2.5 CulturalNetwork
+3.2.5.1 Constructor __init__
+	En el constructor de la clase la creación de grupos culturales es secuencial. 	
+
+
+3.2.5.2  resize
+	Éste método se encarga de llenar la lista de neuronas con memorias, de forma análoga a 	3.2.5.1  
+    los grupos culturales se crean de forma secuencial.
+
+
+3.2.6 DecisionsBlock
+3.2.6.1 get_output_memory
+	En éste método público se obtienen los grupos culturales y la memoria de la cual la decisión 
+    se puede inferir, justamente el calculo de las entradas conscientes para inferir éstas últimas se 	
+    hace de forma secuencial.
+	
+
+3.2.7 EpisodicMemory
+3.2.7.1 retrieve_exact_memory
+	Éste método publico retorna la memoria exacta, excepto para el último elemento del 	
+    disparador, éstos son procesados de forma secuencial.
