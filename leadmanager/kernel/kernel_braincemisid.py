@@ -14,6 +14,7 @@ import logging
 from psycopg2 import extras
 import pickle
 
+from django.db import connection
 import os.path
 
 ## \defgroup Kernel Brain-CEMISID kernel
@@ -45,47 +46,22 @@ class KernelBrainCemisid():
         # If there are no persisten memory related files, create them
 
         if frontend_request == "POST":           
-            try:
-                conn = psycopg2.connect(dbname = 'braincemisid_db', user='postgres', host='localhost',password='1234')
-                print("Opened db successfully.")
-            except:
-                print("Unable to connect to the database")
-                logging.exception('Unable to open database connection')
-                return
-            else:
-                cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
-            cur.execute("INSERT INTO brain(user_id) VALUES (%s) RETURNING id",(user_id,))
-            
-            self.project_id = cur.fetchone()[0]
+            with connection.cursor() as cur:
+                cur.execute("INSERT INTO brain(user_id) VALUES (%s) RETURNING id",(user_id,))
+                self.project_id = cur.fetchone()[0]
             print('this is the project id =', self.project_id)
-            conn.commit()
-            cur.close()
+            
             self.create_kernel()
             self.message = 'BRAIN SUCCESFULLY CREATED'
 
         if frontend_request == "DELETE":
-            try:
-                conn = psycopg2.connect(dbname = 'braincemisid_db', user='postgres', host='localhost',password='1234')
-                print("Opened db successfully.")
-            except:
-                print("Unable to connect to the database")
-                logging.exception('Unable to open database connection')
-                return
-            else:
-                cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
-            cur.execute("DELETE FROM brain WHERE user_id=%s AND id=%s;""",(user_id,project_id,))
+            with connection.cursor() as cur:
+                cur.execute("DELETE FROM brain WHERE user_id=%s AND id=%s;""",(user_id,project_id,))
+                it_was_deleted = cur.rowcount
             
-            it_was_deleted = cur.rowcount
-            if it_was_deleted == 0:
-                conn.commit()
-                cur.close()    
-                self.message = 'NOT BRAIN WAS FOUND TO DELETE'
-                return 
-            conn.commit()
-            cur.close()
-
+                if it_was_deleted == 0:    
+                    self.message = 'NOT BRAIN WAS FOUND TO DELETE'
+                    return 
             self.message = 'BRAIN SUCCESFULLY DELETED'
             return
 
@@ -112,7 +88,7 @@ class KernelBrainCemisid():
             self.project_id=project_id
             # SNB
             self.snb = SensoryNeuralBlock("snb_s","snb_h",self.project_id)
-            #print(self.snb.snb_h.__dict__)
+            print(self.snb.snb_h.__dict__)
             #for i in self.snb.snb_h.neuron_list:
                 #if i._knowledge!= None:
                     #print(i._knowledge)        

@@ -1,54 +1,14 @@
 from rest_framework import serializers
-from .models import Projects
 
-from .classes import StatusClass,NeuronNetworkClass,BrainOutputClass
-
-class ProjectSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Projects
-        fields = '__all__'
+from .classes import BrainOutputClass
 
 ############################################## kernel ###########################################
 
-class StatusSerializer(serializers.Serializer):
-    biology = serializers.FloatField(min_value=0,max_value=1)
-    culture = serializers.FloatField(min_value=0,max_value=1)
-    feelings = serializers.FloatField(min_value=0,max_value=1)
-
-    def create(self, validated_data):
-        return StatusClass(**validated_data)
-    
-    def update(self, instance, validated_data):
-        instance.biology = validated_data.get('biology', instance.biology)
-        instance.culture = validated_data.get('cultural',instance.culture)
-        instance.feelings = validated_data.get('feelings',instance.feelings)
-        return instance
-
-class NeuronNetworkSerializer(serializers.Serializer):
-    _has_knowledge = serializers.BooleanField()
-    _radius = serializers.FloatField()
-    _degraded = serializers.BooleanField()
-    _knowledge = serializers.JSONField(default='')
-
-    def create(self, validated_data):
-        return NeuronNetworkClass(**validated_data)
-    
-    def update(self, instance, validated_data):
-        instance._has_knowledge = validated_data.get('_has_knowledge', instance._has_knowledge)
-        instance._radius = validated_data.get('_radius', instance._radius)
-        instance._degraded = validated_data.get('_degraded', instance._degraded)
-        instance._knowledge = validated_data.get('_knowledge', instance._knowledge)
-        return instance
-
 class BrainOutputSerializer(serializers.Serializer):
-    h_has_knowledge = serializers.BooleanField()
-    h_radius = serializers.FloatField()
-    h_degraded = serializers.BooleanField()
-    h_knowledge = serializers.JSONField(default='')
-    s_has_knowledge = serializers.BooleanField()
-    s_radius = serializers.FloatField()
-    s_degraded = serializers.BooleanField()
-    s_knowledge = serializers.JSONField(default='')
+    h_pattern = serializers.JSONField(default='')
+    hearing_class=serializers.CharField(max_length=200)
+    s_pattern = serializers.JSONField(default='')
+    neuron_number = serializers.IntegerField()
     biology =  serializers.FloatField(min_value=0,max_value=1) 
     culture =  serializers.FloatField(min_value=0,max_value=1)
     feelings = serializers.FloatField(min_value=0,max_value=1)
@@ -58,14 +18,10 @@ class BrainOutputSerializer(serializers.Serializer):
         return BrainOutputClass(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.h_has_knowledge = validated_data.get('h_has_knowledge',instance.h_has_knowledge) 
-        instance.h_radius = validated_data.get('h_radius',instance.h_radius)
-        instance.h_degraded = validated_data.get('h_degraded',instance.h_degraded)
-        instance.h_knowledge = validated_data.get('h_knowledge',instance.h_knowledge)
-        instance.s_has_knowledge = validated_data.get('s_has_knowledge',instance.s_has_knowledge)
-        instance.s_radius = validated_data.get('s_radius',instance.s_radius)
-        instance.s_degraded = validated_data.get('s_degraded',instance.s_degraded)
-        instance.s_knowledge = validated_data.get('s_knowledge',instance.s_knowledge)
+        instance.h_pattern = validated_data.get('h_pattern',instance.h_pattern)
+        instance.hearing_class = validated_data.get('hearing_class', instance.hearing_class)
+        instance.s_pattern = validated_data.get('s_pattern',instance.s_pattern)
+        instance.neuron_number = validated_data.get('neuron_number',instance.neuron_number)
         instance.biology =  validated_data.get('biology',instance.biology)
         instance.culture = validated_data.get('culture',instance.culture)
         instance.feelings = validated_data.get('feelings',instance.feelings)

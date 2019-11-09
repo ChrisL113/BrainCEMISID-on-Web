@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'leads',
     'rest_framework',
-    'frontend',
     'knox',
+    'sight_network',
+    'hearing_network',
+    'project',
     'accounts',
     'brain',
 ]
