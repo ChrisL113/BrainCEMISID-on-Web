@@ -88,7 +88,7 @@ class KernelBrainCemisid():
             self.project_id=project_id
             # SNB
             self.snb = SensoryNeuralBlock("snb_s","snb_h",self.project_id)
-            print(self.snb.snb_h.__dict__)
+            #print(self.snb.snb_h.__dict__)
             #for i in self.snb.snb_h.neuron_list:
                 #if i._knowledge!= None:
                     #print(i._knowledge)        

@@ -83,44 +83,49 @@ class KernelViewSet(viewsets.ViewSet):
     
     def put(self,request):
         #################################################### LEARNING #########################################
-        if "action" in request.data and "hearing_pattern" in request.data and "sight_pattern" in request.data and "intentions_input" in request.data and "hearing_class" in request.data and "is_episodes" in request.data and "user_id" in request.data and "project_id" in request.data:
-            frontend_request="GET"
-            self.kernel=KernelBrainCemisid(request.data['user_id'],request.data['project_id'],frontend_request)
-            #print(request.data)
-            #return Response({'message':'check bash'})
-            if self.kernel==None:
-                return Response({'message': 'KERNEL IS NOT LOADED'})
+        #if "action" in request.data and "hearing_pattern" in request.data and "sight_pattern" in request.data and "intentions_input" in request.data and "hearing_class" in request.data and "is_episodes" in request.data and "user_id" in request.data and "project_id" in request.data:
+        frontend_request="GET"
+        self.kernel=KernelBrainCemisid(request.data['user_id'],request.data['project_id'],frontend_request)
+        #print(request.data)
+        #return Response({'message':'check bash'})
+        if self.kernel==None:
+            return Response({'message': 'KERNEL IS NOT LOADED'})
             
-            if request.data['action'] == 'BUM':
-                self.bum(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'],request.data['is_episodes'])
-                return Response({'message':'BBCC Protocole Initialized'})
+        if "BUM" in request.data:
+            for index in request.data['BUM']:
+                self.bum(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'],request.data['is_episodes'])
+                #return Response({'message':'BBCC Protocole Initialized'})
 
-            if request.data['action'] == 'BIP':
-                self.bip(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'],request.data['is_episodes'])
-                class_serializer
-                return Response(serializer.data)
+        if "BIP" in request.data:
+            for index in request.data['BIP']:
+                self.bip(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'],request.data['is_episodes'])
+                #return Response(serializer.data)
             
-            if request.data['action'] == 'CHECK':
-                self.check(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'],request.data['is_episodes'])
-                serializer= BrainOutputSerializer(self.brain_output)
-                return Response(serializer.data)
+        if "CHECK" in request.data:
+            for index in request.data['CHECK']:
+                self.check(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'],request.data['is_episodes'])
+                print("entering....")
             
-            if request.data['action'] == 'CLACK':
-                self.clack(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'],request.data['is_episodes'])
+        if "CLACK" in request.data:
+            for index in request.data['CLACK']:
+                self.clack(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'],request.data['is_episodes'])
                 return Response({'message':'DONE'})
+        if not "CLACK" in request.data:
+            serializer= BrainOutputSerializer(self.brain_output)
+            return Response(serializer.data)
             
-            if request.data['action'] == 'SET_ZERO':
-                self.set_zero(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'],request.data['is_episodes'])
-                return Response({'message':'SET_ZERO WAS SET IN BRAIN'})
+        #if "SET_ZERO" in request.data:
+            #self.set_zero(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'],request.data['is_episodes'])
+            #return Response({'message':'SET_ZERO WAS SET IN BRAIN'})
 
-            if request.data['action'] == 'SET_ADD_OPERATOR':
-                self.set_add_operator(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'],request.data['is_episodes'])
-                return Response({'message':'SET_ADD_OPERATOR WAS SET IN BRAIN'})
+        #if "SET_ADD_OPERATOR" in request.data:
+            #self.set_add_operator(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'],request.data['is_episodes'])
+            #return Response({'message':'SET_ADD_OPERATOR WAS SET IN BRAIN'})
 
-            if request.data['action'] == 'SET_EQUAL_SIGN':
-                self.set_equal_sign(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'],request.data['is_episodes'])
-                return Response({'message':'SET_EQUAL WAS SET IN BRAIN'})
-
+        #if "SET_EQUAL_SIGN" in request.data:
+            #self.set_equal_sign(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'],request.data['is_episodes'])
+            #return Response({'message':'SET_EQUAL WAS SET IN BRAIN'})
+        
         return Response({'message':'Missed'})
     
     def delete(self, request):
