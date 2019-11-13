@@ -11,7 +11,7 @@ The BrainCEMISID kernel is written in Python 3.7.4 This means that all machines 
 
 Kernel dependencies:
 
-* Virtual enviroment: to provide a virtual enviroment we recommend use pipenv, to install it just simply type the ```command pip install pipenv```
+* Virtual enviroment: to provide a virtual enviroment we recommend use pipenv, to install it just simply type the command ``` pip install pipenv```
 
 * Packages:
 django 
@@ -19,15 +19,15 @@ djangorestframework
 django-rest-knox 
 psycopg2
 
-to install it, just run the pipfile.lock
+to install it, run the pipfile.lock with pipenv install
 
 * Postgres:
-install postgres 
+https://www.postgresql.org/download/
 
-* DB models:
+* DB models: run the command ``` py .\manage.py migrate```
 
 
-Running:
+To Run:
 ```python manage.py runserver```
 
 Most of the modules, such as the MulticlassSingleLayerNetwork, contain independent tests that can be of help for the
