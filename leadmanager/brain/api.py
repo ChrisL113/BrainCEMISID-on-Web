@@ -94,17 +94,19 @@ class KernelViewSet(viewsets.ViewSet):
         if "BUM" in request.data:
             for index in request.data['BUM']:
                 self.bum(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'],request.data['is_episodes'])
+                print("entering.. BUM")
                 #return Response({'message':'BBCC Protocole Initialized'})
 
         if "BIP" in request.data:
             for index in request.data['BIP']:
+                print("entering..BIP")
                 self.bip(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'],request.data['is_episodes'])
                 #return Response(serializer.data)
             
         if "CHECK" in request.data:
             for index in request.data['CHECK']:
+                print("entering.... CHECK")
                 self.check(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'],request.data['is_episodes'])
-                print("entering....")
             
         if "CLACK" in request.data:
             for index in request.data['CLACK']:
