@@ -47,7 +47,7 @@ class KernelBrainCemisid():
 
         if frontend_request == "POST":           
             with connection.cursor() as cur:
-                cur.execute("INSERT INTO brain(user_id) VALUES (%s) RETURNING id",(user_id,))
+                cur.execute("INSERT INTO projects(user_id) VALUES (%s) RETURNING id",(user_id,))
                 self.project_id = cur.fetchone()[0]
             print('this is the project id =', self.project_id)
             
@@ -56,7 +56,7 @@ class KernelBrainCemisid():
 
         if frontend_request == "DELETE":
             with connection.cursor() as cur:
-                cur.execute("DELETE FROM brain WHERE user_id=%s AND id=%s;""",(user_id,project_id,))
+                cur.execute("DELETE FROM brain_projects WHERE user_id=%s AND id=%s;""",(user_id,project_id,))
                 it_was_deleted = cur.rowcount
             
                 if it_was_deleted == 0:    
@@ -76,7 +76,7 @@ class KernelBrainCemisid():
             else:
                 cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-            cur.execute("""SELECT id FROM brain WHERE user_id=%s AND id=%s;""",(user_id,project_id,))
+            cur.execute("""SELECT id FROM brain_projects WHERE user_id=%s AND id=%s;""",(user_id,project_id,))
 
             pickled_data = cur.fetchone()
 

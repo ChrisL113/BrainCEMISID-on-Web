@@ -15,7 +15,7 @@ class InternalStatusViewSet(viewsets.ViewSet):
             user_id=request.data['user_id']
             project_id=request.data['project_id']
             with connection.cursor() as cur:
-                cur.execute('SELECT internal_state FROM brain WHERE user_id=%s AND id=%s',[user_id,project_id])
+                cur.execute('SELECT internal_state FROM brain_projects WHERE user_id=%s AND id=%s',[user_id,project_id])
                 pickled_data = cur.fetchone()
             if pickled_data!=None:
                 int_status=pickle.loads(pickled_data[0])
@@ -36,7 +36,7 @@ class DesiredStatusViewSet(viewsets.ViewSet):
             user_id=request.data['user_id']
             project_id=request.data['project_id']
             with connection.cursor() as cur:
-                cur.execute('SELECT desired_state FROM brain WHERE user_id=%s AND id=%s',[user_id,project_id])
+                cur.execute('SELECT desired_state FROM brain_projects WHERE user_id=%s AND id=%s',[user_id,project_id])
                 pickled_data = cur.fetchone()
             if pickled_data!=None:
                 int_status=pickle.loads(pickled_data[0])

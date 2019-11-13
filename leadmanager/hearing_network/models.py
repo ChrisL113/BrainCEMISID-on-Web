@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 #class brain_proto(models.Model):
  #   user = models.ForeignKey(User, related_name="brains",on_delete=models.CASCADE, null=True)
-    
+"""     
 class snb_h(models.Model):
   #  brain=models.OneToOneField(
   #      brain_proto,
@@ -29,4 +29,4 @@ class RbfNeuron(models.Model):
 
 class IndexRecognize(models.Model):
     snb_hearing = models.ForeignKey(snb_h, related_name="index_recognize",on_delete=models.CASCADE, null=True)
-    index_recognize = models.IntegerField() 
+    index_recognize = models.IntegerField()  """

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import RbfNeuron
+#from .models import RbfNeuron
 
 class NeuronNetworkSerializer(serializers.Serializer):
     _has_knowledge = serializers.BooleanField()
@@ -16,8 +16,9 @@ class NeuronNetworkSerializer(serializers.Serializer):
         instance._degraded = validated_data.get('_degraded', instance._degraded)
         instance._knowledge = validated_data.get('_knowledge', instance._knowledge)
         return instance
-
+""" 
 class NeuronNetworkProto(serializers.ModelSerializer):
     class Meta:
         model = RbfNeuron
         fields = '__all__'
+ """
