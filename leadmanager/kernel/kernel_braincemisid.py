@@ -47,7 +47,7 @@ class KernelBrainCemisid():
 
         if frontend_request == "POST":           
             with connection.cursor() as cur:
-                cur.execute("INSERT INTO projects(user_id) VALUES (%s) RETURNING id",(user_id,))
+                cur.execute("INSERT INTO brain_projects(user_id) VALUES (%s) RETURNING id",(user_id,))
                 self.project_id = cur.fetchone()[0]
             print('this is the project id =', self.project_id)
             
