@@ -49,10 +49,9 @@ class KernelBrainCemisid():
             with connection.cursor() as cur:
                 cur.execute("INSERT INTO brain_projects(user_id) VALUES (%s) RETURNING id",(user_id,))
                 self.project_id = cur.fetchone()[0]
-            print('this is the project id =', self.project_id)
             
             self.create_kernel()
-            self.message = 'BRAIN SUCCESFULLY CREATED'
+            self.message = 'BRAIN SUCCESFULLY CREATED THE ID IS ' + str(self.project_id)
 
         if frontend_request == "DELETE":
             with connection.cursor() as cur:
@@ -125,9 +124,9 @@ class KernelBrainCemisid():
             # Sight-Syllables rel network
             self.ss_rnb = RelNetwork.deserialize("ss_rnb", self.project_id)
             #print(self.ss_rnb.__dict__)
-            #for i in self.ss_rnb.neuron_list:
-                #if i._knowledge!= None:
-                    #print(i._knowledge.__dict__)
+            for i in self.ss_rnb.neuron_list:
+                if i._knowledge!= None:
+                    print(i._knowledge.__dict__)
 
             #################### INTENTIONS MODULES ########################################################################
             self.episodic_memory = EpisodicMemoriesBlock.deserialize("episodic_memory", self.project_id)

@@ -436,7 +436,7 @@ class RbfNetwork:
         pickled_data = cur.fetchone()
 
         return pickle.loads(pickled_data[0])
-           
+
 ## Sensory Neural Block
 # Stores sight and hearing RbfNetworks
 class SensoryNeuralBlock:
