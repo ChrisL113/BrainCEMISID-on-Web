@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'knox',
     'sight_network',
     'hearing_network',
-    'project',
     'accounts',
     'brain',
 ]

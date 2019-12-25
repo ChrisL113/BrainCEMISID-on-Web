@@ -12,6 +12,8 @@ sys.path.append('D:\Desktop\BrainCEMISID on Web\leadmanager\kernel')
 from kernel_braincemisid import KernelBrainCemisid 
 from sensory_neural_block import RbfKnowledge
 
+from .models import *
+
 class KernelViewSet(viewsets.ViewSet):
     kernel= None
     brain_output= None
@@ -76,16 +78,23 @@ class KernelViewSet(viewsets.ViewSet):
         self.kernel.set_equal_sign()
 
     def create(self,request):
-        if "user_id" in request.data:
+        if "user_id" and "project_name" in request.data:
             frontend_request="POST"
-            self.kernel=KernelBrainCemisid(request.data['user_id'],None,frontend_request)
-            return Response({'message': self.kernel.message})
-    
+            user = User.objects.get(pk=request.data['user_id'])
+            if user!=None:
+                self.kernel=KernelBrainCemisid(user,request.data['project_name'],frontend_request)
+                return Response({'message': self.kernel.message})
+            else:
+                return Response({'message': 'THERE IS NO USER WITH THIS ID'})
+        else:
+            return Response({'message': 'INVALID / NOT SUFFICIENT DATA'})
+
     def put(self,request):
         #################################################### LEARNING #########################################
-        #if "action" in request.data and "hearing_pattern" in request.data and "sight_pattern" in request.data and "intentions_input" in request.data and "hearing_class" in request.data and "is_episodes" in request.data and "user_id" in request.data and "project_id" in request.data:
-        frontend_request="GET"
-        self.kernel=KernelBrainCemisid(request.data['user_id'],request.data['project_id'],frontend_request)
+        if "user_id" in request.data:
+            frontend_request="GET"
+            user = User.objects.get(pk=request.data['user_id'])
+            self.kernel=KernelBrainCemisid(user,request.data,frontend_request)
         #print(request.data)
         #return Response({'message':'check bash'})
         if self.kernel==None:
@@ -128,22 +137,25 @@ class KernelViewSet(viewsets.ViewSet):
             #self.set_equal_sign(request.data['hearing_pattern'],request.data['sight_pattern'],request.data['hearing_class'],request.data['intentions_input'],request.data['is_episodes'])
             #return Response({'message':'SET_EQUAL WAS SET IN BRAIN'})
         
-        return Response({'message':'Missed'})
+        return Response({'message':'MISSED'})
     
     def delete(self, request):
-        if "user_id" in request.data and "project_id" in request.data:
-            frontend_request="DELETE"
-            self.kernel=KernelBrainCemisid(request.data['user_id'],request.data['project_id'],frontend_request)
-            return Response({'message':self.kernel.message})
-        else:    
-            return Response({'message':'NOT SUFFICIENT OR ANY DATA SUPPLIED, PLEASE PASS THE ARGUMENTS project_id AND user_id'})
-    
+        if "project_id" in request.data :
+            try:
+                query = brain.objects.get(pk=request.data['project_id'])
+            except:
+                return Response({'message':'NOT BRAIN WAS FOUND TO DELETE'})
+            
+            query.delete()
+            return Response({'message':'BRAIN SUCCESFULLY DELETED'})
 
-""" 
-class testViewSet(viewsets.ViewSet):
-    serializer_class = testSerializer
-    def list(self, request):
-        serializer = testSerializer()
-        return Response(serializer.data)
- """
+        else:    
+            return Response({'message':'NOT PARAMETER project_id WAS PROVIDED'})
+    
+# class testViewSet(viewsets.ViewSet):
+#     serializer_class = testSerializer
+#     def list(self, request):
+#         serializer = testSerializer()
+#         return Response(serializer.data)
+
 

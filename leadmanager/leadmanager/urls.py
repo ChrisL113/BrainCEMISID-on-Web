@@ -20,10 +20,9 @@ urlpatterns = [
     #path('', include('frontend.urls')),
     #path('', include('le²²ads.urls')),
     #path('', include('accounts.urls')),
-    path('', include('project.urls')),
     path('', include('status.urls')),
     path('',include('hearing_network.urls')),
     path('',include('sight_network.urls')),
     path('', include('brain.urls')),
-    #path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
 ]

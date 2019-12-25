@@ -17,6 +17,8 @@ import pickle
 from django.db import connection
 import os.path
 
+from brain.models import *
+
 ## \defgroup Kernel Brain-CEMISID kernel
 #
 # This is the project kernel where all modules interact
@@ -30,7 +32,7 @@ import os.path
 class KernelBrainCemisid():
 
     ## Kernel contructor
-    def __init__(self,user_id,project_id,frontend_request):
+    def __init__(self,user,project_name,frontend_request):
         grid_size = 16
         # HEURISTICS: radius = (1/3)*2^(ENCODING_SIZE)
         # where ENCODING_SIZE is bit size of every pattern element (8 bits for us)
@@ -44,25 +46,16 @@ class KernelBrainCemisid():
         # Set pattern size in RBF knowledge
         RbfKnowledge.PATTERN_SIZE = pattern_size
         # If there are no persisten memory related files, create them
+        self.user=user
 
         if frontend_request == "POST":           
-            with connection.cursor() as cur:
-                cur.execute("INSERT INTO brain_projects(user_id) VALUES (%s) RETURNING id",(user_id,))
-                self.project_id = cur.fetchone()[0]
-            
+            self.brain = brain(user=self.user, name=project_name)
+            self.brain.save()
+            self.project_id = self.brain.id
+            self.project_name = project_name
             self.create_kernel()
             self.message = 'BRAIN SUCCESFULLY CREATED THE ID IS ' + str(self.project_id)
 
-        if frontend_request == "DELETE":
-            with connection.cursor() as cur:
-                cur.execute("DELETE FROM brain_projects WHERE user_id=%s AND id=%s;""",(user_id,project_id,))
-                it_was_deleted = cur.rowcount
-            
-                if it_was_deleted == 0:    
-                    self.message = 'NOT BRAIN WAS FOUND TO DELETE'
-                    return 
-            self.message = 'BRAIN SUCCESFULLY DELETED'
-            return
 
         if frontend_request == "GET":
 
@@ -75,7 +68,7 @@ class KernelBrainCemisid():
             else:
                 cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-            cur.execute("""SELECT id FROM brain_projects WHERE user_id=%s AND id=%s;""",(user_id,project_id,))
+            cur.execute("""SELECT id FROM brain_brain WHERE user_id=%s AND id=%s;""",(user.id,project['project_id'],))
 
             pickled_data = cur.fetchone()
 
@@ -84,7 +77,7 @@ class KernelBrainCemisid():
                 return
 
 
-            self.project_id=project_id
+            self.project_id=project['project_id']
             # SNB
             self.snb = SensoryNeuralBlock("snb_s","snb_h",self.project_id)
             #print(self.snb.snb_h.__dict__)
@@ -545,7 +538,7 @@ class KernelBrainCemisid():
                 sight_knowledge = RbfKnowledge(sight_pattern, sight_class)
                 self.snb.learn_sight(sight_knowledge)
                 sight_id = self.snb.snb_s.get_last_learned_id()
-            self.snb.save(sight_snb_file="snb_s", hearing_snb_file="snb_h")
+            self.snb.save("snb_s", "snb_h",self.project_id)
             # Learn relation in new net
             rel_knowledge = RelKnowledge(syll_hearing_id, sight_id)
             self.ss_rnb.learn(rel_knowledge)
@@ -661,6 +654,8 @@ class KernelBrainCemisid():
     ## Erase all knowlege. Get to a *tabula rasa* state.
     def create_kernel(self):
         # snb
+        snb_s_proto = snb_s(brain_s = self.brain, index_ready_to_learn = 0, last_learned_id =-1)
+        snb_s_proto.save()
         self.snb = SensoryNeuralBlock("no_data","no_data", self.project_id)
         self.snb.save("snb_s", "snb_h", self.project_id)
         # Relational Neural Block

@@ -5,7 +5,7 @@ import psycopg2
 import logging
 from psycopg2 import extras
 from psycopg2 import sql
-
+from django.db import connection
 from neuron import Neuron
 
 ## \defgroup RbfBlocks RBF network related classes
@@ -393,26 +393,25 @@ class RbfNetwork:
     # @param obj RbfNetwork object to be serialized
     # @param name Name of the file where the serialization is to be stored
     def serialize(cls, obj, name, project_id):
+        pass
+        # with connection.cursor() as cur:
 
-        try:
-            conn = psycopg2.connect(dbname='braincemisid_db', user='postgres', host='localhost',password='1234')
-            print("Opened db successfully.", name)
-        except:
-            print("Unable to connect to the database")
-            logging.exception('Unable to open database connection')
-            return
-        else:
-            cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        # try:
+        #     conn = psycopg2.connect(dbname='braincemisid_db', user='postgres', host='localhost',password='1234')
+        #     print("Opened db successfully.", name)
+        # except:
+        #     print("Unable to connect to the database")
+        #     logging.exception('Unable to open database connection')
+        #     return
+        # else:
+        #     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) 
 
-        pickled_obj = pickle.dumps(obj)
-        
-        query = sql.SQL("UPDATE brain_projects SET {} = %s WHERE id=%s").format(sql.Identifier(name))
-
-        cur.execute(query, (pickled_obj,project_id,))
-
-        conn.commit()
-        cur.close()
-        conn.close()
+        #     pickled_obj = pickle.dumps(obj)
+        #     query = sql.SQL("UPDATE brain_brain SET {} = %s WHERE id=%s").format(sql.Identifier(name))
+        #     cur.execute(query, (pickled_obj,project_id,))
+        #     conn.commit()
+        #     cur.close()
+        # #conn.close()
 
     @classmethod
     ## Deserialize object stored in given file
@@ -430,7 +429,7 @@ class RbfNetwork:
         else:
             cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        query = sql.SQL("SELECT {} FROM brain_projects WHERE id=%s").format(sql.Identifier(name))
+        query = sql.SQL("SELECT {} FROM brain_brain WHERE id=%s").format(sql.Identifier(name))
         cur.execute(query, (project_id,))
         
         pickled_data = cur.fetchone()

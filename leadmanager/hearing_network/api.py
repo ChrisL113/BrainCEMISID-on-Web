@@ -18,7 +18,7 @@ class HearingNetworkViewSet(viewsets.ViewSet):
             user_id=request.data['user_id']
             project_id=request.data['project_id']
             with connection.cursor() as cur:
-                cur.execute('SELECT snb_h FROM brain_projects WHERE user_id=%s AND id=%s',[user_id,project_id])
+                cur.execute('SELECT snb_h FROM brain_brain WHERE user_id=%s AND id=%s',[user_id,project_id])
                 pickled_data = cur.fetchone()
             hearing_network=[]
             if pickled_data!=None:

@@ -258,7 +258,7 @@ class RelNetwork:
 
         pickled_obj = pickle.dumps(obj)
         
-        query = sql.SQL("UPDATE brain_projects SET {} = %s WHERE id=%s").format(sql.Identifier(name))
+        query = sql.SQL("UPDATE brain_brain SET {} = %s WHERE id=%s").format(sql.Identifier(name))
 
         cur.execute(query, (pickled_obj,project_id,))
 
@@ -281,7 +281,7 @@ class RelNetwork:
         else:
             cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        query = sql.SQL("SELECT {} FROM brain_projects WHERE id=%s").format(sql.Identifier(name))
+        query = sql.SQL("SELECT {} FROM brain_brain WHERE id=%s").format(sql.Identifier(name))
         cur.execute(query, (project_id,))
         
         pickled_data = cur.fetchone()
