@@ -82,7 +82,7 @@ class KernelViewSet(viewsets.ViewSet):
             frontend_request="POST"
             user = User.objects.get(pk=request.data['user_id'])
             if user!=None:
-                self.kernel=KernelBrainCemisid(user,request.data['project_name'],frontend_request)
+                self.kernel=KernelBrainCemisid(user,request.data,frontend_request)
                 return Response({'message': self.kernel.message})
             else:
                 return Response({'message': 'THERE IS NO USER WITH THIS ID'})

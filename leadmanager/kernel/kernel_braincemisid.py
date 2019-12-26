@@ -32,7 +32,7 @@ from brain.models import *
 class KernelBrainCemisid():
 
     ## Kernel contructor
-    def __init__(self,user,project_name,frontend_request):
+    def __init__(self,user,project,frontend_request):
         grid_size = 16
         # HEURISTICS: radius = (1/3)*2^(ENCODING_SIZE)
         # where ENCODING_SIZE is bit size of every pattern element (8 bits for us)
@@ -48,34 +48,22 @@ class KernelBrainCemisid():
         # If there are no persisten memory related files, create them
         self.user=user
 
-        if frontend_request == "POST":           
-            self.brain = brain(user=self.user, name=project_name)
+        if frontend_request == "POST":   
+
+            self.brain = brain(user=self.user, name=project['project_name'])
             self.brain.save()
             self.project_id = self.brain.id
-            self.project_name = project_name
+            self.project_name = project['project_name']
             self.create_kernel()
             self.message = 'BRAIN SUCCESFULLY CREATED THE ID IS ' + str(self.project_id)
-
 
         if frontend_request == "GET":
 
             try:
-                conn = psycopg2.connect(dbname='braincemisid_db', user='postgres', host='localhost',password='1234')
-                print("Opened db successfully")
+                self.brain=brain.objects.get(pk=project['project_id'])
             except:
-                print("Unable to connect to the database")
-                logging.exception('Unable to open database connection')
-            else:
-                cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
-            cur.execute("""SELECT id FROM brain_brain WHERE user_id=%s AND id=%s;""",(user.id,project['project_id'],))
-
-            pickled_data = cur.fetchone()
-
-            if pickled_data == None:
-                self.message='ERROR : IT DOES NOT EXISTS THIS user_id/ project_id COMBINATION'
+                self.message='ERROR : THERE IS NO PROJECT WITH THIS ID'
                 return
-
 
             self.project_id=project['project_id']
             # SNB

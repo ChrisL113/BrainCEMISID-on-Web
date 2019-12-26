@@ -1,12 +1,16 @@
 import pickle
 from math import fabs
 
-import psycopg2
-import logging
-from psycopg2 import extras
-from psycopg2 import sql
-from django.db import connection
+# import psycopg2
+# import logging
+# from psycopg2 import extras
+# from psycopg2 import sql
+# from django.db import connection
+
 from neuron import Neuron
+
+
+from brain.models import *
 
 ## \defgroup RbfBlocks RBF network related classes
 #
@@ -393,25 +397,19 @@ class RbfNetwork:
     # @param obj RbfNetwork object to be serialized
     # @param name Name of the file where the serialization is to be stored
     def serialize(cls, obj, name, project_id):
-        pass
-        # with connection.cursor() as cur:
+            
+        pickled_obj = pickle.dumps(obj)
+        
+        try:
+            if name=="snb_s":
+                brain.objects.filter(pk=project_id).update(snb_s=pickled_obj)
 
-        # try:
-        #     conn = psycopg2.connect(dbname='braincemisid_db', user='postgres', host='localhost',password='1234')
-        #     print("Opened db successfully.", name)
-        # except:
-        #     print("Unable to connect to the database")
-        #     logging.exception('Unable to open database connection')
-        #     return
-        # else:
-        #     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) 
+            if name=="snb_h":
+                brain.objects.filter(pk=project_id).update(snb_h=pickled_obj)
+        except:
+            print("there was an issue")
+            pass
 
-        #     pickled_obj = pickle.dumps(obj)
-        #     query = sql.SQL("UPDATE brain_brain SET {} = %s WHERE id=%s").format(sql.Identifier(name))
-        #     cur.execute(query, (pickled_obj,project_id,))
-        #     conn.commit()
-        #     cur.close()
-        # #conn.close()
 
     @classmethod
     ## Deserialize object stored in given file
@@ -419,20 +417,20 @@ class RbfNetwork:
     # @param name Name of the file where the object is serialized
     def deserialize(cls, name, project_id):
         #return pickle.load(open(name, "rb"),encoding="bytes")
-        try:
-            conn = psycopg2.connect(dbname='braincemisid_db', user='postgres', host='localhost',
-                                password='1234')
-            print("Opened db successfully", name)
-        except:
-            print(datetime.now(), "Unable to connect to the database")
-            logging.exception('Unable to open database connection')
-        else:
-            cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        # try:
+        #     conn = psycopg2.connect(dbname='braincemisid_db', user='postgres', host='localhost',
+        #                         password='1234')
+        #     print("Opened db successfully", name)
+        # except:
+        #     print(datetime.now(), "Unable to connect to the database")
+        #     logging.exception('Unable to open database connection')
+        # else:
+        #     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        query = sql.SQL("SELECT {} FROM brain_brain WHERE id=%s").format(sql.Identifier(name))
-        cur.execute(query, (project_id,))
+        # query = sql.SQL("SELECT {} FROM brain_brain WHERE id=%s").format(sql.Identifier(name))
+        # cur.execute(query, (project_id,))
         
-        pickled_data = cur.fetchone()
+        # pickled_data = cur.fetchone()
 
         return pickle.loads(pickled_data[0])
 
