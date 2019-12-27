@@ -35,11 +35,11 @@ class snb_s(models.Model):
 #brain_proto.objects.filter(snb_s__rbf_neurons=None)
 
 class RbfNeuron(models.Model):
-    snb_sight = models.ForeignKey(snb_s, related_name="rbf_neurons",on_delete=models.CASCADE, null=True)
+    snb_sight = models.ForeignKey(snb_s, related_name="rbf_neuron",on_delete=models.CASCADE, null=True)
     has_knowledge = models.BooleanField()
     radius = models.FloatField()
-    degraded = models.FloatField()
-    knowledge = JSONField()
+    degraded = models.BooleanField()
+    knowledge = JSONField(null=True,blank=True)
 
 
 class IndexRecognize(models.Model):

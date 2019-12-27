@@ -11,6 +11,7 @@ from neuron import Neuron
 
 
 from brain.models import *
+from brain.models import RbfNeuron as rbf_neuron_model 
 
 ## \defgroup RbfBlocks RBF network related classes
 #
@@ -110,7 +111,7 @@ class RbfNeuron(Neuron):
 
     ## Returns whether neuron is member of the set
     # @param test_set Set to be tested
-    # @retval is_member Boolean. True if neuron is member of set, false in any other case
+    # @retval is_membe{r Boolean. True if neuron is member of set, false in any other case
     def is_member(self, test_set):
         return self.get_set() == test_set
 
@@ -400,15 +401,25 @@ class RbfNetwork:
             
         pickled_obj = pickle.dumps(obj)
         
-        try:
-            if name=="snb_s":
-                brain.objects.filter(pk=project_id).update(snb_s=pickled_obj)
+        if name=="snb_s":
+        
+            brain_object=brain.objects.filter(pk=project_id)
+            brain_object.update(snb_s=pickled_obj)
 
-            if name=="snb_h":
-                brain.objects.filter(pk=project_id).update(snb_h=pickled_obj)
-        except:
-            print("there was an issue")
-            pass
+            sight_network=snb_s.objects.filter(brain_s=brain_object[0])
+        
+            if obj._index_recognize:
+                for i in obj._index_recognize:
+                    IndexRecognize(snb_sight=sight_network[0], index_recognize=i)
+                    #sight_network.objects.index_recognize(index_recognize=i)
+            if obj.neuron_list:
+                for a in obj.neuron_list:
+                    query_neuron=rbf_neuron_model(snb_sight=sight_network[0] ,has_knowledge=a._has_knowledge , radius= a._radius , degraded=a._degraded , knowledge=a._knowledge)
+                    query_neuron.save()
+                    #sight_network.objects.rbf_neuron(knowledge=a._has_knowledge)
+
+        if name=="snb_h":
+            brain.objects.filter(pk=project_id).update(snb_h=pickled_obj)
 
 
     @classmethod
@@ -416,7 +427,8 @@ class RbfNetwork:
     # @param cls RbfNetwork class
     # @param name Name of the file where the object is serialized
     def deserialize(cls, name, project_id):
-        #return pickle.load(open(name, "rb"),encoding="bytes")
+
+
         # try:
         #     conn = psycopg2.connect(dbname='braincemisid_db', user='postgres', host='localhost',
         #                         password='1234')
