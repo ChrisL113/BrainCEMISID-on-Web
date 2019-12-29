@@ -12,7 +12,7 @@ from neuron import Neuron
 
 from brain.models import *
 from brain.models import RbfNeuron as rbf_neuron_model 
-
+import json
 ## \defgroup RbfBlocks RBF network related classes
 #
 # RBF network related classes are a group of classes that
@@ -242,7 +242,7 @@ class RbfNetwork:
     DEFAULT_RADIUS = 5
 
     NEURON_COUNT = 100
-
+    
     ## Class constructor, takes 'neuron_count' as parameter
     #   for setting network size
     def __init__(self, neuron_count):
@@ -263,6 +263,8 @@ class RbfNetwork:
         self._index_ready_to_learn = 0
         # Id of neuron that learned last given knowledge
         self._last_learned_id = -1
+
+        self.it_changed=False
 
     ## get number of neurons in network
     # @retval count Integer. Number of neurons in network
@@ -374,6 +376,7 @@ class RbfNetwork:
         if learned:
             self._last_learned_id = self._index_ready_to_learn
             self._index_ready_to_learn += 1
+            
         # Return whether net succesfully learned the given pattern
         return learned
 
@@ -397,30 +400,64 @@ class RbfNetwork:
     # @param cls RbfNetwork class
     # @param obj RbfNetwork object to be serialized
     # @param name Name of the file where the serialization is to be stored
-    def serialize(cls, obj, name, project_id):
+    def serialize(cls, obj, name, project_id,creating):
             
         pickled_obj = pickle.dumps(obj)
-        
-        if name=="snb_s":
-        
-            brain_object=brain.objects.filter(pk=project_id)
-            brain_object.update(snb_s=pickled_obj)
 
-            sight_network=snb_s.objects.filter(brain_s=brain_object[0])
+        if creating==True:
+            if name=="snb_s":
+            
+                brain_object=brain.objects.filter(pk=project_id)
+                brain_object.update(snb_s=pickled_obj)
+
+                sight_network=snb_s.objects.filter(brain_s=brain_object[0])
+                sight_network.update(state=obj._state, index_ready_to_learn=obj._index_ready_to_learn, last_learned_id=obj._last_learned_id)
+
+                if obj._index_recognize:
+                    for i in obj._index_recognize:
+                        query_index_recognize=IndexRecognize(snb_sight=sight_network[0], index_recognize=i)
+                        query_index_recognize.save()
+                        #sight_network.objects.index_recognize(index_recognize=i)
+                if obj.neuron_list:
+                    for a in obj.neuron_list:
+                        if a._knowledge!=None:
+                            json_knowledge=json.dumps(a._knowledge.__dict__)
+                            query_neuron=rbf_neuron_model(snb_sight=sight_network[0] ,has_knowledge=a._has_knowledge , radius= a._radius , degraded=a._degraded , knowledge=json_knowledge)
+                        else:
+                            query_neuron=rbf_neuron_model(snb_sight=sight_network[0] ,has_knowledge=a._has_knowledge , radius= a._radius , degraded=a._degraded )
+                        query_neuron.save()
+                        #sight_network.objects.rbf_neuron(knowledge=a._has_knowledge)
+
+            if name=="snb_h":
+                brain.objects.filter(pk=project_id).update(snb_h=pickled_obj)
+        else:
+            if obj.it_changed:
+                if name=="snb_s":
+                
+                    brain_object=brain.objects.filter(pk=project_id)
+                    brain_object.update(snb_s=pickled_obj)
+
+                    sight_network=snb_s.objects.filter(brain_s=brain_object[0])
+                    sight_network.update(state=obj._state, index_ready_to_learn=obj._index_ready_to_learn, last_learned_id=obj._last_learned_id)
+
+                    index_db=rbf_neuron_model.objects.filter(snb_sight_id=project_id).values('id').earliest('id')
+                    print(index_db)
+                    if obj._index_recognize:
+                        for i in obj._index_recognize:
+                            query_index_recognize=IndexRecognize(snb_sight=sight_network[0], index_recognize=i)
+                            query_index_recognize.save()
+                            #sight_network.objects.index_recognize(index_recognize=i)
+
+                    json_knowledge=json.dumps(obj.neuron_list[obj._index_ready_to_learn-1]._knowledge.__dict__)
+                    neuron_from_db=rbf_neuron_model.objects.filter(pk=obj._index_ready_to_learn+index_db['id']-1)
+                    neuron_from_db.update(has_knowledge=obj.neuron_list[obj._index_ready_to_learn-1]._has_knowledge, radius=obj.neuron_list[obj._index_ready_to_learn-1]._radius, degraded=obj.neuron_list[obj._index_ready_to_learn-1]._degraded, knowledge=json_knowledge)
+                    
+
+                if name=="snb_h":
+                    brain.objects.filter(pk=project_id).update(snb_h=pickled_obj)
+
+                obj.it_changed=False
         
-            if obj._index_recognize:
-                for i in obj._index_recognize:
-                    IndexRecognize(snb_sight=sight_network[0], index_recognize=i)
-                    #sight_network.objects.index_recognize(index_recognize=i)
-            if obj.neuron_list:
-                for a in obj.neuron_list:
-                    query_neuron=rbf_neuron_model(snb_sight=sight_network[0] ,has_knowledge=a._has_knowledge , radius= a._radius , degraded=a._degraded , knowledge=a._knowledge)
-                    query_neuron.save()
-                    #sight_network.objects.rbf_neuron(knowledge=a._has_knowledge)
-
-        if name=="snb_h":
-            brain.objects.filter(pk=project_id).update(snb_h=pickled_obj)
-
 
     @classmethod
     ## Deserialize object stored in given file
@@ -428,23 +465,18 @@ class RbfNetwork:
     # @param name Name of the file where the object is serialized
     def deserialize(cls, name, project_id):
 
+        if name=="snb_s":
+            
+            brain_object=brain.objects.values('snb_s','id').filter(id=project_id)
+            #print(brain_object[0]['snb_s'])
+            pickled_data = brain_object[0]['snb_s']
+            
+        if name=="snb_h":
 
-        # try:
-        #     conn = psycopg2.connect(dbname='braincemisid_db', user='postgres', host='localhost',
-        #                         password='1234')
-        #     print("Opened db successfully", name)
-        # except:
-        #     print(datetime.now(), "Unable to connect to the database")
-        #     logging.exception('Unable to open database connection')
-        # else:
-        #     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            brain_object=brain.objects.values('snb_h','id').filter(id=project_id)
+            pickled_data = brain_object[0]['snb_h']
 
-        # query = sql.SQL("SELECT {} FROM brain_brain WHERE id=%s").format(sql.Identifier(name))
-        # cur.execute(query, (project_id,))
-        
-        # pickled_data = cur.fetchone()
-
-        return pickle.loads(pickled_data[0])
+        return pickle.loads(pickled_data)
 
 ## Sensory Neural Block
 # Stores sight and hearing RbfNetworks
@@ -517,6 +549,8 @@ class SensoryNeuralBlock:
                 # Store indexes of hearing and sight neurons that just learned
                 self._last_learned_ids = (index_hearing, index_sight )
             # Return sight learning state
+            self.snb_h.it_changed=True
+            self.snb_s.it_changed=True
             return learned
         # Could not learn hearing knowledge
         return False
@@ -562,12 +596,11 @@ class SensoryNeuralBlock:
             if self.snb_s.recognize(pattern) == "HIT":
                 return self.snb_s.get_knowledge()
             return None
-
     ## Save snb object in given files (one for the sight sensory neural block and the other for the
     # hearing neural block
     # @param sight_snb_file Filename where the sight sensory neural block is to be saved
     # @param  hearing_snb_file Filename where the hearing sensory neural block is to be saved
-    def save(self, sight_snb_file, hearing_snb_file, project_id):
-        RbfNetwork.serialize(self.snb_s, sight_snb_file, project_id)
-        RbfNetwork.serialize(self.snb_h, hearing_snb_file, project_id)
+    def save(self, sight_snb_file, hearing_snb_file, project_id,creating):
+        RbfNetwork.serialize(self.snb_s, sight_snb_file, project_id,creating)
+        RbfNetwork.serialize(self.snb_h, hearing_snb_file, project_id,creating)
 
