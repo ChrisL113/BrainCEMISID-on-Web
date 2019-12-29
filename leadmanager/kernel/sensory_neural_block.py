@@ -548,9 +548,9 @@ class SensoryNeuralBlock:
             if learned:
                 # Store indexes of hearing and sight neurons that just learned
                 self._last_learned_ids = (index_hearing, index_sight )
+                self.snb_h.it_changed=True
+                self.snb_s.it_changed=True
             # Return sight learning state
-            self.snb_h.it_changed=True
-            self.snb_s.it_changed=True
             return learned
         # Could not learn hearing knowledge
         return False
