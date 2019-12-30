@@ -5,7 +5,6 @@ from django.contrib.postgres.fields import JSONField
 
 class brain(models.Model):
     name=models.CharField(default='', max_length=250)
-    snb_h= models.BinaryField(null=True)
     rnb= models.BinaryField(null=True)
     am_net= models.BinaryField(null=True)
     gnb= models.BinaryField(null=True)
@@ -31,9 +30,8 @@ class snb_s(models.Model):
     index_ready_to_learn = models.IntegerField()
     last_learned_id = models.IntegerField()
 
-#brain_proto.objects.filter(snb_s__rbf_neurons=None)
 
-class RbfNeuron(models.Model):
+class RbfNeuronSight(models.Model):
     snb_sight = models.ForeignKey(snb_s, related_name="rbf_neuron",on_delete=models.CASCADE, null=True)
     has_knowledge = models.BooleanField()
     radius = models.FloatField()
@@ -41,6 +39,31 @@ class RbfNeuron(models.Model):
     knowledge = JSONField(null=True,blank=True)
 
 
-class IndexRecognize(models.Model):
+class IndexRecognizeSight(models.Model):
     snb_sight = models.ForeignKey(snb_s, related_name="index_recognize",on_delete=models.CASCADE, null=True)
+    index_recognize = models.IntegerField() 
+
+
+class snb_h(models.Model):
+    brain_h=models.OneToOneField(
+        brain,
+        related_name="snb_h_json",
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
+    state = models.CharField(max_length=280, default= 'MISS?')
+    index_ready_to_learn = models.IntegerField()
+    last_learned_id = models.IntegerField()
+
+
+class RbfNeuronHearing(models.Model):
+    snb_hearing = models.ForeignKey(snb_h, related_name="rbf_neuron",on_delete=models.CASCADE, null=True)
+    has_knowledge = models.BooleanField()
+    radius = models.FloatField()
+    degraded = models.BooleanField()
+    knowledge = JSONField(null=True,blank=True)
+
+
+class IndexRecognizeHearing(models.Model):
+    snb_hearing = models.ForeignKey(snb_h, related_name="index_recognize",on_delete=models.CASCADE, null=True)
     index_recognize = models.IntegerField() 

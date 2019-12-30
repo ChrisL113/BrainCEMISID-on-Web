@@ -527,7 +527,7 @@ class KernelBrainCemisid():
                 self.snb.learn_sight(sight_knowledge)
                 sight_id = self.snb.snb_s.get_last_learned_id()
                 
-            self.snb.save("snb_s", "snb_h",self.project_id,False)
+            self.snb.save("snb_s", "snb_h",self.project_id,None)
             # Learn relation in new net
             rel_knowledge = RelKnowledge(syll_hearing_id, sight_id)
             self.ss_rnb.learn(rel_knowledge)
@@ -628,7 +628,7 @@ class KernelBrainCemisid():
         rel_knowledge = RelKnowledge(learned_ids[0], learned_ids[1])
         self.rnb.learn(rel_knowledge)
         RelNetwork.serialize(self.rnb, "rnb", self.project_id)
-        self.snb.save("snb_s", "snb_h",self.project_id,False)
+        self.snb.save("snb_s", "snb_h",self.project_id,None)
         ################ INTENTIONS ####################################################################################
         # New learned item will produce changes in internal state
         self.feed_internal_state(self._internal_state_in)
@@ -643,10 +643,8 @@ class KernelBrainCemisid():
     ## Erase all knowlege. Get to a *tabula rasa* state.
     def create_kernel(self):
         # snb
-        snb_s_proto = snb_s(brain_s = self.brain, index_ready_to_learn = 0, last_learned_id =-1)
-        snb_s_proto.save()
         self.snb = SensoryNeuralBlock("no_data","no_data", self.project_id)
-        self.snb.save("snb_s", "snb_h", self.project_id,True)
+        self.snb.save("snb_s", "snb_h", self.project_id,self.brain)
         # Relational Neural Block
         self.rnb = RelNetwork(100)
         RelNetwork.serialize(self.rnb, "rnb", self.project_id)

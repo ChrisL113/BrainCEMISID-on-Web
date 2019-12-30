@@ -1,22 +1,22 @@
 from rest_framework import serializers
-from brain.models import RbfNeuron
-class NeuronNetworkSerializer(serializers.Serializer):
-    _has_knowledge = serializers.BooleanField()
-    _radius = serializers.FloatField()
-    _degraded = serializers.BooleanField()
-    _knowledge = serializers.JSONField(default='')
+from brain.models import RbfNeuronSight
+# class NeuronNetworkSerializer(serializers.Serializer):
+#     _has_knowledge = serializers.BooleanField()
+#     _radius = serializers.FloatField()
+#     _degraded = serializers.BooleanField()
+#     _knowledge = serializers.JSONField(default='')
 
-    def create(self, validated_data):
-        return NeuronNetworkClass(**validated_data)
+#     def create(self, validated_data):
+#         return NeuronNetworkClass(**validated_data)
     
-    def update(self, instance, validated_data):
-        instance._has_knowledge = validated_data.get('_has_knowledge', instance._has_knowledge)
-        instance._radius = validated_data.get('_radius', instance._radius)
-        instance._degraded = validated_data.get('_degraded', instance._degraded)
-        instance._knowledge = validated_data.get('_knowledge', instance._knowledge)
-        return instance
+#     def update(self, instance, validated_data):
+#         instance._has_knowledge = validated_data.get('_has_knowledge', instance._has_knowledge)
+#         instance._radius = validated_data.get('_radius', instance._radius)
+#         instance._degraded = validated_data.get('_degraded', instance._degraded)
+#         instance._knowledge = validated_data.get('_knowledge', instance._knowledge)
+#         return instance
 
 class NeuronSightSerializer(serializers.ModelSerializer):
     class Meta:
-        model= RbfNeuron
+        model= RbfNeuronSight
         fields = '__all__'
