@@ -1,5 +1,5 @@
 from rest_framework import serializers
-
+from brain.models import RbfNeuron
 class NeuronNetworkSerializer(serializers.Serializer):
     _has_knowledge = serializers.BooleanField()
     _radius = serializers.FloatField()
@@ -15,3 +15,8 @@ class NeuronNetworkSerializer(serializers.Serializer):
         instance._degraded = validated_data.get('_degraded', instance._degraded)
         instance._knowledge = validated_data.get('_knowledge', instance._knowledge)
         return instance
+
+class NeuronSightSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= RbfNeuron
+        fields = '__all__'

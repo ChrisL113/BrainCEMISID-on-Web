@@ -5,7 +5,6 @@ from django.contrib.postgres.fields import JSONField
 
 class brain(models.Model):
     name=models.CharField(default='', max_length=250)
-    snb_s= models.BinaryField(null=True)
     snb_h= models.BinaryField(null=True)
     rnb= models.BinaryField(null=True)
     am_net= models.BinaryField(null=True)
