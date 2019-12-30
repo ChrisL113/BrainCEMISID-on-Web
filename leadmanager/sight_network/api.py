@@ -1,11 +1,12 @@
 from rest_framework import  viewsets, permissions
 from .serializers import  NeuronSightSerializer#,NeuronNetworkSerializer
-from .classes import NeuronNetworkClass
+#from .classes import NeuronNetworkClass
 from rest_framework.response import Response
 
-from django.db import connection
-import pickle
-import json
+#from django.contrib.auth.models import User
+#from django.db import connection
+#import pickle
+#import json
 
 from brain.models import RbfNeuronSight
 
