@@ -107,6 +107,7 @@ class RbfNeuron(Neuron):
         RbfNeuron.instances_count += 1
         # Initialize degraded state
         self._degraded = False
+        self.it_changed=False
 
     ## Returns whether neuron is member of the set
     # @param test_set Set to be tested
@@ -200,6 +201,7 @@ class RbfNeuron(Neuron):
     # retval success True if neuron has not been degraded after radius reduction and False in any other case
     def reduce_radius_by(self, value):
         # type: (value) -> integer
+        self.it_changed=True
         if value < 0:
             raise ValueError("value must be positive")
         if self._radius < value:
@@ -263,7 +265,6 @@ class RbfNetwork:
         # Id of neuron that learned last given knowledge
         self._last_learned_id = -1
         
-        self.it_changed=False
 
     ## get number of neurons in network
     # @retval count Integer. Number of neurons in network
@@ -443,51 +444,64 @@ class RbfNetwork:
                         else:
                             query_neuron=RbfNeuronHearing(snb_hearing=hearing_network ,has_knowledge=a._has_knowledge , radius= a._radius , degraded=a._degraded )
                         query_neuron.save()
+
         else:
-            if obj.it_changed:
-                if name=="snb_s":
+            if name=="snb_s":
                     
-                    #brain_object=brain.objects.filter(pk=project_id)
-                    #brain_object.update(snb_s=pickled_obj)
+                #brain_object=brain.objects.filter(pk=project_id)
+                #brain_object.update(snb_s=pickled_obj)
 
-                    sight_network=snb_s.objects.filter(brain_s__pk=project_id)
-                    sight_network.update(state=obj._state, index_ready_to_learn=obj._index_ready_to_learn, last_learned_id=obj._last_learned_id)
+                sight_network=snb_s.objects.filter(brain_s__pk=project_id)
+                sight_network.update(state=obj._state, index_ready_to_learn=obj._index_ready_to_learn, last_learned_id=obj._last_learned_id)
 
-                    index_db=RbfNeuronSight.objects.filter(snb_sight_id=project_id).values('id').earliest('id')
-                    #print(index_db)
-                    if obj._index_recognize:
-                        qdel=IndexRecognizeSight.objects.filter(snb_sight=sight_network[0])
-                        qdel.delete()
-                        for i in obj._index_recognize:
-                            query_index_recognize=IndexRecognizeSight(snb_sight=sight_network[0], index_recognize=i)
-                            query_index_recognize.save()
-                            #sight_network.objects.index_recognize(index_recognize=i)
+                index_db=RbfNeuronSight.objects.filter(snb_sight_id=project_id).values('id').earliest('id')
+                #print(index_db)
+                if obj._index_recognize:
+                    qdel=IndexRecognizeSight.objects.filter(snb_sight=sight_network[0])
+                    qdel.delete()
+                    for i in obj._index_recognize:
+                        query_index_recognize=IndexRecognizeSight(snb_sight=sight_network[0], index_recognize=i)
+                        query_index_recognize.save()
+                        #sight_network.objects.index_recognize(index_recognize=i)
 
-                    json_knowledge=json.dumps(obj.neuron_list[obj._index_ready_to_learn-1]._knowledge.__dict__)
-                    neuron_from_db=RbfNeuronSight.objects.filter(pk=obj._index_ready_to_learn+index_db['id']-1)
-                    neuron_from_db.update(has_knowledge=obj.neuron_list[obj._index_ready_to_learn-1]._has_knowledge, radius=obj.neuron_list[obj._index_ready_to_learn-1]._radius, degraded=obj.neuron_list[obj._index_ready_to_learn-1]._degraded, knowledge=json_knowledge)
-                    obj.it_changed=False
+                ind=0
+                while ind < obj._index_ready_to_learn:
+                    if ind == obj._index_ready_to_learn-1:
+                        json_knowledge=json.dumps(obj.neuron_list[ind]._knowledge.__dict__)
+                        neuron_from_db=RbfNeuronSight.objects.filter(pk=ind+index_db['id'])
+                        neuron_from_db.update(has_knowledge=obj.neuron_list[ind]._has_knowledge, radius=obj.neuron_list[ind]._radius, degraded=obj.neuron_list[ind]._degraded, knowledge=json_knowledge)
+                    if obj.neuron_list[ind].it_changed:
+                        print('estoy deserializando')
+                        neuron_from_db=RbfNeuronHearing.objects.filter(pk=ind+index_db['id'])
+                        neuron_from_db.update(has_knowledge=obj.neuron_list[ind]._has_knowledge, radius=obj.neuron_list[ind]._radius, degraded=obj.neuron_list[ind]._degraded)
+                    ind +=1
         
-                if name=="snb_h":
-                    #brain.objects.filter(pk=project_id).update(snb_h=pickled_obj)
-                    hearing_network=snb_h.objects.filter(brain_h__pk=project_id)
-                    hearing_network.update(state=obj._state, index_ready_to_learn=obj._index_ready_to_learn, last_learned_id=obj._last_learned_id)
+            if name=="snb_h":
+                #brain.objects.filter(pk=project_id).update(snb_h=pickled_obj)
+                hearing_network=snb_h.objects.filter(brain_h__pk=project_id)
+                hearing_network.update(state=obj._state, index_ready_to_learn=obj._index_ready_to_learn, last_learned_id=obj._last_learned_id)
 
-                    index_db=RbfNeuronHearing.objects.filter(snb_hearing_id=project_id).values('id').earliest('id')
-                    #print(index_db)
-                    if obj._index_recognize:
-                        qdel=IndexRecognizeHearing.objects.filter(snb_hearing=hearing_network[0])
-                        qdel.delete()
-                        for i in obj._index_recognize:
-                            query_index_recognize=IndexRecognizeHearing(snb_hearing=hearing_network[0], index_recognize=i)
-                            query_index_recognize.save()
-                            #sight_network.objects.index_recognize(index_recognize=i)
+                index_db=RbfNeuronHearing.objects.filter(snb_hearing_id=project_id).values('id').earliest('id')
+                #print(index_db)
+                if obj._index_recognize:
+                    qdel=IndexRecognizeHearing.objects.filter(snb_hearing=hearing_network[0])
+                    qdel.delete()
+                    for i in obj._index_recognize:
+                        query_index_recognize=IndexRecognizeHearing(snb_hearing=hearing_network[0], index_recognize=i)
+                        query_index_recognize.save()
+                        #sight_network.objects.index_recognize(index_recognize=i)
+                ind=0
+                while ind < obj._index_ready_to_learn:
+                    if ind == obj._index_ready_to_learn-1:
+                        json_knowledge=json.dumps(obj.neuron_list[ind]._knowledge.__dict__)
+                        neuron_from_db=RbfNeuronHearing.objects.filter(pk=ind+index_db['id'])
+                        neuron_from_db.update(has_knowledge=obj.neuron_list[ind]._has_knowledge, radius=obj.neuron_list[ind]._radius, degraded=obj.neuron_list[ind]._degraded, knowledge=json_knowledge)
+                    if obj.neuron_list[ind].it_changed:
+                        print('estoy deserializando')
+                        neuron_from_db=RbfNeuronHearing.objects.filter(pk=ind+index_db['id'])
+                        neuron_from_db.update(has_knowledge=obj.neuron_list[ind]._has_knowledge, radius=obj.neuron_list[ind]._radius, degraded=obj.neuron_list[ind]._degraded)
+                    ind +=1
 
-                    json_knowledge=json.dumps(obj.neuron_list[obj._index_ready_to_learn-1]._knowledge.__dict__)
-                    neuron_from_db=RbfNeuronHearing.objects.filter(pk=obj._index_ready_to_learn+index_db['id']-1)
-                    neuron_from_db.update(has_knowledge=obj.neuron_list[obj._index_ready_to_learn-1]._has_knowledge, radius=obj.neuron_list[obj._index_ready_to_learn-1]._radius, degraded=obj.neuron_list[obj._index_ready_to_learn-1]._degraded, knowledge=json_knowledge)
-                    obj.it_changed=False
-        
 
     @classmethod
     ## Deserialize object stored in given file
@@ -645,8 +659,6 @@ class SensoryNeuralBlock:
             if learned:
                 # Store indexes of hearing and sight neurons that just learned
                 self._last_learned_ids = (index_hearing, index_sight )
-                self.snb_h.it_changed=True
-                self.snb_s.it_changed=True
             # Return sight learning state
             return learned
         # Could not learn hearing knowledge
