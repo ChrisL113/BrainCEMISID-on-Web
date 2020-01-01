@@ -37,6 +37,7 @@ class RbfNeuronSight(models.Model):
     radius = models.FloatField()
     degraded = models.BooleanField()
     knowledge = JSONField(null=True,blank=True)
+    #img64= models.ForeignKey(, related_name="image_related", null=True)
 
 
 class IndexRecognizeSight(models.Model):
@@ -66,4 +67,5 @@ class RbfNeuronHearing(models.Model):
 
 class IndexRecognizeHearing(models.Model):
     snb_hearing = models.ForeignKey(snb_h, related_name="index_recognize",on_delete=models.CASCADE, null=True)
-    index_recognize = models.IntegerField() 
+    index_recognize = models.IntegerField()
+
