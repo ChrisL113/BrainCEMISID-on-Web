@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import JSONField
+from images_collections.models import ImagesFromNeuron
 # Create your models here.
 
 class brain(models.Model):
@@ -37,7 +38,7 @@ class RbfNeuronSight(models.Model):
     radius = models.FloatField()
     degraded = models.BooleanField()
     knowledge = JSONField(null=True,blank=True)
-    #img64= models.ForeignKey(, related_name="image_related", null=True)
+    img64= models.ForeignKey(ImagesFromNeuron, related_name="image_related", on_delete=models.SET_NULL,null=True)
 
 
 class IndexRecognizeSight(models.Model):

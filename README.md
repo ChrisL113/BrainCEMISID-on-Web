@@ -7,7 +7,7 @@ The BrainCEMISID project is the University of Los Andes (Mérida-Venezuela) firs
 
 ## Installation
 
-The BrainCEMISID kernel is written in Python 3.7.4 This means that all machines with a 3.7.4 Python interpreter can run the code.
+The BrainCEMISID kernel is written in Python 3.7.4 this means that all machines with a 3.7.4 or higher Python interpreter can run the code.
 
 Kernel dependencies:
 

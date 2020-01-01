@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'hearing_network',
     'accounts',
     'brain',
+    'images_collections'
 ]
 
 REST_FRAMEWORK = {
