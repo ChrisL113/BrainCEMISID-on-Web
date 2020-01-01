@@ -13,6 +13,7 @@ from kernel_braincemisid import KernelBrainCemisid
 from sensory_neural_block import RbfKnowledge
 
 from .models import *
+from images_collections.models import *
 
 class KernelViewSet(viewsets.ViewSet):
     kernel= None
@@ -118,9 +119,22 @@ class KernelViewSet(viewsets.ViewSet):
                 self.check(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'],request.data['is_episodes'])
             
         if "CLACK" in request.data:
+            # qifn=ImagesFromNeuron(owner=user,name="lo que sea", name_class="asdfjksl")
+            # print(qifn)
+            # qifn.save()
+
+            #qifn.save()
             for index in request.data['CLACK']:
                 self.clack(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'],request.data['is_episodes'])
-                return Response({'message':'DONE'})
+                if ImagesFromNeuron.objects.filter(pk=request.data['image_id']):
+                    neuron_from_db=RbfNeuronSight.objects.filter(pk=self.kernel.snb.snb_s._last_learned_id_from_db).values('img64_id')
+                    if  neuron_from_db[0]['img64_id']==None and "image_id" in request.data:   
+                        #print(request.data['image_id'])
+                        neuron_from_db.update(img64_id=request.data['image_id'])
+                    return Response({'message':'paired with image id','id':request.data['image_id']})
+                else:
+                    return Response({'message':'there is not id like this'})
+
         if not "CLACK" in request.data:
             serializer= BrainOutputSerializer(self.brain_output)
             return Response(serializer.data)

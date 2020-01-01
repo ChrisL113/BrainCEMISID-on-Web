@@ -264,7 +264,7 @@ class RbfNetwork:
         self._index_ready_to_learn = 0
         # Id of neuron that learned last given knowledge
         self._last_learned_id = -1
-        
+        self._last_learned_id_from_db = -1
 
     ## get number of neurons in network
     # @retval count Integer. Number of neurons in network
@@ -474,7 +474,8 @@ class RbfNetwork:
                             neuron_from_db=RbfNeuronSight.objects.filter(pk=ind+index_db['id'])
                             neuron_from_db.update(has_knowledge=obj.neuron_list[ind]._has_knowledge, radius=obj.neuron_list[ind]._radius, degraded=obj.neuron_list[ind]._degraded, knowledge=json_knowledge)
                     ind +=1
-        
+                    obj._last_learned_id_from_db=obj._last_learned_id+index_db['id']
+
             if name=="snb_h":
                 #brain.objects.filter(pk=project_id).update(snb_h=pickled_obj)
                 hearing_network=snb_h.objects.filter(brain_h__pk=project_id)
@@ -582,7 +583,7 @@ class RbfNetwork:
                     ind +=1
                 #else:
                     #break
-                    print(data.__dict__)
+                    #print(data.__dict__)
             return data
             #brain_object=brain.objects.values('snb_h','id').filter(id=project_id)
             #pickled_data = brain_object[0]['snb_h']

@@ -105,9 +105,9 @@ class KernelBrainCemisid():
             # Sight-Syllables rel network
             self.ss_rnb = RelNetwork.deserialize("ss_rnb", self.project_id)
             #print(self.ss_rnb.__dict__)
-            for i in self.ss_rnb.neuron_list:
-                if i._knowledge!= None:
-                    print(i._knowledge.__dict__)
+            # for i in self.ss_rnb.neuron_list:
+            #     if i._knowledge!= None:
+            #         print(i._knowledge.__dict__)
 
             #################### INTENTIONS MODULES ########################################################################
             self.episodic_memory = EpisodicMemoriesBlock.deserialize("episodic_memory", self.project_id)
