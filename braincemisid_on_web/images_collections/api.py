@@ -1,6 +1,5 @@
 from rest_framework import  viewsets, permissions
 from .serializers import ImagesFromNeuronSerializer
-
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from images_collections.models import ImagesFromNeuron
@@ -27,4 +26,8 @@ class AllCollectionsViewSet(viewsets.ModelViewSet):
     permission_classes = [
         permissions.AllowAny
     ]
+
     serializer_class= ImagesFromNeuronSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)

@@ -38,7 +38,7 @@ class RbfNeuronSight(models.Model):
     radius = models.FloatField()
     degraded = models.BooleanField()
     knowledge = JSONField(null=True,blank=True)
-    img64= models.ForeignKey(ImagesFromNeuron, related_name="image_related", on_delete=models.SET_NULL,null=True)
+    img= models.ForeignKey(ImagesFromNeuron, related_name="image_related", on_delete=models.SET_NULL,null=True)
 
 
 class IndexRecognizeSight(models.Model):

@@ -127,21 +127,21 @@ class KernelViewSet(viewsets.ViewSet):
             for index in request.data['CLACK']:
                 self.clack(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'],request.data['is_episodes'])
                 if ImagesFromNeuron.objects.filter(pk=request.data['image_id']):
-                    neuron_from_db=RbfNeuronSight.objects.filter(pk=self.kernel.snb.snb_s._last_learned_id_from_db).values('img64_id')
-                    if  neuron_from_db[0]['img64_id']==None and "image_id" in request.data or "image_id" in request.data and request.data['rename']==True:   
+                    neuron_from_db=RbfNeuronSight.objects.filter(pk=self.kernel.snb.snb_s._last_learned_id_from_db).values('img_id')
+                    if  neuron_from_db[0]['img_id']==None and "image_id" in request.data or "image_id" in request.data and request.data['rename']==True:   
                         #print(request.data['image_id'])
                         #print(neuron_from_db[0])
-                        neuron_from_db.update(img64_id=request.data['image_id'])
+                        neuron_from_db.update(img_id=request.data['image_id'])
                         
                         if request.data['rename']==True:
                             return Response({'message':'renamed with image id:','id':request.data['image_id']})
                         else:
                             return Response({'message':'paired with image id','id':request.data['image_id']})
                         
-                    if neuron_from_db[0]['img64_id']==request.data['image_id']:
+                    if neuron_from_db[0]['img_id']==request.data['image_id']:
                         return Response({'message':'this id is already in the neuron','id':request.data['image_id']})
-                    if neuron_from_db[0]['img64_id']!=request.data['image_id']:
-                        return Response({'message':'there is another id in the neuron, if you want to rename it please, pass the argument rename equal to true, otherwise the id is','id':neuron_from_db[0]['img64_id']})
+                    if neuron_from_db[0]['img_id']!=request.data['image_id']:
+                        return Response({'message':'there is another id in the neuron, if you want to rename it please, pass the argument rename equal to true, otherwise the id is','id':neuron_from_db[0]['img_id']})
                 else:
                     return Response({'message':'there is not id like this'})
 
