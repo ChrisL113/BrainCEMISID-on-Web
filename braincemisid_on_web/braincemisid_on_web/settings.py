@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'hearing_network',
     'accounts',
     'brain',
-    'images_collections'
+    'images_collections',
+    'django_cleanup'
 ]
 
 REST_FRAMEWORK = {
