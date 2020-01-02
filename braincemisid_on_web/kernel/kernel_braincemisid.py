@@ -57,7 +57,7 @@ class KernelBrainCemisid():
             self.create_kernel()
             self.message = 'BRAIN SUCCESFULLY CREATED THE ID IS ' + str(self.project_id)
 
-        if frontend_request == "GET":
+        if frontend_request == "PUT":
 
             try:
                 self.brain=brain.objects.get(pk=project['project_id'])
@@ -116,10 +116,11 @@ class KernelBrainCemisid():
                 #print(i.__dict__)
                 #for k in i.group:
                     #print(k.__dict__)
-                    #try:
-                        #asd=int(k._knowledge)
-                    #except ValueError:
-                        #print(k._knowledge.__dict__)
+                    # if isinstance(k._knowledge, int):
+                    #     asd=int(k._knowledge)
+                    #     print(asd)
+                    # else:
+                    #     print(k._knowledge.__dict__)
             self.decisions_block = DecisionsBlock.deserialize("decisions_block", self.project_id)
             #print(self.decisions_block.__dict__)
             #print(self.decisions_block.conscious_block.decision_prediction_block.predictive_net.__dict__)

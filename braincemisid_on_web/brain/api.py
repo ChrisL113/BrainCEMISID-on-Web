@@ -25,7 +25,7 @@ class KernelViewSet(viewsets.ViewSet):
             self.kernel.set_working_domain("EPISODES")
         else:
             self.kernel.set_working_domain("INTENTIONS")
-            
+
         biology_in = intentions_input[0]
         culture_in = intentions_input[1]
         feelings_in= intentions_input[2]
@@ -93,7 +93,7 @@ class KernelViewSet(viewsets.ViewSet):
     def put(self,request):
         #################################################### LEARNING #########################################
         if "user_id" in request.data:
-            frontend_request="GET"
+            frontend_request="PUT"
             user = User.objects.get(pk=request.data['user_id'])
             self.kernel=KernelBrainCemisid(user,request.data,frontend_request)
         #print(request.data)
