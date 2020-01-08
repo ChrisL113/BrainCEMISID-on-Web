@@ -19,13 +19,18 @@ djangorestframework
 django-rest-knox 
 psycopg2
 
-to install it, run the pipfile.lock with pipenv install
+to install it, run the pipfile.lock with ``` pipenv install```
 
 * Postgres:
 https://www.postgresql.org/download/
 
 * DB models: run the command ``` py .\manage.py migrate```
 
+Changing absolute path of the kernel
+
+In the file "...\BrainCEMISID on Web\braincemisid_on_web\brain\api.py"
+change the line 11 ```sys.path.append('D:\Desktop\BrainCEMISID on Web\\braincemisid_on_web\kernel')```
+for the absolute path that you would have in your machine
 
 To Run:
 ```python manage.py runserver```
