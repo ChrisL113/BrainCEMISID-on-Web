@@ -10,6 +10,7 @@ django = "*"
 djangorestframework = "*"
 django-rest-knox = "*"
 psycopg2 ="*"
+django-cleanup = "*"
 
 [requires]
 python_version = "3.7"
