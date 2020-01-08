@@ -6,9 +6,12 @@ from rest_framework.response import Response
 import pickle
 import sys
 import json
+import os 
+dirname = os.path.dirname(__file__) 
+filename = os.path.join(os.path.realpath('.'), 'kernel')
 
-#################################### kernel################################################
-sys.path.append('D:\Desktop\BrainCEMISID on Web\\braincemisid_on_web\kernel')
+sys.path.append(filename)
+
 from kernel_braincemisid import KernelBrainCemisid 
 from sensory_neural_block import RbfKnowledge
 
