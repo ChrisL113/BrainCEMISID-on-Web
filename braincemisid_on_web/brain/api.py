@@ -20,6 +20,8 @@ from images_collections.models import *
 
 class KernelViewSet(viewsets.ViewSet):
     kernel= None
+    h_knowledge=[]
+    s_knowledge=[]
     brain_output= []
     serializer_class = BrainOutputSerializer
     def pass_kernel_inputs(self, hearing_pattern, sight_pattern, hearing_class, intentions_input,mode):
@@ -48,10 +50,19 @@ class KernelViewSet(viewsets.ViewSet):
     def show_kernel_outputs(self):
         internal_status = self.kernel.get_internal_state().get_state()
         if self.kernel.state == "HIT":
-            h_knowledge = self.kernel.get_hearing_knowledge_out()
-            s_knowledge = self.kernel.get_sight_knowledge_out()
+            self.h_knowledge = self.kernel.get_hearing_knowledge_out()
+            self.s_knowledge = self.kernel.get_sight_knowledge_out()
             #self.brain_output=BrainOutputClass(h_knowledge,s_knowledge,self.kernel.state,internal_status)
-            self.brain_output.append(BrainOutputClass(h_knowledge,s_knowledge,self.kernel.state,internal_status))
+            if isinstance(self.s_knowledge, list):
+                index=0
+                for h,s in self.h_knowledge,self.s_knowledge:
+                    if index==0:
+                        self.brain_output.append(BrainOutputClass(h,s,self.kernel.state,internal_status))
+                    else:
+                        self.brain_output.append(BrainOutputClass(h,s,None,None))
+                    index +=1
+            else:
+                self.brain_output.append(BrainOutputClass(self.h_knowledge,self.s_knowledge,self.kernel.state,internal_status))
 ############################################### BBCC Protocole ###############################################
 
     def bum(self,hearing_pattern, sight_pattern, hearing_class, intentions_input,mode):
@@ -158,23 +169,23 @@ class KernelViewSet(viewsets.ViewSet):
             #qifn.save()
             for index in request.data['CLACK']:
                 self.clack(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'],request.data['mode'])
-                if  request.data['image_id']==-1:
+                if  index['image_id']==-1:
                         return Response({'message':'neuron saved but wihout image because of debugging options'})
-                if ImagesFromNeuron.objects.filter(pk=request.data['image_id']):
+                if ImagesFromNeuron.objects.filter(pk=index['image_id']):
                     
                     neuron_from_db=RbfNeuronSight.objects.filter(pk=self.kernel.snb.snb_s._last_learned_id_from_db).values('img_id')
-                    if  neuron_from_db[0]['img_id']==None and "image_id" in request.data or "image_id" in request.data and request.data['rename']==True:   
-                        #print(request.data['image_id'])
+                    if  neuron_from_db[0]['img_id']==None and "image_id" in index or "image_id" in index and index['rename']==True:   
+                        #print(index['image_id'])
                         #print(neuron_from_db[0])
-                        neuron_from_db.update(img_id=request.data['image_id'])
-                        
-                        if request.data['rename']==True:
-                            return Response({'message':'renamed with image id:','id':request.data['image_id']})
+                        neuron_from_db.update(img_id=index['image_id'])
+                        print("entering...")
+                        if index['rename']==True:
+                            return Response({'message':'renamed with image id:','id':index['image_id']})
                         else:
-                            return Response({'message':'paired with image id','id':request.data['image_id']})
-                    if neuron_from_db[0]['img_id']==request.data['image_id']:
-                        return Response({'message':'this id is already in the neuron','id':request.data['image_id']})
-                    if neuron_from_db[0]['img_id']!=request.data['image_id']:
+                            return Response({'message':'paired with image id','id':index['image_id']})
+                    if neuron_from_db[0]['img_id']==index['image_id']:
+                        return Response({'message':'this id is already in the neuron','id':index['image_id']})
+                    if neuron_from_db[0]['img_id']!=index['image_id']:
                         return Response({'message':'there is another id in the neuron, if you want to rename it please, pass the argument rename equal to true, otherwise the id is','id':neuron_from_db[0]['img_id']})
                 else:
                     return Response({'message':'there is not id like this'})
