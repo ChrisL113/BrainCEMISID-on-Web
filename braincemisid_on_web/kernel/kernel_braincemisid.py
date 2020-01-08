@@ -48,6 +48,8 @@ class KernelBrainCemisid():
         # If there are no persisten memory related files, create them
         self.user=user
 
+        self.hearing_id=-1
+
         if frontend_request == "POST":   
 
             self.brain = brain(user=self.user, name=project['project_name'])
@@ -89,7 +91,7 @@ class KernelBrainCemisid():
             #print(self.gnb.__dict__)
             #for i in self.gnb._addition_structure.neurons:
                 #if i._knowledge!= None:
-                #print(i.__dict__)
+                    #print(i.__dict__)
             # Syllables net
             self.syllables_net = CulturalNetwork.deserialize("syllables_net", self.project_id)
             #print(self.syllables_net.__dict__)
@@ -680,9 +682,10 @@ class KernelBrainCemisid():
         s_pattern = self.s_knowledge_in.get_pattern()
         self.state = self.snb.recognize_sight(s_pattern)
         if self.state == "HIT":
-            hearing_id = self._get_hearing_id_recognize()
-            self.gnb.set_add_operator(hearing_id)
+            self.hearing_id = self._get_hearing_id_recognize()
+            self.gnb.set_add_operator(self.hearing_id)
             GeometricNeuralBlock.serialize(self.gnb, "gnb", self.project_id)
+            #print("entering !......")
             return True
         return False
 
@@ -691,8 +694,8 @@ class KernelBrainCemisid():
         s_pattern = self.s_knowledge_in.get_pattern()
         self.state = self.snb.recognize_sight(s_pattern)
         if self.state == "HIT":
-            hearing_id = self._get_hearing_id_recognize()
-            self.gnb.set_equal_sign(hearing_id)
+            self.hearing_id = self._get_hearing_id_recognize()
+            self.gnb.set_equal_sign(self.hearing_id)
             GeometricNeuralBlock.serialize(self.gnb, "gnb", self.project_id)
             return True
         return False
@@ -702,8 +705,8 @@ class KernelBrainCemisid():
         s_pattern = self.s_knowledge_in.get_pattern()
         self.state = self.snb.recognize_sight(s_pattern)
         if self.state == "HIT":
-            hearing_id = self._get_hearing_id_recognize()
-            self.gnb.set_zero(hearing_id)
+            self.hearing_id = self._get_hearing_id_recognize()
+            self.gnb.set_zero(self.hearing_id)
             GeometricNeuralBlock.serialize(self.gnb, "gnb", self.project_id)
             return True
         return False
