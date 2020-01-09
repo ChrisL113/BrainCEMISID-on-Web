@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,6 +55,7 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -140,3 +142,11 @@ STATIC_ROOT = 'static'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = 'media'
+
+# CORS 
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+# NOTE: IF YOU WANT TO DEPLOY THIS PROJECT IN A SERVER YOU MUST HAVE TO CONFIGURE THE CORS_ORIGIN_WHITELIST
+
+#CORS_ORIGIN_WHITELIST = []
