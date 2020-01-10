@@ -242,7 +242,7 @@ class RelNetwork:
     # @param obj RelNetwork object to be serialized
     # @param name Name of the file where the serialization is to be stored
     def serialize(cls, obj, name, project_id):
-        print(name)
+        
         
         if name=="rnb":
             pickled_obj = pickle.dumps(obj)
@@ -258,7 +258,7 @@ class RelNetwork:
     # @param cls RelNetwork class
     # @param name Name of the file where the object is serialized
     def deserialize(cls, name, project_id):
-        print(name)
+        
         if name=="rnb":
             brain_object=brain.objects.values('rnb','id').filter(id=project_id)
             pickled_data = brain_object[0]['rnb']

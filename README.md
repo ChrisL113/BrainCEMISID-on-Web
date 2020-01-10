@@ -13,11 +13,6 @@ Kernel dependencies:
 
 * Virtual enviroment: to provide a virtual enviroment we recommend use pipenv, to install it just simply type the command ``` pip install pipenv```
 
-* Packages:
-django 
-djangorestframework 
-django-rest-knox 
-psycopg2
 
 to install it, run the pipfile.lock with ``` pipenv install```
 

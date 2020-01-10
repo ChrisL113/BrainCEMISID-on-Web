@@ -74,7 +74,7 @@ class DecisionsBlock:
     # @param cls CulturalNetwork class
     # @param name Name of the file where the object is serialize
     def deserialize(cls, name, project_id):
-        print(name)
+        
         brain_object=brain.objects.values('decisions_block','id').filter(id=project_id)
         pickled_data = brain_object[0]['decisions_block']
         return pickle.loads(pickled_data)

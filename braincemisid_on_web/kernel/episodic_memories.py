@@ -53,7 +53,7 @@ class EpisodicMemoriesBlock(CulturalNetwork):
     # @param name Name of the file where the serialization is to be stored
     def serialize(cls, obj, name, project_id):
         #pickle.dump(obj, open(name, "wb"))
-        print(name)
+        
         pickled_obj = pickle.dumps(obj)
         brain_object=brain.objects.filter(pk=project_id)
         brain_object.update(episodic_memory=pickled_obj)
@@ -64,7 +64,7 @@ class EpisodicMemoriesBlock(CulturalNetwork):
     # @param cls EpisodicMemory class
     # @param name Name of the file where the object is serialized
     def deserialize(cls, name, project_id):
-        print(name)
+        
         brain_object=brain.objects.values('episodic_memory','id').filter(id=project_id)
         pickled_data = brain_object[0]['episodic_memory']
         return pickle.loads(pickled_data)

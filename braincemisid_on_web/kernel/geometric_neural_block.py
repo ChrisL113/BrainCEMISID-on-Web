@@ -360,7 +360,7 @@ class GeometricNeuralBlock:
     # @param obj GeometricNeuralBlock object to be serialized
     # @param name Name of the file where the serialization is to be stored
     def serialize(cls, obj, name, project_id):
-        print(name)
+        
         pickled_obj = pickle.dumps(obj)
         brain_object=brain.objects.filter(pk=project_id)
         brain_object.update(gnb=pickled_obj)
@@ -370,7 +370,7 @@ class GeometricNeuralBlock:
     # @param cls GeometricNeuralBlock class
     # @param name Name of the file where the object is serialized
     def deserialize(cls, name, project_id):
-        print(name)
+        
         brain_object=brain.objects.values('gnb','id').filter(id=project_id)
         pickled_data = brain_object[0]['gnb']
         return pickle.loads(pickled_data)

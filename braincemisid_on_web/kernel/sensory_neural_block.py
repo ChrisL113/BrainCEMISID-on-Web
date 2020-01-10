@@ -1,11 +1,6 @@
 import pickle
 from math import fabs
 
-# import psycopg2
-# import logging
-# from psycopg2 import extras
-# from psycopg2 import sql
-# from django.db import connection
 
 from neuron import Neuron
 

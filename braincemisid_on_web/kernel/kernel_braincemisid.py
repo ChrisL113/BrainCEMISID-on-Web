@@ -9,9 +9,7 @@ from episodic_memories import EpisodicMemoriesBlock
 from decisions_block import DecisionsBlock
 
 
-import psycopg2
-import logging
-from psycopg2 import extras
+
 import pickle
 
 from django.db import connection

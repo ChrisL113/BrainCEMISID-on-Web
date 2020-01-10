@@ -205,7 +205,7 @@ class CulturalNetwork:
     # @param cls CulturalNetwork class
     # @param name Name of the file where the object is serialize
     def deserialize(cls, name, project_id):
-        print(name)
+        
 
         if name=="syllables_net":
             brain_object=brain.objects.values('syllables_net','id').filter(id=project_id)
