@@ -53,8 +53,11 @@ class KernelViewSet(viewsets.ViewSet):
             self.h_knowledge = self.kernel.get_hearing_knowledge_out()
             self.s_knowledge = self.kernel.get_sight_knowledge_out()
             #self.brain_output=BrainOutputClass(h_knowledge,s_knowledge,self.kernel.state,internal_status)
+            self.brain_output=[]
             if isinstance(self.s_knowledge, list):
                 index=0
+                
+                print("im entering and doing what you needed...")
                 for h,s in self.h_knowledge,self.s_knowledge:
                     if index==0:
                         self.brain_output.append(BrainOutputClass(h,s,self.kernel.state,internal_status))
