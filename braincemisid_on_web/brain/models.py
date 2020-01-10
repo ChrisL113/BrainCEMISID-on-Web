@@ -14,8 +14,8 @@ class brain(models.Model):
     ss_rnb= models.BinaryField(null=True)
     episodic_memory= models.BinaryField(null=True)
     decisions_block= models.BinaryField(null=True)
-    internal_state= models.BinaryField(null=True)
-    desired_state= models.BinaryField(null=True)
+    internal_state= JSONField(null=True,blank=True)
+    desired_state= JSONField(null=True,blank=True)
     user = models.ForeignKey(User, related_name="brain", on_delete=models.CASCADE, null=True)
 
 

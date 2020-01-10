@@ -5,6 +5,8 @@ import logging
 from psycopg2 import sql
 from psycopg2 import extras
 
+from brain.models import * 
+import json
 
 ## \defgroup BCF BCF classes
 #
@@ -167,47 +169,31 @@ class InternalState(BiologyCultureFeelings):
     # @param name Name of the file where the serialization is to be stored
     def serialize(cls, obj, name, project_id):
         #pickle.dump(obj, open(name, "wb"))
-        try:
-            conn = psycopg2.connect(dbname='braincemisid_db', user='postgres', host='localhost',password='1234')
-            print("Opened db successfully.", name)
-        except:
-            print("Unable to connect to the database")
-            logging.exception('Unable to open database connection')
-            return
-        else:
-            cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
-        pickled_obj = pickle.dumps(obj)
+        obj_json=json.dumps(obj.__dict__)
+        print(obj_json)
         
-        query = sql.SQL("UPDATE brain_brain SET {} = %s WHERE id=%s").format(sql.Identifier(name))
+        brain_object=brain.objects.filter(pk=project_id)
 
-        cur.execute(query, (pickled_obj,project_id,))
-
-        conn.commit()
-        cur.close()
-        conn.close()
+        if project_id=="internal_state":
+            brain_object.update(internal_state=obj_json)
+        else :
+            brain_object.update(desired_state=obj_json)
+        
 
     @classmethod
     ## Deserialize object stored in given file
     # @param cls CulturalNetwork class
     # @param name Name of the file where the object is serialize
     def deserialize(cls, name, project_id):
-        try:
-            conn = psycopg2.connect(dbname='braincemisid_db', user='postgres', host='localhost',
-                                password='1234')
-            print("Opened db successfully", name)
-        except:
-            print(datetime.now(), "Unable to connect to the database")
-            logging.exception('Unable to open database connection')
-        else:
-            cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        query = sql.SQL("SELECT {} FROM brain_brain WHERE id=%s").format(sql.Identifier(name))
-        cur.execute(query, (project_id,))
-        
-        pickled_data = cur.fetchone()
-
-        return pickle.loads(pickled_data[0])
+        if project_id=="internal_state":
+            brain_object=brain.objects.values('internal_state','id').filter(id=project_id)
+            aux=json.loads(brain_object[0]['internal_state'])
+            return aux
+        else :
+            brain_object=brain.objects.values('desired_state','id').filter(id=project_id)
+            aux=json.loads(brain_object[0]['desired_state'])
+            return aux
 
 ## @}
 #
