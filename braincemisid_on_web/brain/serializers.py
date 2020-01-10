@@ -32,7 +32,7 @@ class BrainOutputSerializer(serializers.Serializer):
 class ProjectSummarySerializer(serializers.ModelSerializer):
     class Meta:
         model= brain
-        fields = ['id', 'name', 'internal_state']
+        fields = ['id', 'name', 'internal_state','desired_state']
 
 """ 
 class testSerializer(serializers.Serializer):

@@ -1,10 +1,5 @@
 import pickle
-
-import psycopg2
-import logging
-from psycopg2 import extras
-from datetime import datetime
-from psycopg2 import sql
+from brain.models import *
 
 from cultural_network import CulturalNetwork,CulturalGroup,CulturalNeuron
 
@@ -58,25 +53,10 @@ class EpisodicMemoriesBlock(CulturalNetwork):
     # @param name Name of the file where the serialization is to be stored
     def serialize(cls, obj, name, project_id):
         #pickle.dump(obj, open(name, "wb"))
-        try:
-            conn = psycopg2.connect(dbname='braincemisid_db', user='postgres', host='localhost',password='1234')
-            print("Opened db successfully.", name)
-        except:
-            print("Unable to connect to the database")
-            logging.exception('Unable to open database connection')
-            return
-        else:
-            cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
+        print(name)
         pickled_obj = pickle.dumps(obj)
-        
-        query = sql.SQL("UPDATE brain_brain SET {} = %s WHERE id=%s").format(sql.Identifier(name))
-
-        cur.execute(query, (pickled_obj,project_id,))
-
-        conn.commit()
-        cur.close()
-        conn.close()
+        brain_object=brain.objects.filter(pk=project_id)
+        brain_object.update(episodic_memory=pickled_obj)
 
 
     @classmethod
@@ -84,22 +64,10 @@ class EpisodicMemoriesBlock(CulturalNetwork):
     # @param cls EpisodicMemory class
     # @param name Name of the file where the object is serialized
     def deserialize(cls, name, project_id):
-        try:
-            conn = psycopg2.connect(dbname='braincemisid_db', user='postgres', host='localhost',
-                                password='1234')
-            print("Opened db successfully", name)
-        except:
-            print(datetime.now(), "Unable to connect to the database")
-            logging.exception('Unable to open database connection')
-        else:
-            cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
-        query = sql.SQL("SELECT {} FROM brain_brain WHERE id=%s").format(sql.Identifier(name))
-        cur.execute(query, (project_id,))
-        
-        pickled_data = cur.fetchone()
-
-        return pickle.loads(pickled_data[0])
+        print(name)
+        brain_object=brain.objects.values('episodic_memory','id').filter(id=project_id)
+        pickled_data = brain_object[0]['episodic_memory']
+        return pickle.loads(pickled_data)
 ## @}
 #
 

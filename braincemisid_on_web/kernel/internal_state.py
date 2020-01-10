@@ -1,10 +1,5 @@
 import pickle
 
-import psycopg2
-import logging
-from psycopg2 import sql
-from psycopg2 import extras
-
 from brain.models import * 
 import json
 
