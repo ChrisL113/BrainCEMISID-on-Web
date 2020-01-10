@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from .classes import BrainOutputClass
+from .models import brain
 
 ############################################## kernel ###########################################
 
@@ -28,6 +29,10 @@ class BrainOutputSerializer(serializers.Serializer):
         instance.state= validated_data.get('state',instance.state)
 
 
+class ProjectSummarySerializer(serializers.ModelSerializer):
+    class Meta:
+        model= brain
+        fields = ['id', 'name', 'internal_state']
 
 """ 
 class testSerializer(serializers.Serializer):

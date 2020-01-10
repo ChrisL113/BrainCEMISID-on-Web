@@ -1,5 +1,5 @@
 from rest_framework import  viewsets, permissions
-from .serializers import BrainOutputSerializer
+from .serializers import BrainOutputSerializer,ProjectSummarySerializer
 from .classes import BrainOutputClass 
 from rest_framework.response import Response
 
@@ -217,3 +217,13 @@ class KernelViewSet(viewsets.ViewSet):
 #         return Response(serializer.data)
 
 
+
+class ProjectSummaryViewSet(viewsets.ModelViewSet):
+    permission_classes = [
+            permissions.AllowAny#IsAuthenticated,
+        ]
+    serializer_class = ProjectSummarySerializer
+    #pagination_class = StandardResultsSetPagination
+
+    def get_queryset(self):
+        return self.request.user.brain.all()
