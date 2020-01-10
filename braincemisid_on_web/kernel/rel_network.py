@@ -6,7 +6,7 @@ from psycopg2 import extras
 from psycopg2 import sql
 
 from neuron import Neuron
-
+from datetime import datetime
 ## \defgroup RelBlocks Relational network related classes
 #
 # Relational network related classes are a group of classes that
