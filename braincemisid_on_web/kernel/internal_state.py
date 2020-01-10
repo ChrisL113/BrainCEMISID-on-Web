@@ -170,11 +170,10 @@ class InternalState(BiologyCultureFeelings):
     def serialize(cls, obj, name, project_id):
         #pickle.dump(obj, open(name, "wb"))
         obj_json=json.dumps(obj.__dict__)
-        print(obj_json)
         
         brain_object=brain.objects.filter(pk=project_id)
-
-        if project_id=="internal_state":
+        
+        if name=="internal_state":
             brain_object.update(internal_state=obj_json)
         else :
             brain_object.update(desired_state=obj_json)
@@ -186,14 +185,18 @@ class InternalState(BiologyCultureFeelings):
     # @param name Name of the file where the object is serialize
     def deserialize(cls, name, project_id):
 
-        if project_id=="internal_state":
+        if name=="internal_state":
             brain_object=brain.objects.values('internal_state','id').filter(id=project_id)
             aux=json.loads(brain_object[0]['internal_state'])
-            return aux
+            state=[aux['biology'],aux['culture'],aux['feelings']]
+            aux2=InternalState(state)
+            return aux2
         else :
             brain_object=brain.objects.values('desired_state','id').filter(id=project_id)
             aux=json.loads(brain_object[0]['desired_state'])
-            return aux
+            state=[aux['biology'],aux['culture'],aux['feelings']]
+            aux2=InternalState(state)
+            return aux2
 
 ## @}
 #
