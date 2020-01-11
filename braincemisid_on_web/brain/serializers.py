@@ -13,6 +13,9 @@ class BrainOutputSerializer(serializers.Serializer):
     biology =  serializers.FloatField(min_value=0,max_value=1) 
     culture =  serializers.FloatField(min_value=0,max_value=1)
     feelings = serializers.FloatField(min_value=0,max_value=1)
+    desired_biology =  serializers.FloatField(min_value=0,max_value=1) 
+    desired_culture =  serializers.FloatField(min_value=0,max_value=1)
+    desired_feelings = serializers.FloatField(min_value=0,max_value=1)
     state= serializers.CharField(max_length=100)
 
     def create(self, validated_data):
@@ -26,6 +29,10 @@ class BrainOutputSerializer(serializers.Serializer):
         instance.biology =  validated_data.get('biology',instance.biology)
         instance.culture = validated_data.get('culture',instance.culture)
         instance.feelings = validated_data.get('feelings',instance.feelings)
+        
+        instance.desired_biology =  validated_data.get('desired_biology',instance.desired_biology)
+        instance.desired_culture = validated_data.get('desired_culture',instance.desired_culture)
+        instance.desired_feelings = validated_data.get('desired_feelings',instance.desired_feelings)
         instance.state= validated_data.get('state',instance.state)
 
 
