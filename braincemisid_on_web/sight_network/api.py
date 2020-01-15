@@ -45,18 +45,15 @@ class SightNeuronsViewSet(viewsets.ViewSet):
     
     
     def list(self, request):
-        
-        if  "project_id" in request.data:
-            
-            project_id=request.data['project_id']
-            try:
-                query=RbfNeuronSight.objects.filter(snb_sight__brain_s__pk=project_id, has_knowledge=True)
-                #print(query.values())
-                serializer = NeuronSightSerializer(instance=query, many=True)
-            except:
-                return Response({'message':'There was an error, please, check the project_id'})
-        
-            return Response(serializer.data)
+        project_id=self.request.query_params.get('project_id')
+        try:
+            query=RbfNeuronSight.objects.filter(snb_sight__brain_s__pk=project_id, has_knowledge=True)
+            #print(query.values())
+            serializer = NeuronSightSerializer(instance=query, many=True)
+        except:
+            return Response({'message':'There was an error, please, check the project_id'})
+        print(serializer.data)
+        return Response(serializer.data)
         #     sight_network=[]
         #     if pickled_data!=None:
         #         aux = pickle.loads(pickled_data[0])

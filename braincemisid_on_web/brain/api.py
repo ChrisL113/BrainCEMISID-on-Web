@@ -131,7 +131,7 @@ class KernelViewSet(viewsets.ViewSet):
             frontend_request="PUT"
             user = User.objects.get(pk=request.data['user_id'])
             self.kernel=KernelBrainCemisid(user,request.data,frontend_request)
-        #print(request.data)
+        print(request)
         #return Response({'message':'check bash'})
         if self.kernel==None:
             return Response({'message': 'KERNEL IS NOT LOADED'})

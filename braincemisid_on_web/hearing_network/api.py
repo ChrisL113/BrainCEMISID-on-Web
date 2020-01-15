@@ -11,15 +11,13 @@ class HearingNeuronsViewSet(viewsets.ViewSet):
     #]
 
     def list(self, request):
-        
-        if  "project_id" in request.data:
+        project_id=self.request.query_params.get('project_id')
             
-            project_id=request.data['project_id']
-            try:
-                query=RbfNeuronHearing.objects.filter(snb_hearing__brain_h__pk=project_id, has_knowledge=True)
-                #print(query.values())
-                serializer = NeuronHearingSerializer(instance=query, many=True)
-            except:
-                return Response({'message':'There was an error, please, check the project_id'})
+        try:
+            query=RbfNeuronHearing.objects.filter(snb_hearing__brain_h__pk=project_id, has_knowledge=True)
+            #print(query.values())
+            serializer = NeuronHearingSerializer(instance=query, many=True)
+        except:
+            return Response({'message':'There was an error, please, check the project_id'})
         
-            return Response(serializer.data)
+        return Response(serializer.data)
