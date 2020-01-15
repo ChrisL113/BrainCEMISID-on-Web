@@ -23,7 +23,6 @@ class brain(models.Model):
 class snb_s(models.Model):
     brain_s=models.OneToOneField(
         brain,
-        related_name="snb_s_json",
         on_delete=models.CASCADE,
         primary_key=True,
     )
@@ -49,7 +48,6 @@ class IndexRecognizeSight(models.Model):
 class snb_h(models.Model):
     brain_h=models.OneToOneField(
         brain,
-        related_name="snb_h_json",
         on_delete=models.CASCADE,
         primary_key=True,
     )

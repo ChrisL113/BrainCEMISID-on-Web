@@ -38,22 +38,18 @@ from brain.models import RbfNeuronSight
 #         else:
 #             return Response({'message':'NOT SUFFICIENT OR ANY DATA SUPPLIED PLEASE, PASS THE ARGUMENTS project_id AND user_id'})
 
-class SightNeuronsViewSet(viewsets.ViewSet):
-    #permission_classes = [
-    #    permissions.IsAuthenticated
-    #]
-    
-    
-    def list(self, request):
+class SightNeuronsViewSet(viewsets.ModelViewSet):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    serializer_class = NeuronSightSerializer
+    #pagination_class = StandardResultsSetPagination
+
+    def get_queryset(self):
         project_id=self.request.query_params.get('project_id')
-        try:
-            query=RbfNeuronSight.objects.filter(snb_sight__brain_s__pk=project_id, has_knowledge=True)
-            #print(query.values())
-            serializer = NeuronSightSerializer(instance=query, many=True)
-        except:
-            return Response({'message':'There was an error, please, check the project_id'})
-        print(serializer.data)
-        return Response(serializer.data)
+        
+        return self.request.user.brain.get(pk=project_id).snb_s.rbf_neuron.filter(has_knowledge=True)
         #     sight_network=[]
         #     if pickled_data!=None:
         #         aux = pickle.loads(pickled_data[0])
