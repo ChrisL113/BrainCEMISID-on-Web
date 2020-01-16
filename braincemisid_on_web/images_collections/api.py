@@ -33,7 +33,7 @@ class AllCollectionsViewSet(viewsets.ReadOnlyModelViewSet):
     pagination_class = StandardResultsSetPagination
     queryset= ImagesFromNeuron.objects.all().order_by('id')
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
 
 # class UserFilterImageViewSet(viewsets.ModelViewSet):
