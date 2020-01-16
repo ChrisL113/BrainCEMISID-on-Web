@@ -114,24 +114,27 @@ class KernelViewSet(viewsets.ViewSet):
         self.kernel.set_equal_sign()
 
     def create(self,request):
-        if "user_id" and "project_name" in request.data:
-            frontend_request="POST"
-            user = User.objects.get(pk=request.data['user_id'])
-            if user!=None:
-                self.kernel=KernelBrainCemisid(user,request.data,frontend_request)
-                return Response({'message': self.kernel.message})
-            else:
-                return Response({'message': 'THERE IS NO USER WITH THIS ID'})
-        else:
-            return Response({'message': 'INVALID / NOT SUFFICIENT DATA'})
+        project_name=self.request.query_params.get('project_name')
+        frontend_request="POST"
+        if self.request.user.is_authenticated==False:    
+            return Response({'message':'There is no user, please login :)'})
+        self.kernel=KernelBrainCemisid(self.request.user,project_name,frontend_request)
+        return Response({'message':self.kernel.message})
 
     def put(self,request):
         #################################################### LEARNING #########################################
-        if "user_id" in request.data:
-            frontend_request="PUT"
-            user = User.objects.get(pk=request.data['user_id'])
-            self.kernel=KernelBrainCemisid(user,request.data,frontend_request)
-        print(request)
+        if self.request.user.is_authenticated==False:
+            return Response({'message':'There is no user, please login :)'})
+        frontend_request="PUT"
+        project_id=self.request.query_params.get('project_id')
+        if project_id==None:
+            return Response({'message':'There is no project, please provide the id :)'})
+        try:
+            request.user.brain.get(pk=project_id)
+        except:
+            return Response({'message':'There is no project linked with this user, please, provide a valid id :)'})
+
+        self.kernel=KernelBrainCemisid(request.user,project_id,frontend_request)
         #return Response({'message':'check bash'})
         if self.kernel==None:
             return Response({'message': 'KERNEL IS NOT LOADED'})
@@ -213,17 +216,14 @@ class KernelViewSet(viewsets.ViewSet):
         return Response({'message':'MISSED'})
     
     def delete(self, request):
-        if "project_id" in request.data :
+        project_id=self.request.query_params.get('project_id')
+        if project_id:
             try:
-                query = brain.objects.get(pk=request.data['project_id'])
+                query=self.request.user.brain.get(pk=project_id)
             except:
                 return Response({'message':'NOT BRAIN WAS FOUND TO DELETE'})
-            
             query.delete()
             return Response({'message':'BRAIN SUCCESFULLY DELETED'})
-
-        else:    
-            return Response({'message':'NOT PARAMETER project_id WAS PROVIDED'})
     
 # class testViewSet(viewsets.ViewSet):
 #     serializer_class = testSerializer

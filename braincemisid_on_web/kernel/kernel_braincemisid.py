@@ -48,24 +48,18 @@ class KernelBrainCemisid():
 
         self.hearing_id=-1
 
-        if frontend_request == "POST":   
+        if frontend_request == "POST":  
 
-            self.brain = brain(user=self.user, name=project['project_name'])
+            self.brain = brain(user=self.user, name=project)
             self.brain.save()
             self.project_id = self.brain.id
-            self.project_name = project['project_name']
+            self.project_name = project
             self.create_kernel()
             self.message = 'BRAIN SUCCESFULLY CREATED THE ID IS ' + str(self.project_id)
 
         if frontend_request == "PUT":
 
-            try:
-                self.brain=brain.objects.get(pk=project['project_id'])
-            except:
-                self.message='ERROR : THERE IS NO PROJECT WITH THIS ID'
-                return
-
-            self.project_id=project['project_id']
+            self.project_id=project
             # SNB
             self.snb = SensoryNeuralBlock("snb_s","snb_h",self.project_id)
             #print(self.snb.snb_h.__dict__)
