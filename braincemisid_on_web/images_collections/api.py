@@ -14,7 +14,7 @@ class StandardResultsSetPagination(PageNumberPagination):
 
 class UserCollectionViewSet(viewsets.ModelViewSet):
     permission_classes = [
-        permissions.AllowAny#IsAuthenticated,
+        permissions.IsAuthenticated
     ]
     serializer_class = ImagesFromNeuronSerializer
     pagination_class = StandardResultsSetPagination

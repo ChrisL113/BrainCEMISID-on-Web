@@ -19,6 +19,9 @@ from .models import *
 from images_collections.models import *
 
 class KernelViewSet(viewsets.ViewSet):
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
     kernel= None
     h_knowledge=[]
     s_knowledge=[]
@@ -116,15 +119,11 @@ class KernelViewSet(viewsets.ViewSet):
     def create(self,request):
         project_name=self.request.query_params.get('project_name')
         frontend_request="POST"
-        if self.request.user.is_authenticated==False:    
-            return Response({'message':'There is no user, please login :)'})
         self.kernel=KernelBrainCemisid(self.request.user,project_name,frontend_request)
         return Response({'message':self.kernel.message})
 
     def put(self,request):
         #################################################### LEARNING #########################################
-        if self.request.user.is_authenticated==False:
-            return Response({'message':'There is no user, please login :)'})
         frontend_request="PUT"
         project_id=self.request.query_params.get('project_id')
         if project_id==None:
