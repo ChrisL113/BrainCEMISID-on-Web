@@ -240,4 +240,4 @@ class ProjectSummaryViewSet(viewsets.ModelViewSet):
     #pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
-        return self.request.user.brain.all()
+        return self.request.user.brain.all().order_by('id')
