@@ -127,11 +127,11 @@ class KernelViewSet(viewsets.ViewSet):
         frontend_request="PUT"
         project_id=self.request.query_params.get('project_id')
         if project_id==None:
-            return Response({'message':'There is no project, please provide the id :)'})
+            return Response({'message':'There is not project, please provide the id :)'})
         try:
             request.user.brain.get(pk=project_id)
         except:
-            return Response({'message':'There is no project linked with this user, please, provide a valid id :)'})
+            return Response({'message':'There is not project linked with this user, please, provide a valid id :)'})
 
         self.kernel=KernelBrainCemisid(request.user,project_id,frontend_request)
         #return Response({'message':'check bash'})
@@ -144,7 +144,7 @@ class KernelViewSet(viewsets.ViewSet):
             if self.kernel.hearing_id!=-1:
                 return Response({'message':'FROM SET_ZERO, its already set the neuron is', 'id':self.kernel.hearing_id})
             else:
-                return Response({'message':'FROM SET_ZERO, THERE IS NO SUCH A NEURON'})
+                return Response({'message':'FROM SET_ZERO, THERE IS NOT SUCH A NEURON'})
 
         if "SET_ADD_OPERATOR" in request.data:
             self.set_add_operator(request.data['SET_ADD_OPERATOR']['hearing_pattern'],request.data['SET_ADD_OPERATOR']['sight_pattern'],request.data['SET_ADD_OPERATOR']['hearing_class'],request.data['SET_ADD_OPERATOR']['intentions_input'],request.data['SET_ADD_OPERATOR']['desired_intentions_input'],request.data['mode'])
@@ -152,14 +152,14 @@ class KernelViewSet(viewsets.ViewSet):
             if self.kernel.hearing_id!=-1:
                 return Response({'message':'FROM SET_ADD_OPERATOR, its already set the neuron is', 'id':self.kernel.hearing_id})
             else:
-                return Response({'message':'FROM SET_ADD_OPERATOR, THERE IS NO SUCH A NEURON'})
+                return Response({'message':'FROM SET_ADD_OPERATOR, THERE IS NOT SUCH A NEURON'})
 
         if "SET_EQUAL_SIGN" in request.data:
             state_operator=self.set_equal_sign(request.data['SET_EQUAL_SIGN']['hearing_pattern'],request.data['SET_EQUAL_SIGN']['sight_pattern'],request.data['SET_EQUAL_SIGN']['hearing_class'],request.data['SET_EQUAL_SIGN']['intentions_input'],request.data['SET_EQUAL_SIGN']['desired_intentions_input'],request.data['mode'])
             if self.kernel.hearing_id!=-1:
                 return Response({'message':'FROM SET_EQUAL_SIGN, SET_EQUAL WAS SET IN BRAIN, THE NEURON ID IS', 'id':self.kernel.hearing_id})
             else:
-                return Response({'message':'FROM SET_EQUAL_SIGN, THERE IS NO SUCH A NEURON'})
+                return Response({'message':'FROM SET_EQUAL_SIGN, THERE IS NOT SUCH A NEURON'})
                 
         if "BUM" in request.data:
             for index in request.data['BUM']:
@@ -205,7 +205,7 @@ class KernelViewSet(viewsets.ViewSet):
                     if neuron_from_db[0]['img_id']!=index['image_id']:
                         return Response({'message':'there is another id in the neuron, if you want to rename it please, pass the argument rename equal to true, otherwise the id is','id':neuron_from_db[0]['img_id']})
                 else:
-                    return Response({'message':'there is not id like this'})
+                    return Response({'message':'there is not image_id like this'})
 
         if not "CLACK" in request.data:
             #serializer= BrainOutputSerializer(self.brain_output)

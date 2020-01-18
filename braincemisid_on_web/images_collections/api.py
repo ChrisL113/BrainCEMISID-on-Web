@@ -23,6 +23,7 @@ class UserCollectionViewSet(viewsets.ModelViewSet):
         return self.request.user.images_collection.all().order_by('id')
 
     def perform_create(self, serializer):
+        #request.user.images_collection.filter()
         serializer.save(owner=self.request.user)
 
 
