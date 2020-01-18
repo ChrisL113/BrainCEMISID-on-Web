@@ -77,7 +77,7 @@ class KernelViewSet(viewsets.ViewSet):
                         self.brain_output.append(BrainOutputClass(h,s,None,None))
                     index +=1
             else:
-                aux=RbfNeuronSight.objects.filter(snb_sight__brain_s__id=self.kernel.brain.pk).values('id').earliest('id')
+                aux=RbfNeuronSight.objects.filter(snb_sight__brain_s__id=self.kernel.project_id).values('id').earliest('id')
                 num=int(self.s_knowledge._class)+aux['id'] 
                 img_id=RbfNeuronSight.objects.filter(pk=num).values('img_id')
                 self.brain_output.append(BrainOutputClass(self.h_knowledge,self.s_knowledge,self.kernel.state,internal_status,desired_status,img_id[0]['img_id']))
