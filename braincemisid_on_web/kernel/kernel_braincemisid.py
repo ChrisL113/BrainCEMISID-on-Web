@@ -48,7 +48,7 @@ class KernelBrainCemisid():
 
         self.hearing_id=-1
 
-        if frontend_request == "POST":  
+        if frontend_request == "CREATE":  
 
             self.brain = brain(user=self.user, name=project)
             self.brain.save()
@@ -57,7 +57,7 @@ class KernelBrainCemisid():
             self.create_kernel()
             self.message = 'BRAIN SUCCESFULLY CREATED THE ID IS ' + str(self.project_id)
 
-        if frontend_request == "PUT":
+        if frontend_request == "LOAD":
 
             self.project_id=project
             # SNB
@@ -69,10 +69,10 @@ class KernelBrainCemisid():
             # Relational Neural Block
             self.rnb = RelNetwork.deserialize("rnb", self.project_id)
             #print(self.rnb.__dict__)
-            for i in self.rnb.neuron_list:
-                if i._knowledge!= None:
+            #for i in self.rnb.neuron_list:
+                #if i._knowledge!= None:
                     #print(i.__dict__)
-                    print(i._knowledge.__dict__)
+                    #print(i._knowledge.__dict__)
             # Addition by memory network
             self.am_net = CulturalNetwork.deserialize("am_net", self.project_id)
             #print(self.am_net.__dict__)

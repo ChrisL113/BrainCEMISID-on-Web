@@ -3,13 +3,10 @@ from .serializers import RelNetworkSerializer
 from .classes import RelNetworkClass
 from rest_framework.response import Response
 
-#from django.contrib.auth.models import User
-#from django.db import connection
 import pickle
-#import json
 
 
-class RelNetworkViewSet(viewsets.ViewSet):
+class RelNetworkViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [
         permissions.IsAuthenticated
     ]
@@ -17,6 +14,9 @@ class RelNetworkViewSet(viewsets.ViewSet):
     def list(self, request):
         
         project_id=self.request.query_params.get('project_id')
+        if project_id==None:
+            return Response({'message':'There is not project, please provide the id :)'})
+            
         pickled_data=self.request.user.brain.get(pk=project_id).rnb
         
         rel_network=[]

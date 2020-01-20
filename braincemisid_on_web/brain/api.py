@@ -49,14 +49,6 @@ class KernelViewSet(viewsets.ViewSet):
         self.kernel.set_hearing_knowledge_in(hearing_knowledge)
         self.kernel.set_sight_knowledge_in(sight_knowledge)
         self.kernel.set_internal_state_in([biology_in, culture_in, feelings_in])
-        
-        desired_biology_in = desired_input[0]
-        desired_culture_in = desired_input[1]
-        desired_feelings_in= desired_input[2]
-        # desired_biology_in = intentions_input[0]
-        # desired_culture_in = intentions_input[1] 
-        # desired_feelings_in= intentions_input[2]
-        self.kernel.set_desired_state([desired_biology_in, desired_culture_in, desired_feelings_in])
 
     def show_kernel_outputs(self):
         internal_status = self.kernel.get_internal_state().get_state()
@@ -118,13 +110,13 @@ class KernelViewSet(viewsets.ViewSet):
 
     def create(self,request):
         project_name=request.data['project_name']
-        frontend_request="POST"
+        frontend_request="CREATE"
         self.kernel=KernelBrainCemisid(self.request.user,project_name,frontend_request)
         return Response({'message':self.kernel.message})
 
     def put(self,request):
         #################################################### LEARNING #########################################
-        frontend_request="PUT"
+        frontend_request="LOAD"
         project_id=self.request.query_params.get('project_id')
         if project_id==None:
             return Response({'message':'There is not project, please provide the id :)'})
@@ -230,11 +222,29 @@ class KernelViewSet(viewsets.ViewSet):
 #         serializer = testSerializer()
 #         return Response(serializer.data)
 
+class DesiredStateViewset(viewsets.ModelViewSet):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+    def create(self,request):
+        project_id=self.request.query_params.get('project_id')
+        if project_id==None:
+            return Response({'message':'There is not project, please provide the id :)'})
+
+        frontend_request="LOAD"
+        self.kernel=KernelBrainCemisid(self.request.user,project_id,frontend_request)
+        biology=float(request.data['biology'])
+        culture=float(request.data['culture'])
+        feelings=float(request.data['feelings'])
+
+        self.kernel.set_desired_state([biology,culture,feelings])
+        actual_desired=self.kernel.get_desired_state()
+        return Response({'biology':actual_desired.__dict__['biology'],'culture':actual_desired.__dict__['culture'],'feelings':actual_desired.__dict__['feelings']})
 
 
 class ProjectSummaryViewSet(viewsets.ModelViewSet):
     permission_classes = [
-            permissions.AllowAny#IsAuthenticated,
+            permissions.IsAuthenticated,
         ]
     serializer_class = ProjectSummarySerializer
     #pagination_class = StandardResultsSetPagination
