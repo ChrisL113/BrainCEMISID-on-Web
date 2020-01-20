@@ -19,7 +19,7 @@ from django.urls import path, include
 urlpatterns = [
     path('', include('episodicmemory.urls')),
     path('', include('accounts.urls')),
-    #path('',include('relational_network')),
+    path('',include('relational_network.urls')),
     path('',include('hearing_network.urls')),
     path('',include('sight_network.urls')),
     path('', include('brain.urls')),

@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from .classes import RelNetworkClass
 
-class BrainOutputSerializer(serializers.Serializer):
+class RelNetworkSerializer(serializers.Serializer):
     _weight= serializers.FloatField() 
     _h_id= serializers.IntegerField()
     _s_id= serializers.IntegerField()

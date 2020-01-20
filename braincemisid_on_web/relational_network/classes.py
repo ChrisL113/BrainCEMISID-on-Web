@@ -1,6 +1,6 @@
 
 class RelNetworkClass(object):
-    def __init__(self, _knowledge,_hit,_knowledge,has_knowledge):
+    def __init__(self, _hit,_knowledge,has_knowledge):
         self._has_knowledge=has_knowledge
         self._hit=_hit
         self._h_id= _knowledge._h_id
