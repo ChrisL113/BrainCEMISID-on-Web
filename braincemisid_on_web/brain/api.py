@@ -27,7 +27,7 @@ class KernelViewSet(viewsets.ViewSet):
     s_knowledge=[]
     brain_output= []
     serializer_class = BrainOutputSerializer
-    def pass_kernel_inputs(self, hearing_pattern, sight_pattern, hearing_class, intentions_input, desired_input, mode):
+    def pass_kernel_inputs(self, hearing_pattern, sight_pattern, hearing_class, intentions_input,  mode):
         # Set working domain
         if mode== "EPISODES":
             self.kernel.set_working_domain("EPISODES")
@@ -75,37 +75,37 @@ class KernelViewSet(viewsets.ViewSet):
                 self.brain_output.append(BrainOutputClass(self.h_knowledge,self.s_knowledge,self.kernel.state,internal_status,desired_status,img_id[0]['img_id']))
 ############################################### BBCC Protocole ###############################################
 
-    def bum(self,hearing_pattern, sight_pattern, hearing_class, intentions_input, desired_input, mode):
-        self.pass_kernel_inputs(hearing_pattern, sight_pattern, hearing_class, intentions_input, desired_input, mode)
+    def bum(self,hearing_pattern, sight_pattern, hearing_class, intentions_input,  mode):
+        self.pass_kernel_inputs(hearing_pattern, sight_pattern, hearing_class, intentions_input,  mode)
         self.kernel.bum()
 
-    def bip(self,hearing_pattern, sight_pattern, hearing_class, intentions_input, desired_input, mode):
-        self.pass_kernel_inputs(hearing_pattern, sight_pattern, hearing_class, intentions_input, desired_input, mode)
+    def bip(self,hearing_pattern, sight_pattern, hearing_class, intentions_input,  mode):
+        self.pass_kernel_inputs(hearing_pattern, sight_pattern, hearing_class, intentions_input,  mode)
         self.kernel.bip()
         self.show_kernel_outputs()
 
-    def check(self,hearing_pattern, sight_pattern, hearing_class, intentions_input, desired_input, mode):
-        self.pass_kernel_inputs(hearing_pattern, sight_pattern, hearing_class, intentions_input, desired_input, mode)
+    def check(self,hearing_pattern, sight_pattern, hearing_class, intentions_input,  mode):
+        self.pass_kernel_inputs(hearing_pattern, sight_pattern, hearing_class, intentions_input,  mode)
         self.kernel.check()
         self.show_kernel_outputs()
 
-    def clack(self,hearing_pattern, sight_pattern, hearing_class, intentions_input, desired_input, mode):
-        self.pass_kernel_inputs(hearing_pattern, sight_pattern, hearing_class, intentions_input, desired_input, mode)
+    def clack(self,hearing_pattern, sight_pattern, hearing_class, intentions_input,  mode):
+        self.pass_kernel_inputs(hearing_pattern, sight_pattern, hearing_class, intentions_input,  mode)
         self.kernel.clack()
         self.show_kernel_outputs()
 
 ############################################## OTHER SIGNALS #############################################
 
-    def set_zero(self,hearing_pattern, sight_pattern, hearing_class, intentions_input, desired_input, mode):
-        self.pass_kernel_inputs(hearing_pattern, sight_pattern, hearing_class, intentions_input, desired_input, mode)
+    def set_zero(self,hearing_pattern, sight_pattern, hearing_class, intentions_input,  mode):
+        self.pass_kernel_inputs(hearing_pattern, sight_pattern, hearing_class, intentions_input,  mode)
         self.kernel.set_zero()
 
-    def set_add_operator(self,hearing_pattern, sight_pattern, hearing_class, intentions_input, desired_input, mode):
-        self.pass_kernel_inputs(hearing_pattern, sight_pattern, hearing_class, intentions_input, desired_input, mode)
+    def set_add_operator(self,hearing_pattern, sight_pattern, hearing_class, intentions_input,  mode):
+        self.pass_kernel_inputs(hearing_pattern, sight_pattern, hearing_class, intentions_input,  mode)
         self.kernel.set_add_operator()
 
-    def set_equal_sign(self,hearing_pattern, sight_pattern, hearing_class, intentions_input, desired_input, mode):
-        self.pass_kernel_inputs(hearing_pattern, sight_pattern, hearing_class, intentions_input, desired_input, mode)
+    def set_equal_sign(self,hearing_pattern, sight_pattern, hearing_class, intentions_input,  mode):
+        self.pass_kernel_inputs(hearing_pattern, sight_pattern, hearing_class, intentions_input,  mode)
         self.kernel.set_equal_sign()
 
     def create(self,request):
@@ -131,7 +131,7 @@ class KernelViewSet(viewsets.ViewSet):
             return Response({'message': 'KERNEL IS NOT LOADED'})
         
         if "SET_ZERO" in request.data:
-            self.set_zero(request.data['SET_ZERO']['hearing_pattern'],request.data['SET_ZERO']['sight_pattern'],request.data['SET_ZERO']['hearing_class'],request.data['SET_ZERO']['intentions_input'],request.data['SET_ZERO']['desired_intentions_input'],request.data['mode'])
+            self.set_zero(request.data['SET_ZERO']['hearing_pattern'],request.data['SET_ZERO']['sight_pattern'],request.data['SET_ZERO']['hearing_class'],request.data['SET_ZERO']['intentions_input'],request.data['mode'])
             
             if self.kernel.hearing_id!=-1:
                 return Response({'message':'FROM SET_ZERO, its already set the neuron is', 'id':self.kernel.hearing_id})
@@ -139,7 +139,7 @@ class KernelViewSet(viewsets.ViewSet):
                 return Response({'message':'FROM SET_ZERO, THERE IS NOT SUCH A NEURON'})
 
         if "SET_ADD_OPERATOR" in request.data:
-            self.set_add_operator(request.data['SET_ADD_OPERATOR']['hearing_pattern'],request.data['SET_ADD_OPERATOR']['sight_pattern'],request.data['SET_ADD_OPERATOR']['hearing_class'],request.data['SET_ADD_OPERATOR']['intentions_input'],request.data['SET_ADD_OPERATOR']['desired_intentions_input'],request.data['mode'])
+            self.set_add_operator(request.data['SET_ADD_OPERATOR']['hearing_pattern'],request.data['SET_ADD_OPERATOR']['sight_pattern'],request.data['SET_ADD_OPERATOR']['hearing_class'],request.data['SET_ADD_OPERATOR']['intentions_input'],request.data['mode'])
             
             if self.kernel.hearing_id!=-1:
                 return Response({'message':'FROM SET_ADD_OPERATOR, its already set the neuron is', 'id':self.kernel.hearing_id})
@@ -147,7 +147,7 @@ class KernelViewSet(viewsets.ViewSet):
                 return Response({'message':'FROM SET_ADD_OPERATOR, THERE IS NOT SUCH A NEURON'})
 
         if "SET_EQUAL_SIGN" in request.data:
-            state_operator=self.set_equal_sign(request.data['SET_EQUAL_SIGN']['hearing_pattern'],request.data['SET_EQUAL_SIGN']['sight_pattern'],request.data['SET_EQUAL_SIGN']['hearing_class'],request.data['SET_EQUAL_SIGN']['intentions_input'],request.data['SET_EQUAL_SIGN']['desired_intentions_input'],request.data['mode'])
+            state_operator=self.set_equal_sign(request.data['SET_EQUAL_SIGN']['hearing_pattern'],request.data['SET_EQUAL_SIGN']['sight_pattern'],request.data['SET_EQUAL_SIGN']['hearing_class'],request.data['SET_EQUAL_SIGN']['intentions_input'],request.data['mode'])
             if self.kernel.hearing_id!=-1:
                 return Response({'message':'FROM SET_EQUAL_SIGN, SET_EQUAL WAS SET IN BRAIN, THE NEURON ID IS', 'id':self.kernel.hearing_id})
             else:
@@ -155,20 +155,20 @@ class KernelViewSet(viewsets.ViewSet):
                 
         if "BUM" in request.data:
             for index in request.data['BUM']:
-                self.bum(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'],index['desired_intentions_input'], request.data['mode'])
+                self.bum(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'], request.data['mode'])
                 print("entering.. BUM")
                 #return Response({'message':'BBCC Protocole Initialized'})
 
         if "BIP" in request.data:
             for index in request.data['BIP']:
                 print("entering..BIP")
-                self.bip(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'],index['desired_intentions_input'], request.data['mode'])
+                self.bip(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'], request.data['mode'])
                 #return Response(serializer.data)
             
         if "CHECK" in request.data:
             for index in request.data['CHECK']:
                 print("entering.... CHECK")
-                self.check(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'],index['desired_intentions_input'], request.data['mode'])
+                self.check(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'], request.data['mode'])
             
         if "CLACK" in request.data:
             # qifn=ImagesFromNeuron(owner=user,name="lo que sea", name_class="asdfjksl")
@@ -177,17 +177,31 @@ class KernelViewSet(viewsets.ViewSet):
 
             #qifn.save()
             for index in request.data['CLACK']:
-                self.clack(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'],index['desired_intentions_input'], request.data['mode'])
+                self.clack(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'], request.data['mode'])
                 if  index['image_id']==-1:
-                        return Response({'message':'neuron saved but wihout image because of debugging options'})
+                        return Response({'message':'neuron saved but without image because of debugging option'})
+                # if index['image_id']< -1:
+                #     neuron_from_db=RbfNeuronSight.objects.filter(pk=self.kernel.snb.snb_s._last_learned_id_from_db).values('img_id')
+                #     if  (neuron_from_db[0]['img_id']==None and "image_id" in index) or ("image_id" in index and index['rename']==True):   
+                #         #print(index['image_id'])
+                #         #print(neuron_from_db[0])
+                #         neuron_from_db.update(img_id=index['image_id'])
+                #         if index['rename']==True:
+                #             return Response({'message':'renamed with image id:','id':index['image_id']})
+                #         else:
+                #             return Response({'message':'paired with image id','id':index['image_id']})
+                #     if neuron_from_db[0]['img_id']==index['image_id']:
+                #         return Response({'message':'this id is already in the neuron','id':index['image_id']})
+                #     if neuron_from_db[0]['img_id']!=index['image_id']:
+                #         return Response({'message':'there is another id in the neuron, if you want to rename it please, pass the argument rename equal to true, otherwise the id is','id':neuron_from_db[0]['img_id']})
+                
                 if ImagesFromNeuron.objects.filter(pk=index['image_id']):
                     
                     neuron_from_db=RbfNeuronSight.objects.filter(pk=self.kernel.snb.snb_s._last_learned_id_from_db).values('img_id')
-                    if  neuron_from_db[0]['img_id']==None and "image_id" in index or "image_id" in index and index['rename']==True:   
+                    if  (neuron_from_db[0]['img_id']==None and "image_id" in index) or ("image_id" in index and index['rename']==True):
                         #print(index['image_id'])
                         #print(neuron_from_db[0])
                         neuron_from_db.update(img_id=index['image_id'])
-                        print("entering...")
                         if index['rename']==True:
                             return Response({'message':'renamed with image id:','id':index['image_id']})
                         else:
