@@ -236,12 +236,20 @@ class DesiredStateViewset(viewsets.ModelViewSet):
         biology=float(request.data['biology'])
         culture=float(request.data['culture'])
         feelings=float(request.data['feelings'])
-        if (biology>= 1 or biology<=0) or (feelings>= 1 or feelings<=0) or (culture >= 1 or culture<=0):
+        if (biology> 1 or biology<0) or (feelings> 1 or feelings<0) or (culture > 1 or culture<0):
             return Response({'error':'please, provide valid data between 1 and 0'})
         self.kernel.set_desired_state([biology,culture,feelings])
         actual_desired=self.kernel.get_desired_state()
         return Response({'biology':actual_desired.__dict__['biology'],'culture':actual_desired.__dict__['culture'],'feelings':actual_desired.__dict__['feelings']})
+    
+    def list(self, request):
+        project_id=self.request.query_params.get('project_id')
+        if project_id==None:
+            return Response({'message':'There is not project, please provide the id :)'})
 
+        actual_desired=json.loads(self.request.user.brain.get(pk=project_id).desired_state)
+        #print(actual_desired[0])
+        return Response({'biology':actual_desired['biology'],'culture':actual_desired['culture'],'feelings':actual_desired['feelings']})
 
 class ProjectSummaryViewSet(viewsets.ModelViewSet):
     permission_classes = [
