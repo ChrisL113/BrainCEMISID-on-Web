@@ -69,9 +69,10 @@ class KernelBrainCemisid():
             # Relational Neural Block
             self.rnb = RelNetwork.deserialize("rnb", self.project_id)
             #print(self.rnb.__dict__)
-            #for i in self.rnb.neuron_list:
-                #if i._knowledge!= None:
+            for i in self.rnb.neuron_list:
+                if i._knowledge!= None:
                     #print(i.__dict__)
+                    print(i._knowledge.__dict__)
             # Addition by memory network
             self.am_net = CulturalNetwork.deserialize("am_net", self.project_id)
             #print(self.am_net.__dict__)

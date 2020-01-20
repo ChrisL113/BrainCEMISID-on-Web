@@ -117,7 +117,7 @@ class KernelViewSet(viewsets.ViewSet):
         self.kernel.set_equal_sign()
 
     def create(self,request):
-        project_name=self.request.query_params.get('project_name')
+        project_name=request.data['project_name']
         frontend_request="POST"
         self.kernel=KernelBrainCemisid(self.request.user,project_name,frontend_request)
         return Response({'message':self.kernel.message})
