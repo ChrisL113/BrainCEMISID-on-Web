@@ -460,16 +460,19 @@ class RbfNetwork:
 
                 ind=0
                 while ind < obj._index_ready_to_learn:
-                    if obj.neuron_list[ind].it_changed:
-                        neuron_from_db=RbfNeuronSight.objects.filter(pk=ind+index_db['id'])
-                        neuron_from_db.update(has_knowledge=obj.neuron_list[ind]._has_knowledge, radius=obj.neuron_list[ind]._radius, degraded=obj.neuron_list[ind]._degraded)
-                    else:
-                        if ind == obj._index_ready_to_learn-1:
-                            json_knowledge=json.dumps(obj.neuron_list[ind]._knowledge.__dict__)
-                            neuron_from_db=RbfNeuronSight.objects.filter(pk=ind+index_db['id'])
-                            neuron_from_db.update(has_knowledge=obj.neuron_list[ind]._has_knowledge, radius=obj.neuron_list[ind]._radius, degraded=obj.neuron_list[ind]._degraded, knowledge=json_knowledge)
+                    json_knowledge=json.dumps(obj.neuron_list[ind]._knowledge.__dict__)
+                    neuron_from_db=RbfNeuronSight.objects.filter(pk=ind+index_db['id'])
+                    neuron_from_db.update(has_knowledge=obj.neuron_list[ind]._has_knowledge, radius=obj.neuron_list[ind]._radius, degraded=obj.neuron_list[ind]._degraded, knowledge=json_knowledge)
+                    # if obj.neuron_list[ind].it_changed:
+                    #     neuron_from_db=RbfNeuronSight.objects.filter(pk=ind+index_db['id'])
+                    #     neuron_from_db.update(has_knowledge=obj.neuron_list[ind]._has_knowledge, radius=obj.neuron_list[ind]._radius, degraded=obj.neuron_list[ind]._degraded)
+                    # else:
+                    #     if ind == obj._index_ready_to_learn-1:
+                    #         json_knowledge=json.dumps(obj.neuron_list[ind]._knowledge.__dict__)
+                    #         neuron_from_db=RbfNeuronSight.objects.filter(pk=ind+index_db['id'])
+                    #         neuron_from_db.update(has_knowledge=obj.neuron_list[ind]._has_knowledge, radius=obj.neuron_list[ind]._radius, degraded=obj.neuron_list[ind]._degraded, knowledge=json_knowledge)
                     ind +=1
-                    obj._last_learned_id_from_db=obj._last_learned_id+index_db['id']
+                obj._last_learned_id_from_db=obj._last_learned_id+index_db['id']
 
             if name=="snb_h":
                 #brain.objects.filter(pk=project_id).update(snb_h=pickled_obj)
@@ -487,14 +490,17 @@ class RbfNetwork:
                         #sight_network.objects.index_recognize(index_recognize=i)
                 ind=0
                 while ind < obj._index_ready_to_learn:
-                    if obj.neuron_list[ind].it_changed:
-                        neuron_from_db=RbfNeuronHearing.objects.filter(pk=ind+index_db['id'])
-                        neuron_from_db.update(has_knowledge=obj.neuron_list[ind]._has_knowledge, radius=obj.neuron_list[ind]._radius, degraded=obj.neuron_list[ind]._degraded)
-                    else:
-                        if ind == obj._index_ready_to_learn-1:
-                            json_knowledge=json.dumps(obj.neuron_list[ind]._knowledge.__dict__)
-                            neuron_from_db=RbfNeuronHearing.objects.filter(pk=ind+index_db['id'])
-                            neuron_from_db.update(has_knowledge=obj.neuron_list[ind]._has_knowledge, radius=obj.neuron_list[ind]._radius, degraded=obj.neuron_list[ind]._degraded, knowledge=json_knowledge)
+                    json_knowledge=json.dumps(obj.neuron_list[ind]._knowledge.__dict__)
+                    neuron_from_db=RbfNeuronHearing.objects.filter(pk=ind+index_db['id'])
+                    neuron_from_db.update(has_knowledge=obj.neuron_list[ind]._has_knowledge, radius=obj.neuron_list[ind]._radius, degraded=obj.neuron_list[ind]._degraded, knowledge=json_knowledge)
+                    # if obj.neuron_list[ind].it_changed:
+                    #     neuron_from_db=RbfNeuronHearing.objects.filter(pk=ind+index_db['id'])
+                    #     neuron_from_db.update(has_knowledge=obj.neuron_list[ind]._has_knowledge, radius=obj.neuron_list[ind]._radius, degraded=obj.neuron_list[ind]._degraded)
+                    # else:
+                    #     if ind == obj._index_ready_to_learn-1:
+                    #         json_knowledge=json.dumps(obj.neuron_list[ind]._knowledge.__dict__)
+                    #         neuron_from_db=RbfNeuronHearing.objects.filter(pk=ind+index_db['id'])
+                    #         neuron_from_db.update(has_knowledge=obj.neuron_list[ind]._has_knowledge, radius=obj.neuron_list[ind]._radius, degraded=obj.neuron_list[ind]._degraded, knowledge=json_knowledge)
                     ind +=1
 
 
@@ -522,6 +528,7 @@ class RbfNetwork:
             data._state=sight_network.values()[0]['state']
             
             ind=0
+            print(neurons_from_db.values())
             for a in neurons_from_db.values():
                 #if a['has_knowledge']==True:
                     aux=json.loads(a['knowledge'])
