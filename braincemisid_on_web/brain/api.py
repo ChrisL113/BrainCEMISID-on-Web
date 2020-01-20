@@ -236,7 +236,8 @@ class DesiredStateViewset(viewsets.ModelViewSet):
         biology=float(request.data['biology'])
         culture=float(request.data['culture'])
         feelings=float(request.data['feelings'])
-
+        if (biology>= 1 or biology<=0) or (feelings>= 1 or feelings<=0) or (culture >= 1 or culture<=0):
+            return Response({'error':'please, provide valid data between 1 and 0'})
         self.kernel.set_desired_state([biology,culture,feelings])
         actual_desired=self.kernel.get_desired_state()
         return Response({'biology':actual_desired.__dict__['biology'],'culture':actual_desired.__dict__['culture'],'feelings':actual_desired.__dict__['feelings']})
