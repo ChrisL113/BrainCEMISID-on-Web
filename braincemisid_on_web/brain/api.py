@@ -59,15 +59,16 @@ class KernelViewSet(viewsets.ViewSet):
             #self.brain_output=BrainOutputClass(h_knowledge,s_knowledge,self.kernel.state,internal_status)
             self.brain_output=[]
             if isinstance(self.s_knowledge, list):
-                index=0
-                
-                print("im entering and doing what you needed...")
-                for h,s in self.h_knowledge,self.s_knowledge:
-                    if index==0:
-                        self.brain_output.append(BrainOutputClass(h,s,self.kernel.state,internal_status))
-                    else:
-                        self.brain_output.append(BrainOutputClass(h,s,None,None))
-                    index +=1
+                if self.s_knowledge!=[] and self.h_knowledge!=[]:
+                    index=0
+                    print(self.h_knowledge)
+                    print("im entering and doing what you needed...")
+                    for h,s in self.h_knowledge,self.s_knowledge:
+                        if index==0:
+                            self.brain_output.append(BrainOutputClass(h,s,self.kernel.state,internal_status))
+                        else:
+                            self.brain_output.append(BrainOutputClass(h,s,None,None))
+                        index +=1
             else:
                 aux=RbfNeuronSight.objects.filter(snb_sight__brain_s__id=self.kernel.project_id).values('id').earliest('id')
                 num=int(self.s_knowledge._class)+aux['id'] 

@@ -15,4 +15,4 @@ class HearingNeuronsViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         project_id=self.request.query_params.get('project_id')
-        return self.request.user.brain.get(pk=project_id).snb_h.rbf_neuron.filter(has_knowledge=True)
+        return self.request.user.brain.get(pk=project_id).snb_h.rbf_neuron.filter(has_knowledge=True).order_by('id')
