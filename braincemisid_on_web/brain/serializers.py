@@ -6,31 +6,25 @@ from .models import brain
 ############################################## kernel ###########################################
 
 class BrainOutputSerializer(serializers.Serializer):
-    h_pattern = serializers.JSONField(default='')
-    hearing_class=serializers.CharField(max_length=200)
-    s_pattern = serializers.JSONField(default='')
-    neuron_number = serializers.IntegerField()
+    h_knowledge = serializers.JSONField(default='')
+    s_knowledge = serializers.JSONField(default='')
     biology =  serializers.FloatField(min_value=0,max_value=1) 
     culture =  serializers.FloatField(min_value=0,max_value=1)
     feelings = serializers.FloatField(min_value=0,max_value=1)
     desired_biology =  serializers.FloatField(min_value=0,max_value=1) 
     desired_culture =  serializers.FloatField(min_value=0,max_value=1)
     desired_feelings = serializers.FloatField(min_value=0,max_value=1)
-    img_id = serializers.IntegerField()
     state= serializers.CharField(max_length=100)
 
     def create(self, validated_data):
         return BrainOutputClass(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.h_pattern = validated_data.get('h_pattern',instance.h_pattern)
-        instance.hearing_class = validated_data.get('hearing_class', instance.hearing_class)
-        instance.s_pattern = validated_data.get('s_pattern',instance.s_pattern)
-        instance.neuron_number = validated_data.get('neuron_number',instance.neuron_number)
+        instance.h_knowledge = validated_data.get('h_knowledge',instance.h_knowledge)
+        instance.s_knowledge = validated_data.get('s_knowledge', instance.s_knowledge)
         instance.biology =  validated_data.get('biology',instance.biology)
         instance.culture = validated_data.get('culture',instance.culture)
         instance.feelings = validated_data.get('feelings',instance.feelings)
-        instance.img_id = validated_data.get('img_id',instance.img_id)
         instance.desired_biology =  validated_data.get('desired_biology',instance.desired_biology)
         instance.desired_culture = validated_data.get('desired_culture',instance.desired_culture)
         instance.desired_feelings = validated_data.get('desired_feelings',instance.desired_feelings)
