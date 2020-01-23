@@ -55,7 +55,7 @@ class KernelBrainCemisid():
             self.project_id = self.brain.id
             self.project_name = project
             self.create_kernel()
-            self.message = 'BRAIN SUCCESFULLY CREATED THE ID IS ' + str(self.project_id)
+            self.message = 'the brain has been created successfully, the id is ' + str(self.project_id)
 
         if frontend_request == "LOAD":
 

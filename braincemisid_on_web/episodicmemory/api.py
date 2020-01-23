@@ -60,19 +60,14 @@ class EpisodicMemoryViewSet(viewsets.ModelViewSet):
         episodic_memory=[]
         if pickled_data!=None:
             aux = pickle.loads(pickled_data)
-            #print(aux.group_list)
+            #print(aux.__dict__)
             for k in aux.group_list:
-                for i in k.group:
-                    #print(i.__dict__)
-                    if i._knowledge!=None:
-                        if isinstance(i._knowledge, int):
-                            #print(str(i._knowledge))
-                            episodic_memory.append(EpisodicMemoryClass(i._has_knowledge,json.dumps(str(i._knowledge)),ind))
-                        else:
-                            episodic_memory.append(EpisodicMemoryClass(i._has_knowledge,json.dumps(i._knowledge.__dict__),ind))
-                    else:
-                        episodic_memory.append(EpisodicMemoryClass(i._has_knowledge,None,ind))
-                    ind +=1
+                if k.group!=[]:
+                    #r1=json.dumps(k.group[0].__dict__)
+                    r2_aux={'_has_knowledge':k.group[1]._has_knowledge,'_knowledge':k.group[1]._knowledge.__dict__}
+                    #r2=json.dumps(r2_aux)
+                    #k._index_bip
+                    episodic_memory.append(EpisodicMemoryClass(json.dumps(k.group[0].__dict__),json.dumps(r2_aux),k._index_bip))
             serializer = EpisodicMemorySerializer(instance=episodic_memory, many=True)
             
             return serializer.data

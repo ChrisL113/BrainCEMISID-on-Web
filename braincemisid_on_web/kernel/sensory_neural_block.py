@@ -528,7 +528,7 @@ class RbfNetwork:
             data._state=sight_network.values()[0]['state']
             
             ind=0
-            print(neurons_from_db.values())
+            # print(neurons_from_db.values())
             for a in neurons_from_db.values():
                 #if a['has_knowledge']==True:
                     aux=json.loads(a['knowledge'])
