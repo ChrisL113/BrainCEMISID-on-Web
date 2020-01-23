@@ -49,31 +49,35 @@ class KernelViewSet(viewsets.ViewSet):
         self.kernel.set_hearing_knowledge_in(hearing_knowledge)
         self.kernel.set_sight_knowledge_in(sight_knowledge)
         self.kernel.set_internal_state_in([biology_in, culture_in, feelings_in])
-
+        
     def show_kernel_outputs(self):
         internal_status = self.kernel.get_internal_state().get_state()
         desired_status = self.kernel.get_desired_state().get_state()
         if self.kernel.state == "HIT":
             self.h_knowledge = self.kernel.get_hearing_knowledge_out()
             self.s_knowledge = self.kernel.get_sight_knowledge_out()
+            print(self.h_knowledge)
+            #self.s_knowledge
             #self.brain_output=BrainOutputClass(h_knowledge,s_knowledge,self.kernel.state,internal_status)
-            self.brain_output=[]
-            if isinstance(self.s_knowledge, list):
-                if self.s_knowledge!=[] and self.h_knowledge!=[]:
-                    index=0
-                    print(self.h_knowledge)
-                    print("im entering and doing what you needed...")
-                    for h,s in self.h_knowledge,self.s_knowledge:
-                        if index==0:
-                            self.brain_output.append(BrainOutputClass(h,s,self.kernel.state,internal_status))
-                        else:
-                            self.brain_output.append(BrainOutputClass(h,s,None,None))
-                        index +=1
+
+            aux_h=None
+            aux_s=None
+            if isinstance(self.h_knowledge, list):
+                for a in self.h_knowledge:
+                    aux_h=a.__dict__
+                for a in self.s_knowledge:
+                    aux_s=a.__dict__
             else:
-                aux=RbfNeuronSight.objects.filter(snb_sight__brain_s__id=self.kernel.project_id).values('id').earliest('id')
-                num=int(self.s_knowledge._class)+aux['id'] 
-                img_id=RbfNeuronSight.objects.filter(pk=num).values('img_id')
-                self.brain_output.append(BrainOutputClass(self.h_knowledge,self.s_knowledge,self.kernel.state,internal_status,desired_status,img_id[0]['img_id']))
+                aux_h=self.h_knowledge.__dict__
+                aux_s=self.s_knowledge.__dict__
+            self.brain_output=[]
+            #aux=RbfNeuronSight.objects.filter(snb_sight__brain_s__id=self.kernel.project_id).values('id').earliest('id')
+            #num=int(self.s_knowledge._class)+aux['id'] 
+            #img_id=RbfNeuronSight.objects.filter(pk=num).values('img_id')
+            brainauxout=BrainOutputClass(json.dumps(aux_h),json.dumps(aux_s),self.kernel.state,internal_status,desired_status)
+            #print(brainauxout.__dict__)
+            self.brain_output.append(brainauxout)
+                
 ############################################### BBCC Protocole ###############################################
 
     def bum(self,hearing_pattern, sight_pattern, hearing_class, intentions_input,  mode):
@@ -168,7 +172,6 @@ class KernelViewSet(viewsets.ViewSet):
             
         if "CHECK" in request.data:
             for index in request.data['CHECK']:
-                print("entering.... CHECK")
                 self.check(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'], request.data['mode'])
             
         if "CLACK" in request.data:
@@ -206,7 +209,9 @@ class KernelViewSet(viewsets.ViewSet):
                         if index['rename']==True:
                             return Response({'message':'renamed with image id:','id':index['image_id']})
                         else:
-                            return Response({'message':'paired with image id','id':index['image_id']})
+                            auxResp= {'message':'paired with image id','id':index['image_id']}
+                            #print(auxResp)
+                            return Response(auxResp)
                     if neuron_from_db[0]['img_id']==index['image_id']:
                         return Response({'message':'this id is already in the neuron','id':index['image_id']})
                     if neuron_from_db[0]['img_id']!=index['image_id']:
