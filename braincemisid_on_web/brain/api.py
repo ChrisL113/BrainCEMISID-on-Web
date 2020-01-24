@@ -56,10 +56,8 @@ class KernelViewSet(viewsets.ViewSet):
         if self.kernel.state == "HIT":
             self.h_knowledge = self.kernel.get_hearing_knowledge_out()
             self.s_knowledge = self.kernel.get_sight_knowledge_out()
-            print(self.h_knowledge)
             #self.s_knowledge
             #self.brain_output=BrainOutputClass(h_knowledge,s_knowledge,self.kernel.state,internal_status)
-
             aux_h=None
             aux_s=None
             if isinstance(self.h_knowledge, list):
@@ -172,6 +170,7 @@ class KernelViewSet(viewsets.ViewSet):
             
         if "CHECK" in request.data:
             for index in request.data['CHECK']:
+                print("entering..CHECK")
                 self.check(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'], request.data['mode'])
             
         if "CLACK" in request.data:
@@ -182,50 +181,53 @@ class KernelViewSet(viewsets.ViewSet):
             #qifn.save()
             for index in request.data['CLACK']:
                 self.clack(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'], request.data['mode'])
-                if  index['image_id']==-1:
-                        return Response({'message':'neuron saved but without image because of debugging option'})
-                # if index['image_id']< -1:
-                #     neuron_from_db=RbfNeuronSight.objects.filter(pk=self.kernel.snb.snb_s._last_learned_id_from_db).values('img_id')
-                #     if  (neuron_from_db[0]['img_id']==None and "image_id" in index) or ("image_id" in index and index['rename']==True):   
-                #         #print(index['image_id'])
-                #         #print(neuron_from_db[0])
-                #         neuron_from_db.update(img_id=index['image_id'])
-                #         if index['rename']==True:
-                #             return Response({'message':'renamed with image id:','id':index['image_id']})
-                #         else:
-                #             return Response({'message':'paired with image id','id':index['image_id']})
-                #     if neuron_from_db[0]['img_id']==index['image_id']:
-                #         return Response({'message':'this id is already in the neuron','id':index['image_id']})
-                #     if neuron_from_db[0]['img_id']!=index['image_id']:
-                #         return Response({'message':'there is another id in the neuron, if you want to rename it please, pass the argument rename equal to true, otherwise the id is','id':neuron_from_db[0]['img_id']})
-                
-                if ImagesFromNeuron.objects.filter(pk=index['image_id']):
-                    
-                    neuron_from_db=RbfNeuronSight.objects.filter(pk=self.kernel.snb.snb_s._last_learned_id_from_db).values('img_id')
-                    if  (neuron_from_db[0]['img_id']==None and "image_id" in index) or ("image_id" in index and index['rename']==True):
-                        #print(index['image_id'])
-                        #print(neuron_from_db[0])
-                        neuron_from_db.update(img_id=index['image_id'])
-                        if index['rename']==True:
-                            return Response({'message':'renamed with image id:','id':index['image_id']})
-                        else:
-                            auxResp= {'message':'paired with image id','id':index['image_id']}
-                            #print(auxResp)
-                            return Response(auxResp)
-                    if neuron_from_db[0]['img_id']==index['image_id']:
-                        return Response({'message':'this id is already in the neuron','id':index['image_id']})
-                    if neuron_from_db[0]['img_id']!=index['image_id']:
-                        return Response({'message':'there is another id in the neuron, if you want to rename it please, pass the argument rename equal to true, otherwise the id is','id':neuron_from_db[0]['img_id']})
-                else:
-                    return Response({'message':'there is not image_id like this'})
 
-        if not "CLACK" in request.data:
-            #serializer= BrainOutputSerializer(self.brain_output)
+                print("entering..CLACK")
+                if image_id in index:
+                    if  index['image_id']==-1:
+                            return Response({'message':'neuron saved but without image because of debugging option'})
+                    # if index['image_id']< -1:
+                    #     neuron_from_db=RbfNeuronSight.objects.filter(pk=self.kernel.snb.snb_s._last_learned_id_from_db).values('img_id')
+                    #     if  (neuron_from_db[0]['img_id']==None and "image_id" in index) or ("image_id" in index and index['rename']==True):   
+                    #         #print(index['image_id'])
+                    #         #print(neuron_from_db[0])
+                    #         neuron_from_db.update(img_id=index['image_id'])
+                    #         if index['rename']==True:
+                    #             return Response({'message':'renamed with image id:','id':index['image_id']})
+                    #         else:
+                    #             return Response({'message':'paired with image id','id':index['image_id']})
+                    #     if neuron_from_db[0]['img_id']==index['image_id']:
+                    #         return Response({'message':'this id is already in the neuron','id':index['image_id']})
+                    #     if neuron_from_db[0]['img_id']!=index['image_id']:
+                    #         return Response({'message':'there is another id in the neuron, if you want to rename it please, pass the argument rename equal to true, otherwise the id is','id':neuron_from_db[0]['img_id']})
+                    
+                    if ImagesFromNeuron.objects.filter(pk=index['image_id']):
+                        
+                        neuron_from_db=RbfNeuronSight.objects.filter(pk=self.kernel.snb.snb_s._last_learned_id_from_db).values('img_id')
+                        if  (neuron_from_db[0]['img_id']==None and "image_id" in index) or ("image_id" in index and index['rename']==True):
+                            #print(index['image_id'])
+                            #print(neuron_from_db[0])
+                            neuron_from_db.update(img_id=index['image_id'])
+                            if index['rename']==True:
+                                return Response({'message':'renamed with image id:','id':index['image_id']})
+                            else:
+                                auxResp= {'message':'paired with image id','id':index['image_id']}
+                                #print(auxResp)
+                                return Response(auxResp)
+                        if neuron_from_db[0]['img_id']==index['image_id']:
+                            return Response({'message':'this id is already in the neuron','id':index['image_id']})
+                        if neuron_from_db[0]['img_id']!=index['image_id']:
+                            return Response({'message':'there is another id in the neuron, if you want to rename it please, pass the argument rename equal to true, otherwise the id is','id':neuron_from_db[0]['img_id']})
+                    else:
+                        return Response({'message':'there is not image_id like this'})
+        
+        #serializer= BrainOutputSerializer(self.brain_output)
+        if self.brain_output==[]:
+            return Response({'message': 'there is not output'})
+        else:
             serializer= BrainOutputSerializer(instance=self.brain_output, many=True)
             return Response(serializer.data)
-        
-        return Response({'message':'MISSED'})
-    
+
     def delete(self, request):
         project_id=self.request.query_params.get('project_id')
         if project_id:
