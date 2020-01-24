@@ -81,7 +81,7 @@ class EpisodicMemoryViewSet(viewsets.ModelViewSet):
                     r2_aux.append({'index_bip':k._index_bip})
                     r1_aux.append(r2_aux)
                 r2_aux=[]
-            episodic_memory.append(EpisodicMemoryClass([r1_aux,{"_clack":aux._clack},{'_recognized_indexes':aux._recognized_indexes}]))
+            episodic_memory.append(EpisodicMemoryClass(r1_aux,aux._clack,{'_recognized_indexes':aux._recognized_indexes}))
             r1_aux=[]
                     #episodic_memory.append(EpisodicMemoryClass([json.dumps(k.group[0].__dict__),json.dumps(r2_aux),json.dumps(k._index_bip)]))
             serializer = EpisodicMemorySerializer(instance=episodic_memory, many=True)
