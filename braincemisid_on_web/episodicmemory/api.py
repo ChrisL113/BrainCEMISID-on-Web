@@ -56,18 +56,34 @@ class EpisodicMemoryViewSet(viewsets.ModelViewSet):
         project_id=self.request.query_params.get('project_id')
         #print(self.request.user.brain.get(pk=project_id).episodic_memory)
         pickled_data=self.request.user.brain.get(pk=project_id).episodic_memory
-        ind=1
+        knowl=None
+        r1_aux=[]
+        r2_aux=[]
         episodic_memory=[]
         if pickled_data!=None:
             aux = pickle.loads(pickled_data)
-            #print(aux.__dict__)
+            print(aux.__dict__)
             for k in aux.group_list:
-                if k.group!=[]:
+                for i in k.group:
+                    
+                    #if k.group!=[]:
                     #r1=json.dumps(k.group[0].__dict__)
-                    r2_aux={'_has_knowledge':k.group[1]._has_knowledge,'_knowledge':k.group[1]._knowledge.__dict__}
+                    if isinstance(i._knowledge, int):
+                        knowl=i._knowledge
+                    else:
+                        knowl=i._knowledge.__dict__
+                    
+                    r2_aux.append({'has_knowledge':i._has_knowledge,'_knowledge':knowl})
+                    #{'_has_knowledge':k.group[1]._has_knowledge,'_knowledge':k.group[1]._knowledge.__dict__}
                     #r2=json.dumps(r2_aux)
                     #k._index_bip
-                    episodic_memory.append(EpisodicMemoryClass(json.dumps(k.group[0].__dict__),json.dumps(r2_aux),k._index_bip))
+                if k.group!=[]:    
+                    r2_aux.append({'index_bip':k._index_bip})
+                    r1_aux.append(r2_aux)
+                r2_aux=[]
+            episodic_memory.append(EpisodicMemoryClass([r1_aux,{"_clack":aux._clack},{'_recognized_indexes':aux._recognized_indexes}]))
+            r1_aux=[]
+                    #episodic_memory.append(EpisodicMemoryClass([json.dumps(k.group[0].__dict__),json.dumps(r2_aux),json.dumps(k._index_bip)]))
             serializer = EpisodicMemorySerializer(instance=episodic_memory, many=True)
             
             return serializer.data
