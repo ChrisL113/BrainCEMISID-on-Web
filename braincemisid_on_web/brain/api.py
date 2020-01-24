@@ -183,7 +183,7 @@ class KernelViewSet(viewsets.ViewSet):
                 self.clack(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'], request.data['mode'])
 
                 print("entering..CLACK")
-                if image_id in index:
+                if 'image_id' in index:
                     if  index['image_id']==-1:
                             return Response({'message':'neuron saved but without image because of debugging option'})
                     # if index['image_id']< -1:
