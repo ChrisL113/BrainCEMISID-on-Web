@@ -15,7 +15,7 @@ class ImageSettingsWithImageFromNeuron(serializers.ModelSerializer):
 
     class Meta:
         model= ImageSettings
-        fields = ['r_tolerance','g_tolerance','b_tolerance','img','created','name','name_class','created']
+        fields = ['r_tolerance','g_tolerance','b_tolerance','image','img','created','name','name_class','created']
     
     def get_img(self,obj):
         return obj.image.img.url
