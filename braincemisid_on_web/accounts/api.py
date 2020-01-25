@@ -14,10 +14,14 @@ class RegisterAPI(generics.GenericAPIView):
             if repeated:
                 return Response ({"message" : "username or email already in use"})
             else:
+                #print(request.data)
                 serializer = self.get_serializer(data=request.data)
                 serializer.is_valid(raise_exception=True)
                 user = serializer.save()
-                return Response ({"user": UserSerializer(user, context=self.get_serializer_context()).data,"token": AuthToken.objects.create(user)[1]})
+                serialized_response=UserSerializer(user, context=self.get_serializer_context()).data
+                auth=AuthToken.objects.create(user)[1]
+                print(serialized_response,auth)
+                return Response ({"user": serialized_response,"token": auth})
         except:
             return Response ({"message" : "not sufficient data :("})
 
@@ -30,9 +34,13 @@ class LoginAPI(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
+        serialized_response=UserSerializer(user, context=self.get_serializer_context()).data
+        auth=AuthToken.objects.create(user)[1]
+        print(serialized_response)
+        print("token :",auth)
         return Response ({
-            "user": UserSerializer(user, context=self.get_serializer_context()).data,
-            "token": AuthToken.objects.create(user)[1]
+            "user": serialized_response,
+            "token": auth
         })
 
 # Get User API

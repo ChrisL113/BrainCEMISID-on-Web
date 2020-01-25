@@ -48,8 +48,9 @@ class SightNeuronsViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         project_id=self.request.query_params.get('project_id')
-        
-        return self.request.user.brain.get(pk=project_id).snb_s.rbf_neuron.filter(has_knowledge=True).order_by('id')
+        response=self.request.user.brain.get(pk=project_id).snb_s.rbf_neuron.filter(has_knowledge=True).order_by('id')
+        #print(response)
+        return response
         #     sight_network=[]
         #     if pickled_data!=None:
         #         aux = pickle.loads(pickled_data[0])

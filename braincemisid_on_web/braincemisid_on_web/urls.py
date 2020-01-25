@@ -20,6 +20,7 @@ urlpatterns = [
     path('', include('episodicmemory.urls')),
     path('', include('accounts.urls')),
     path('',include('relational_network.urls')),
+    path('',include('images_settings.urls')),
     path('',include('hearing_network.urls')),
     path('',include('sight_network.urls')),
     path('', include('brain.urls')),
