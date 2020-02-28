@@ -29,6 +29,10 @@ Most of the modules, such as the MulticlassSingleLayerNetwork, contain independe
 comprehension of their functionality. Run, for instance:
  ```python multiclass_single_layer_network.py```
 
+* link of the frontend part of the project:
+https://github.com/PedrouV/BrainCEMISID-frontend
+
+
 ## Contributors
 
 * Jonathan Monsalve
