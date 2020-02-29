@@ -220,11 +220,12 @@ class KernelViewSet(viewsets.ViewSet):
                             return Response({'message':'there is another id in the neuron, if you want to rename it please, pass the argument rename equal to true, otherwise the id is','id':neuron_from_db[0]['img_id']})
                     else:
                         return Response({'message':'there is not image_id like this'})
-        
+                
         #serializer= BrainOutputSerializer(self.brain_output)
         if self.brain_output==[]:
-            return Response({'message': 'there is not output'})
-        else:
+            state_response=self.kernel.get_internal_state().get_state()
+            return Response({'biology':state_response[0],'cultural':state_response[1],'feelings':state_response[2]})
+        else:            
             serializer= BrainOutputSerializer(instance=self.brain_output, many=True)
             return Response(serializer.data)
 
