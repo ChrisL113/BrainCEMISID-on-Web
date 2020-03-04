@@ -1,8 +1,9 @@
 import pickle
 
-from brain.models import *
-
 from neuron import Neuron
+
+from brain.models import *
+import json
 ## \defgroup RelBlocks Relational network related classes
 #
 # Relational network related classes are a group of classes that
@@ -85,6 +86,7 @@ class RelNeuron(Neuron):
     def __init__(self):
         super(RelNeuron, self).__init__()
         self._hit = False
+        self.it_changed=False
 
     ## Set knowledge of type RelKnowledge
     # @param knowledge RelKnowledge to be learned
@@ -119,11 +121,12 @@ class RelNeuron(Neuron):
         return self._hit
 
     ## Return hearing id if neuron has knowledge and an object of type None in any other case
-     # @retval h_id Integer or None. Hearing id.
+    # @retval h_id Integer or None. Hearing id.
     def get_h_id(self):
         if self.has_knowledge():
             # Increase weight everytime that the relation is somehow used
             self._knowledge.increase_weight()
+            self.it_changed=True
             return self._knowledge.get_h_id()
         return None
 
@@ -133,6 +136,7 @@ class RelNeuron(Neuron):
         if self.has_knowledge():
             # Increase weight everytime that the relation is somehow used
             self._knowledge.increase_weight()
+            self.it_changed=True
             return self._knowledge.get_s_id()
         return None
 
@@ -143,6 +147,7 @@ class RelNeuron(Neuron):
         if self.has_knowledge():
             # Increase weight everytime that the relation is somehow used
             self._knowledge.increase_weight()
+            self.it_changed=True
             return self._knowledge
         return None
 
@@ -241,31 +246,132 @@ class RelNetwork:
     # @param cls RelNetwork class
     # @param obj RelNetwork object to be serialized
     # @param name Name of the file where the serialization is to be stored
-    def serialize(cls, obj, name, project_id):
-        print(obj.__dict__)
-        if name=="rnb":
-            pickled_obj = pickle.dumps(obj)
-            brain_object=brain.objects.filter(pk=project_id)
-            brain_object.update(rnb=pickled_obj)
-        elif name=="ss_rnb":
-            pickled_obj = pickle.dumps(obj)
-            brain_object=brain.objects.filter(pk=project_id)
-            brain_object.update(ss_rnb=pickled_obj)
+    def serialize(cls, obj, name, project_id, brain):
+        if brain:
+            if name=="rnb":
+                # pickled_obj = pickle.dumps(obj)
+                # brain_object=brain.objects.filter(pk=project_id)
+                # brain_object.update(rnb=pickled_obj)
+                rnb_data=rnb(brain_rnb=brain, index_ready_to_learn=obj._index_ready_to_learn)
+                rnb_data.save()
+                if obj.neuron_list:
+                    for a in obj.neuron_list:
+                        if a._knowledge!=None:
+                            json_knowledge=json.dumps(a._knowledge.__dict__)
+                            query_neuron=RnbNeuron(rnb=rnb_data, has_knowledge=a._has_knowledge, hit=a._hit, knowledge=json_knowledge)
+                        else:
+                            query_neuron=RnbNeuron(rnb=rnb_data, has_knowledge=a._has_knowledge, hit=a._hit)
+                        query_neuron.save()
+
+
+            elif name=="ss_rnb":
+                # pickled_obj = pickle.dumps(obj)
+                # brain_object=brain.objects.filter(pk=project_id)
+                # brain_object.update(ss_rnb=pickled_obj)
+                ss_rnb_data=ss_rnb(brain_ss_rnb=brain, index_ready_to_learn=obj._index_ready_to_learn)
+                ss_rnb_data.save()
+                if obj.neuron_list:
+                    for a in obj.neuron_list:
+                        if a._knowledge!=None:
+                            json_knowledge=json.dumps(a._knowledge.__dict__)
+                            query_neuron=SsRnbNeuron(ss_rnb=ss_rnb_data, has_knowledge=a._has_knowledge, hit=a._hit, knowledge=json_knowledge)
+                        else:
+                            query_neuron=SsRnbNeuron(ss_rnb=ss_rnb_data, has_knowledge=a._has_knowledge, hit=a._hit)
+                        query_neuron.save()
+
+        else:
+            if name=="rnb":
+
+                rnb_data=rnb.objects.filter(brain_rnb__pk=project_id)
+                rnb_data.update(index_ready_to_learn=obj._index_ready_to_learn)
+
+                index_db=RnbNeuron.objects.filter(rnb__brain_rnb__pk=project_id).values('id').earliest('id')
+
+                ind=0
+                while ind < obj._index_ready_to_learn:
+                    if obj.neuron_list[ind].it_changed:
+                        neuron_from_db=RnbNeuron.objects.filter(pk=ind+index_db['id'])
+                        neuron_from_db.update(has_knowledge=obj.neuron_list[ind]._has_knowledge, hit=obj.neuron_list[ind]._hit)
+                    else:
+                        if ind == obj._index_ready_to_learn-1:
+                            json_knowledge=json.dumps(obj.neuron_list[ind]._knowledge.__dict__)
+                            neuron_from_db=RnbNeuron.objects.filter(pk=ind+index_db['id'])
+                            neuron_from_db.update(has_knowledge=obj.neuron_list[ind]._has_knowledge, hit=obj.neuron_list[ind]._hit, knowledge=json_knowledge)
+                    ind +=1
+
+            elif name=="ss_rnb":
+
+                ss_rnb_data=ss_rnb.objects.filter(brain_ss_rnb__pk=project_id)
+                ss_rnb_data.update(index_ready_to_learn=obj._index_ready_to_learn)
+
+                index_db=SsRnbNeuron.objects.filter(ss_rnb_brain_ss_rnb_pk=project_id).values('id').earliest('id')
+                print(obj.neuron_list)
+                print("djfskal;fsdaj")
+                ind=0
+                while ind < obj._index_ready_to_learn:
+                    if obj.neuron_list[ind].it_changed:
+                        neuron_from_db=SsRnbNeuron.objects.filter(pk=ind+index_db['id'])
+                        neuron_from_db.update(has_knowledge=obj.neuron_list[ind]._has_knowledge, hit=obj.neuron_list[ind]._hit)
+                    else:
+                        if ind == obj._index_ready_to_learn-1:
+                            json_knowledge=json.dumps(obj.neuron_list[ind]._knowledge.__dict__)
+                            neuron_from_db=SsRnbNeuron.objects.filter(pk=ind+index_db['id'])
+                            neuron_from_db.update(has_knowledge=obj.neuron_list[ind]._has_knowledge, hit=obj.neuron_list[ind]._hit, knowledge=json_knowledge)
+                    ind +=1
 
     @classmethod
     ## Deserialize object stored in given file
     # @param cls RelNetwork class
     # @param name Name of the file where the object is serialized
     def deserialize(cls, name, project_id):
-        
+        NEURON_COUNT=100
         if name=="rnb":
-            brain_object=brain.objects.values('rnb','id').filter(id=project_id)
-            pickled_data = brain_object[0]['rnb']
-            return pickle.loads(pickled_data)
+            #brain_object=brain.objects.values('rnb','id').filter(id=project_id)
+            #pickled_data = brain_object[0]['rnb']
+            #return pickle.loads(pickled_data)
+            rnb_data=rnb.objects.filter(brain_rnb__pk=project_id)
+            neurons_from_db=RnbNeuron.objects.filter(rnb=rnb_data[0], has_knowledge=True).order_by('id')
+
+            data=RelNetwork(NEURON_COUNT)
+            data._index_ready_to_learn=rnb_data.values()[0]['index_ready_to_learn']
+
+            ind=0
+            for a in neurons_from_db.values():
+                if a['has_knowledge']==True:
+                    aux=json.loads(a['knowledge'])
+                    data.neuron_list[ind]._has_knowledge=a['has_knowledge']
+                    data.neuron_list[ind]._hit=a['hit']
+                    aux_knowledge=RelKnowledge(aux['_h_id'], aux['_s_id'], aux['_weight']) 
+                    data.neuron_list[ind].learn(aux_knowledge)
+                ind +=1
+            return data
+
         elif name=="ss_rnb":
-            brain_object=brain.objects.values('ss_rnb','id').filter(id=project_id)
-            pickled_data = brain_object[0]['ss_rnb']
-            return pickle.loads(pickled_data)
+            # brain_object=brain.objects.values('ss_rnb','id').filter(id=project_id)
+            # pickled_data = brain_object[0]['ss_rnb']
+            # print(pickle.loads(pickled_data).__dict__)
+            # for index123 in pickle.loads(pickled_data).neuron_list:
+            #     print(index123.__dict__)
+            #     if index123._knowledge :
+            #         print(index123._knowledge.__dict__)
+            # return pickle.loads(pickled_data)
+            ss_rnb_data=ss_rnb.objects.filter(brain_ss_rnb__pk=project_id)
+            neurons_from_db=SsRnbNeuron.objects.filter(ss_rnb=ss_rnb_data[0], has_knowledge=True).order_by('id')
+
+            data=RelNetwork(NEURON_COUNT)
+            data._index_ready_to_learn=ss_rnb_data.values()[0]['index_ready_to_learn']
+
+            ind=0
+            for a in neurons_from_db.values():
+                if a['has_knowledge']==True:
+                    aux=json.loads(a['knowledge'])
+                    data.neuron_list[ind]._has_knowledge=a['has_knowledge']
+                    data.neuron_list[ind]._hit=a['hit']
+                    aux_knowledge=RelKnowledge(aux['_h_id'], aux['_s_id'], aux['_weight']) 
+                    data.neuron_list[ind].learn(aux_knowledge)
+                ind +=1
+            return data
+
 
 
 ## @}

@@ -527,7 +527,7 @@ class KernelBrainCemisid():
             # Learn relation in new net
             rel_knowledge = RelKnowledge(syll_hearing_id, sight_id)
             self.ss_rnb.learn(rel_knowledge)
-            RelNetwork.serialize(self.ss_rnb, "ss_rnb", self.project_id)
+            RelNetwork.serialize(self.ss_rnb, "ss_rnb", self.project_id, self.brain)
             self._learning_syllables = False
 
     ##  Learn addition related to given bbcc sequence
@@ -623,8 +623,8 @@ class KernelBrainCemisid():
         learned_ids = self.snb.get_last_learned_ids()
         rel_knowledge = RelKnowledge(learned_ids[0], learned_ids[1])
         self.rnb.learn(rel_knowledge)
-        RelNetwork.serialize(self.rnb, "rnb", self.project_id)
-        self.snb.save("snb_s", "snb_h",self.project_id,None)
+        RelNetwork.serialize(self.rnb, "rnb", self.project_id, None)
+        self.snb.save("snb_s", "snb_h",self.project_id, None)
         ################ INTENTIONS ####################################################################################
         # New learned item will produce changes in internal state
         self.feed_internal_state(self._internal_state_in)
@@ -640,10 +640,10 @@ class KernelBrainCemisid():
     def create_kernel(self):
         # snb
         self.snb = SensoryNeuralBlock("no_data","no_data", self.project_id)
-        self.snb.save("snb_s", "snb_h", self.project_id,self.brain)
+        self.snb.save("snb_s", "snb_h", self.project_id, self.brain)
         # Relational Neural Block
         self.rnb = RelNetwork(100)
-        RelNetwork.serialize(self.rnb, "rnb", self.project_id)
+        RelNetwork.serialize(self.rnb, "rnb", self.project_id, self.brain) 
         # Addition by memory network
         self.am_net = CulturalNetwork(100)
         CulturalNetwork.serialize(self.am_net, "am_net", self.project_id)
@@ -655,7 +655,7 @@ class KernelBrainCemisid():
         CulturalNetwork.serialize(self.words_net, "words_net", self.project_id)
         # Sight-Syllables rel network
         self.ss_rnb = RelNetwork(100)
-        RelNetwork.serialize(self.ss_rnb, "ss_rnb", self.project_id)
+        RelNetwork.serialize(self.ss_rnb, "ss_rnb", self.project_id, self.brain)
         # Geometric Neural Block
         self.gnb = GeometricNeuralBlock()
         GeometricNeuralBlock.serialize(self.gnb, "gnb", self.project_id)

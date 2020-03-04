@@ -1,6 +1,4 @@
-import pickle
 from math import fabs
-
 
 from neuron import Neuron
 
@@ -395,9 +393,8 @@ class RbfNetwork:
     # @param cls RbfNetwork class
     # @param obj RbfNetwork object to be serialized
     # @param name Name of the file where the serialization is to be stored
-    def serialize(cls, obj, name, project_id,brain):
-            
-        pickled_obj = pickle.dumps(obj)
+    def serialize(cls, obj, name, project_id, brain):
+
         if brain:
             if name=="snb_s":
                 sight_network = snb_s(brain_s = brain, state=obj._state, index_ready_to_learn=obj._index_ready_to_learn, last_learned_id=obj._last_learned_id)
@@ -523,7 +520,7 @@ class RbfNetwork:
                     data.neuron_list[ind]._degraded=a['degraded']
                     aux_knowledge=RbfKnowledge(aux['_pattern'], aux['_class'], aux['_set'])
                     data.neuron_list[ind].learn(aux_knowledge)
-                    ind +=1
+                ind +=1
             return data
 
         if name=="snb_h":
@@ -551,7 +548,7 @@ class RbfNetwork:
                     aux_knowledge=RbfKnowledge(aux['_pattern'], aux['_class'], aux['_set'])
                     data.neuron_list[ind].learn(aux_knowledge)
                     #print(data.neuron_list[ind]._knowledge)
-                    ind +=1
+                ind +=1
                 #else:
                     #break
                     #print(data.__dict__)

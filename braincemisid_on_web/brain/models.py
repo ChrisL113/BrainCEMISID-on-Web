@@ -6,19 +6,43 @@ from images_collections.models import ImagesFromNeuron
 
 class brain(models.Model):
     name=models.CharField(default='', max_length=250)
-    rnb= models.BinaryField(null=True)
     am_net= models.BinaryField(null=True)
     gnb= models.BinaryField(null=True)
     syllables_net= models.BinaryField(null=True)
     words_net= models.BinaryField(null=True)
-    ss_rnb= models.BinaryField(null=True)
     episodic_memory= models.BinaryField(null=True)
     decisions_block= models.BinaryField(null=True)
     internal_state= JSONField(null=True,blank=True)
     desired_state= JSONField(null=True,blank=True)
     user = models.ForeignKey(User, related_name="brain", on_delete=models.CASCADE, null=True)
 
+class rnb(models.Model):
+    brain_rnb=models.OneToOneField(
+        brain,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
+    index_ready_to_learn=models.IntegerField()
 
+class ss_rnb(models.Model):
+    brain_ss_rnb=models.OneToOneField(
+        brain,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
+    index_ready_to_learn=models.IntegerField()
+
+class SsRnbNeuron(models.Model):
+    ss_rnb = models.ForeignKey(ss_rnb, related_name="ss_rnb_neuron",on_delete=models.CASCADE, null=True)
+    has_knowledge = models.BooleanField()
+    hit = models.BooleanField()
+    knowledge = JSONField(null=True,blank=True)
+
+class RnbNeuron(models.Model):
+    rnb = models.ForeignKey(rnb, related_name="rnb_neuron",on_delete=models.CASCADE, null=True)
+    has_knowledge = models.BooleanField()
+    hit = models.BooleanField()
+    knowledge = JSONField(null=True,blank=True)
 
 class snb_s(models.Model):
     brain_s=models.OneToOneField(
