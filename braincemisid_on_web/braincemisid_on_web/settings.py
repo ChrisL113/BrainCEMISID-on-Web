@@ -94,7 +94,7 @@ WSGI_APPLICATION = 'braincemisid_on_web.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'braincemisid_db',
+        'NAME': 'braincemisid_db_dev',
         'USER': 'postgres',
         'PASSWORD': '1234',
         'HOST': '127.0.0.1',
