@@ -3,6 +3,8 @@ from brain.models import *
 
 from cultural_network import CulturalNetwork,CulturalGroup,CulturalNeuron
 
+import json
+
 ## \addtogroup Intentions
 #  Episodic memories block
 # @{
@@ -51,13 +53,31 @@ class EpisodicMemoriesBlock(CulturalNetwork):
     # @param cls EpisodicMemory class
     # @param obj EpisodicMemory object to be serialized
     # @param name Name of the file where the serialization is to be stored
-    def serialize(cls, obj, name, project_id):
-        #pickle.dump(obj, open(name, "wb"))
-        
-        pickled_obj = pickle.dumps(obj)
-        brain_object=brain.objects.filter(pk=project_id)
-        brain_object.update(episodic_memory=pickled_obj)
+    def serialize(cls, obj, name, project_id, brain):
 
+        if brain:
+            episodic_memory_data = episodic_memory(brain_episodic_memory = brain, index_ready_to_learn = obj._index_ready_to_learn, clack = obj._clack, indexes_recognized = obj._recognized_indexes)
+            episodic_memory_data.save()
+
+        else:
+            episodic_memory_data=episodic_memory.objects.filter(brain_episodic_memory__pk = project_id)
+            episodic_memory_data.update(index_ready_to_learn = obj._index_ready_to_learn, clack = obj._clack, indexes_recognized = obj._recognized_indexes)
+        
+        if obj.group_list:
+            knowl = None
+            group_data = []
+            if obj.group_list[-1].group != []:
+                for i in obj.group_list[-1].group:
+                    if isinstance(i._knowledge, int):
+                        knowl = i._knowledge
+                    else:
+                        knowl = i._knowledge.__dict__
+                    
+                    group_data.append({'has_knowledge': i._has_knowledge, '_knowledge': knowl})
+                
+                group_data.append({'index_bip': obj.group_list[-1]._index_bip})    
+                query_group = Group(episodic_memory_group = episodic_memory_data[0], index_bip = obj.group_list[-1]._index_bip, episodicMemNeuron = group_data)
+                query_group.save()
 
     @classmethod
     ## Deserialize object stored in given file
@@ -65,9 +85,21 @@ class EpisodicMemoriesBlock(CulturalNetwork):
     # @param name Name of the file where the object is serialized
     def deserialize(cls, name, project_id):
         
-        brain_object=brain.objects.values('episodic_memory','id').filter(id=project_id)
-        pickled_data = brain_object[0]['episodic_memory']
-        return pickle.loads(pickled_data)
+        episodic_memory_data = episodic_memory.objects.filter(brain_episodic_memory__pk = project_id)
+        group_from_db = Group.objects.filter(episodic_memory_group = episodic_memory_data[0]).order_by('id')
+
+        
+        data = CulturalNetwork()
+
+        # data._index_ready_to_learn = episodic_memory_data[0].index_ready_to_learn
+        # data._clack = episodic_memory_data[0].clack
+        # data._recognized_indexes = episodic_memory_data[0].indexes_recognized
+
+        for i in group_from_db.values():
+            print(i)
+        
+        return data
+
 ## @}
 #
 

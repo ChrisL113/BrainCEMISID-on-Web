@@ -2,8 +2,8 @@ from rest_framework import  viewsets, permissions
 from .serializers import RelNetworkSerializer
 from .classes import RelNetworkClass
 from rest_framework.response import Response
-
-import pickle
+from brain.models import *
+import json
 
 
 class RelNetworkViewSet(viewsets.ReadOnlyModelViewSet):
@@ -16,15 +16,16 @@ class RelNetworkViewSet(viewsets.ReadOnlyModelViewSet):
         project_id=self.request.query_params.get('project_id')
         if project_id==None:
             return Response({'message':'There is not project, please provide the id :)'})
-            
-        pickled_data=self.request.user.brain.get(pk=project_id).rnb
+        #rnb_data=rnb.objects.filter(brain_rnb__pk=project_id)
+        neurons_from_db=RnbNeuron.objects.filter(rnb__brain_rnb__pk=project_id, has_knowledge=True).order_by('id')
+        #pickled_data=self.request.user.brain.get(pk=project_id).rnb
         
         rel_network=[]
-        if pickled_data!=None:
-            aux = pickle.loads(pickled_data)
-            for i in aux.neuron_list:
-                if i._knowledge!=None:
-                    rel_network.append(RelNetworkClass(i._hit,i._knowledge,i._has_knowledge))
+        if neurons_from_db!=None:
+            for i in neurons_from_db.values():
+                if i['has_knowledge']==True:
+                    aux=json.loads(i['knowledge'])
+                    rel_network.append(RelNetworkClass(i['hit'],aux,i['has_knowledge']))
             serializer = RelNetworkSerializer(instance=rel_network, many=True)
         
             return Response(serializer.data)

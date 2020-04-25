@@ -24,7 +24,7 @@ class UserCollectionViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         #request.user.images_collection.filter()
-        print(serializer.validated_data)
+        #print(serializer.validated_data)
         serializer.save(owner=self.request.user)
 
 

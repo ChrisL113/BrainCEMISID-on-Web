@@ -106,27 +106,13 @@ class KernelBrainCemisid():
 
             #################### INTENTIONS MODULES ########################################################################
             self.episodic_memory = EpisodicMemoriesBlock.deserialize("episodic_memory", self.project_id)
-            #print(self.episodic_memory.__dict__)
-            #for i in self.episodic_memory.group_list:
-                #print(i.__dict__)
-                #for k in i.group:
-                    #print(k.__dict__)
-                    # if isinstance(k._knowledge, int):
-                    #     asd=int(k._knowledge)
-                    #     print(asd)
-                    # else:
-                    #     print(k._knowledge.__dict__)
             self.decisions_block = DecisionsBlock.deserialize("decisions_block", self.project_id)
-            #print(self.decisions_block.__dict__)
-            #print(self.decisions_block.conscious_block.decision_prediction_block.predictive_net.__dict__)
             self.internal_state = InternalState.deserialize("internal_state", self.project_id)
-            #print('internal',self.internal_state.__dict__)
             self.desired_state = InternalState.deserialize("desired_state", self.project_id)
-            #print('desired',self.desired_state.__dict__)
 
             self.message= "BRAIN SUCCESFULLY LOADED"
 
-        ################################################# NON-deserialize data################  
+        ################################################# NON-deserialize data############################################ 
         # Analytical neuron
         self.analytical_n = AnalyticalNeuron()
         #print(self.analytical_n.__dict__)
@@ -633,7 +619,7 @@ class KernelBrainCemisid():
         self.episodic_memory.bum()
         self.episodic_memory.check(learned_ids[1])
         self.episodic_memory.clack(internal_state_in)
-        EpisodicMemoriesBlock.serialize(self.episodic_memory, "episodic_memory", self.project_id)
+        EpisodicMemoriesBlock.serialize(self.episodic_memory, "episodic_memory", self.project_id, None)
         ################################################################################################################
 
     ## Erase all knowlege. Get to a *tabula rasa* state.
@@ -661,7 +647,7 @@ class KernelBrainCemisid():
         GeometricNeuralBlock.serialize(self.gnb, "gnb", self.project_id)
         ################ INTENTIONS ####################################################################################
         self.episodic_memory = EpisodicMemoriesBlock()
-        EpisodicMemoriesBlock.serialize(self.episodic_memory, "episodic_memory", self.project_id)
+        EpisodicMemoriesBlock.serialize(self.episodic_memory, "episodic_memory", self.project_id, self.brain)
         self.decisions_block = DecisionsBlock()
         DecisionsBlock.serialize(self.decisions_block, "decisions_block", self.project_id)
         self.internal_state = InternalState()
@@ -752,7 +738,7 @@ class KernelBrainCemisid():
     def _clack_episodes(self):
         episode_bcf = BiologyCultureFeelings(self.internal_state.get_state())
         self.episodic_memory.clack(episode_bcf)
-        EpisodicMemoriesBlock.serialize(self.episodic_memory, "episodic_memory", self.project_id)
+        EpisodicMemoriesBlock.serialize(self.episodic_memory, "episodic_memory", self.project_id, None)
 
     ## Pass bum signal to intentions short term memory (Alternatives)
     def _bum_intentions(self):

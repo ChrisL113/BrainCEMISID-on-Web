@@ -249,9 +249,6 @@ class RelNetwork:
     def serialize(cls, obj, name, project_id, brain):
         if brain:
             if name=="rnb":
-                # pickled_obj = pickle.dumps(obj)
-                # brain_object=brain.objects.filter(pk=project_id)
-                # brain_object.update(rnb=pickled_obj)
                 rnb_data=rnb(brain_rnb=brain, index_ready_to_learn=obj._index_ready_to_learn)
                 rnb_data.save()
                 if obj.neuron_list:
@@ -265,9 +262,6 @@ class RelNetwork:
 
 
             elif name=="ss_rnb":
-                # pickled_obj = pickle.dumps(obj)
-                # brain_object=brain.objects.filter(pk=project_id)
-                # brain_object.update(ss_rnb=pickled_obj)
                 ss_rnb_data=ss_rnb(brain_ss_rnb=brain, index_ready_to_learn=obj._index_ready_to_learn)
                 ss_rnb_data.save()
                 if obj.neuron_list:
@@ -304,9 +298,7 @@ class RelNetwork:
                 ss_rnb_data=ss_rnb.objects.filter(brain_ss_rnb__pk=project_id)
                 ss_rnb_data.update(index_ready_to_learn=obj._index_ready_to_learn)
 
-                index_db=SsRnbNeuron.objects.filter(ss_rnb_brain_ss_rnb_pk=project_id).values('id').earliest('id')
-                print(obj.neuron_list)
-                print("djfskal;fsdaj")
+                index_db=SsRnbNeuron.objects.filter(ss_rnb_brain_ss_rnb__pk=project_id).values('id').earliest('id')
                 ind=0
                 while ind < obj._index_ready_to_learn:
                     if obj.neuron_list[ind].it_changed:
@@ -326,9 +318,6 @@ class RelNetwork:
     def deserialize(cls, name, project_id):
         NEURON_COUNT=100
         if name=="rnb":
-            #brain_object=brain.objects.values('rnb','id').filter(id=project_id)
-            #pickled_data = brain_object[0]['rnb']
-            #return pickle.loads(pickled_data)
             rnb_data=rnb.objects.filter(brain_rnb__pk=project_id)
             neurons_from_db=RnbNeuron.objects.filter(rnb=rnb_data[0], has_knowledge=True).order_by('id')
 
@@ -347,14 +336,6 @@ class RelNetwork:
             return data
 
         elif name=="ss_rnb":
-            # brain_object=brain.objects.values('ss_rnb','id').filter(id=project_id)
-            # pickled_data = brain_object[0]['ss_rnb']
-            # print(pickle.loads(pickled_data).__dict__)
-            # for index123 in pickle.loads(pickled_data).neuron_list:
-            #     print(index123.__dict__)
-            #     if index123._knowledge :
-            #         print(index123._knowledge.__dict__)
-            # return pickle.loads(pickled_data)
             ss_rnb_data=ss_rnb.objects.filter(brain_ss_rnb__pk=project_id)
             neurons_from_db=SsRnbNeuron.objects.filter(ss_rnb=ss_rnb_data[0], has_knowledge=True).order_by('id')
 
