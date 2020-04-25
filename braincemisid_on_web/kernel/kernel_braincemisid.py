@@ -746,7 +746,7 @@ class KernelBrainCemisid():
         # Memory's bcf affects internal state
         self.feed_internal_state(episode_bcf)
         # Disable bbcc
-        self._enable_bbcc = False
+        # self._enable_bbcc = False
 
     ## Pass clack signal to episodic memory
     def _clack_episodes(self):
