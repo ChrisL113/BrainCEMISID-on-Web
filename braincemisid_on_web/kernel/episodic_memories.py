@@ -61,23 +61,25 @@ class EpisodicMemoriesBlock(CulturalNetwork):
 
         else:
             episodic_memory_data=episodic_memory.objects.filter(brain_episodic_memory__pk = project_id)
+            print(obj._index_ready_to_learn, " ....here is the index ready to learn")
+            if episodic_memory_data[0].index_ready_to_learn < obj._index_ready_to_learn or obj._index_ready_to_learn == 1:
+                if obj.group_list:
+                    knowl = None
+                    group_data = []
+                    if obj.group_list[obj._index_ready_to_learn-1].group != []:
+                        for i in obj.group_list[obj._index_ready_to_learn-1].group:
+                            if isinstance(i._knowledge, int):
+                                knowl = i._knowledge
+                            else:
+                                knowl = i._knowledge.__dict__
+                            
+                            group_data.append({'has_knowledge': i._has_knowledge, '_knowledge': knowl})
+                        
+                        group_data.append({'index_bip': obj.group_list[obj._index_ready_to_learn-1]._index_bip})    
+                        query_group = Group(episodic_memory_group = episodic_memory_data[0], index_bip = obj.group_list[obj._index_ready_to_learn-1]._index_bip, episodicMemNeuron = group_data)
+                        query_group.save()
+
             episodic_memory_data.update(index_ready_to_learn = obj._index_ready_to_learn, clack = obj._clack, indexes_recognized = obj._recognized_indexes)
-        
-        if obj.group_list:
-            knowl = None
-            group_data = []
-            if obj.group_list[-1].group != []:
-                for i in obj.group_list[-1].group:
-                    if isinstance(i._knowledge, int):
-                        knowl = i._knowledge
-                    else:
-                        knowl = i._knowledge.__dict__
-                    
-                    group_data.append({'has_knowledge': i._has_knowledge, '_knowledge': knowl})
-                
-                group_data.append({'index_bip': obj.group_list[-1]._index_bip})    
-                query_group = Group(episodic_memory_group = episodic_memory_data[0], index_bip = obj.group_list[-1]._index_bip, episodicMemNeuron = group_data)
-                query_group.save()
 
     @classmethod
     ## Deserialize object stored in given file
@@ -89,15 +91,31 @@ class EpisodicMemoriesBlock(CulturalNetwork):
         group_from_db = Group.objects.filter(episodic_memory_group = episodic_memory_data[0]).order_by('id')
 
         
-        data = CulturalNetwork()
+        data = EpisodicMemoriesBlock()
 
-        # data._index_ready_to_learn = episodic_memory_data[0].index_ready_to_learn
-        # data._clack = episodic_memory_data[0].clack
-        # data._recognized_indexes = episodic_memory_data[0].indexes_recognized
-
+        it=None
         for i in group_from_db.values():
-            print(i)
-        
+
+            it = len(i['episodicMemNeuron'])
+
+            for k in range(0, it):
+                if k == 0 :
+                    data.bum()
+
+                if k > 0 and k < it-3 :
+                    data.bip(i['episodicMemNeuron'][k]['_knowledge'])
+                
+                if k == it-3 :
+                    data.check(i['episodicMemNeuron'][k]['_knowledge'])
+
+                if k == it-2 :
+                    bcf = [i['episodicMemNeuron'][k]['_knowledge']['biology'], i['episodicMemNeuron'][k]['_knowledge']['culture'], i['episodicMemNeuron'][k]['_knowledge']['feelings']]
+                    data.clack(bcf)
+
+        data._index_ready_to_learn = episodic_memory_data[0].index_ready_to_learn
+        data._clack = episodic_memory_data[0].clack
+        data._recognized_indexes = episodic_memory_data[0].indexes_recognized
+
         return data
 
 ## @}
