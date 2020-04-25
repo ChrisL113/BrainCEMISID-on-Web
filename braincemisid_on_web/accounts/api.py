@@ -20,7 +20,7 @@ class RegisterAPI(generics.GenericAPIView):
                 user = serializer.save()
                 serialized_response=UserSerializer(user, context=self.get_serializer_context()).data
                 auth=AuthToken.objects.create(user)[1]
-                print(serialized_response,auth)
+                # print(serialized_response,auth)
                 return Response ({"user": serialized_response,"token": auth})
         except:
             return Response ({"message" : "not sufficient data :("})
@@ -36,8 +36,8 @@ class LoginAPI(generics.GenericAPIView):
         user = serializer.validated_data
         serialized_response=UserSerializer(user, context=self.get_serializer_context()).data
         auth=AuthToken.objects.create(user)[1]
-        print(serialized_response)
-        print("token :",auth)
+        # print(serialized_response)
+        # print("token :",auth)
         return Response ({
             "user": serialized_response,
             "token": auth

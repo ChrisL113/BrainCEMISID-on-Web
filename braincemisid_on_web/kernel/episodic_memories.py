@@ -67,6 +67,8 @@ class EpisodicMemoriesBlock(CulturalNetwork):
         
         brain_object=brain.objects.values('episodic_memory','id').filter(id=project_id)
         pickled_data = brain_object[0]['episodic_memory']
+        aux=pickle.loads(pickled_data)
+        print(aux.group_list, "here's the cooky")
         return pickle.loads(pickled_data)
 ## @}
 #

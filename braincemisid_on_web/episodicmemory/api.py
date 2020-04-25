@@ -62,7 +62,7 @@ class EpisodicMemoryViewSet(viewsets.ModelViewSet):
         episodic_memory=[]
         if pickled_data!=None:
             aux = pickle.loads(pickled_data)
-            print(aux.__dict__)
+            # print(aux.__dict__)
             for k in aux.group_list:
                 for i in k.group:
                     
