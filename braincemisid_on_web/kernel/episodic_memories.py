@@ -2,6 +2,7 @@ import pickle
 from brain.models import *
 
 from cultural_network import CulturalNetwork,CulturalGroup,CulturalNeuron
+from internal_state import InternalState
 
 import json
 
@@ -61,25 +62,25 @@ class EpisodicMemoriesBlock(CulturalNetwork):
 
         else:
             episodic_memory_data=episodic_memory.objects.filter(brain_episodic_memory__pk = project_id)
-            print(obj._index_ready_to_learn, " ....here is the index ready to learn")
-            if episodic_memory_data[0].index_ready_to_learn < obj._index_ready_to_learn or obj._index_ready_to_learn == 1:
-                if obj.group_list:
-                    knowl = None
-                    group_data = []
-                    if obj.group_list[obj._index_ready_to_learn-1].group != []:
-                        for i in obj.group_list[obj._index_ready_to_learn-1].group:
-                            if isinstance(i._knowledge, int):
-                                knowl = i._knowledge
-                            else:
-                                knowl = i._knowledge.__dict__
-                            
-                            group_data.append({'has_knowledge': i._has_knowledge, '_knowledge': knowl})
-                        
-                        group_data.append({'index_bip': obj.group_list[obj._index_ready_to_learn-1]._index_bip})    
-                        query_group = Group(episodic_memory_group = episodic_memory_data[0], index_bip = obj.group_list[obj._index_ready_to_learn-1]._index_bip, episodicMemNeuron = group_data)
-                        query_group.save()
+            if episodic_memory_data[0].index_ready_to_learn < obj._index_ready_to_learn :
+                knowl = None
+                group_data = []
+                index_alrdy_deprecated=None
 
-            episodic_memory_data.update(index_ready_to_learn = obj._index_ready_to_learn, clack = obj._clack, indexes_recognized = obj._recognized_indexes)
+                for i in obj.group_list[obj._index_ready_to_learn-1].group:
+
+                    if isinstance(i._knowledge, int):
+                        knowl = i._knowledge
+                    else:
+                        knowl = i._knowledge.__dict__
+
+                    group_data.append({'has_knowledge': i._has_knowledge, '_knowledge': knowl})
+                
+                group_data.append({'index_bip': obj.group_list[obj._index_ready_to_learn-1]._index_bip})    
+                query_group = Group(episodic_memory_group = episodic_memory_data[0], index_bip = obj.group_list[obj._index_ready_to_learn-1]._index_bip, episodicMemNeuron = group_data)
+                query_group.save()
+
+                episodic_memory_data.update(index_ready_to_learn = obj._index_ready_to_learn, clack = obj._clack, indexes_recognized = obj._recognized_indexes)
 
     @classmethod
     ## Deserialize object stored in given file
@@ -97,20 +98,18 @@ class EpisodicMemoriesBlock(CulturalNetwork):
         for i in group_from_db.values():
 
             it = len(i['episodicMemNeuron'])
+            data.bum()
 
-            for k in range(0, it):
-                if k == 0 :
-                    data.bum()
+            for k in range(0, it-3):
 
-                if k > 0 and k < it-3 :
-                    data.bip(i['episodicMemNeuron'][k]['_knowledge'])
-                
-                if k == it-3 :
-                    data.check(i['episodicMemNeuron'][k]['_knowledge'])
+                data.bip(i['episodicMemNeuron'][k]['_knowledge'])
 
-                if k == it-2 :
-                    bcf = [i['episodicMemNeuron'][k]['_knowledge']['biology'], i['episodicMemNeuron'][k]['_knowledge']['culture'], i['episodicMemNeuron'][k]['_knowledge']['feelings']]
-                    data.clack(bcf)
+            data.check(i['episodicMemNeuron'][-3]['_knowledge'])
+
+            bcf = [i['episodicMemNeuron'][-2]['_knowledge']['biology'], i['episodicMemNeuron'][-2]['_knowledge']['culture'], i['episodicMemNeuron'][-2]['_knowledge']['feelings']]
+            bcfState = InternalState(bcf)
+            data.clack(bcfState)
+            
 
         data._index_ready_to_learn = episodic_memory_data[0].index_ready_to_learn
         data._clack = episodic_memory_data[0].clack
@@ -143,6 +142,14 @@ if __name__ == '__main__':
     bcf = [0.5, 0.7, 0.4]
     em.clack(bcf)
 
+    em.bum()
+    em.bip('board')
+    em.bip('notebook')
+    em.check('pupils')
+    bcf = [0.4, 0.7, 0.4]
+    em.clack(bcf)
+
+    
     em.bum()
     em.bip('board')
     em.bip('notebook')

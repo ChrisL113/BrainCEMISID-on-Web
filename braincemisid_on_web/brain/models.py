@@ -24,7 +24,7 @@ class episodic_memory(models.Model):
         on_delete = models.CASCADE,
         primary_key = True,
     )
-    index_ready_to_learn = models.IntegerField()
+    index_ready_to_learn = models.IntegerField(default=0)
     clack = models.BooleanField()
     indexes_recognized = JSONField(null=True,blank=True)
 
