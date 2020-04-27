@@ -373,6 +373,9 @@ class GeometricNeuralBlock:
         
         brain_object=brain.objects.values('gnb','id').filter(id=project_id)
         pickled_data = brain_object[0]['gnb']
+        # aux = pickle.loads(pickled_data)
+        # print(aux.__dict__)
+        # print(aux._order_structure.__dict__)
         return pickle.loads(pickled_data)
 
 

@@ -65,8 +65,9 @@ class DecisionsBlock:
     # @param obj CulturalNetwork object to be serialized
     # @param name Name of the file where the serialization is to be stored
     def serialize(cls, obj, name, project_id):
+        
         pickled_obj = pickle.dumps(obj)
-        brain_object=brain.objects.filter(pk=project_id)
+        brain_object = brain.objects.filter(pk=project_id)
         brain_object.update(decisions_block=pickled_obj)
 
     @classmethod
@@ -75,8 +76,12 @@ class DecisionsBlock:
     # @param name Name of the file where the object is serialize
     def deserialize(cls, name, project_id):
         
-        brain_object=brain.objects.values('decisions_block','id').filter(id=project_id)
+        brain_object = brain.objects.values('decisions_block','id').filter(id=project_id)
         pickled_data = brain_object[0]['decisions_block']
+        # aux = pickle.loads(pickled_data)
+        # print(aux.__dict__)
+        # print(aux.unconscious_block.__dict__)
+        # print(aux.conscious_block.__dict__)
         return pickle.loads(pickled_data)
 
 

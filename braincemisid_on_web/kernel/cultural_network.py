@@ -188,17 +188,101 @@ class CulturalNetwork:
     # @param cls CulturalNetwork class
     # @param obj CulturalNetwork object to be serialized
     # @param name Name of the file where the serialization is to be stored
-    def serialize(cls, obj, name, project_id):
+    def serialize(cls, obj, name, project_id, brainproto):
         
         pickled_obj = pickle.dumps(obj)
-        brain_object=brain.objects.filter(pk=project_id)
+        brain_object = brain.objects.filter(pk = project_id)
         
-        if name=="syllables_net":
-            brain_object.update(syllables_net=pickled_obj)
-        elif name=="am_net":
-            brain_object.update(am_net=pickled_obj)
-        elif name=="words_net":
-            brain_object.update(words_net=pickled_obj)
+        if name == "syllables_net":
+            brain_object.update(syllables_net_proto = pickled_obj)
+            print(obj.group_list[-1].__dict__)
+        elif name == "am_net":
+            brain_object.update(am_net_proto = pickled_obj)
+            print(obj.group_list[-1].__dict__)
+        elif name == "words_net":
+            brain_object.update(words_net_proto = pickled_obj)
+            print(obj.group_list[-1].__dict__)
+
+        if brainproto:
+
+            if name == "syllables_net":
+                syllables_net_data = syllables_net(brain_syllables_net = brainproto, index_ready_to_learn = obj._index_ready_to_learn, clack = obj._clack, indexes_recognized = obj._recognized_indexes) 
+                syllables_net_data.save()
+
+            if name == "am_net":
+                am_net_data = am_net(brain_am_net = brainproto, index_ready_to_learn = obj._index_ready_to_learn, clack = obj._clack, indexes_recognized = obj._recognized_indexes)
+                am_net_data.save()
+
+            if name == "words_net":
+                words_net_data = words_net(brain_words_net = brainproto, index_ready_to_learn = obj._index_ready_to_learn, clack = obj._clack, indexes_recognized = obj._recognized_indexes)
+                words_net_data.save()
+
+        else:
+
+            if name == "syllables_net":
+                syllables_net_data = syllables_net.objects.filter(brain_syllables_net__pk = project_id)
+                if syllables_net_data[0].index_ready_to_learn < obj._index_ready_to_learn :
+                    knowl = None
+                    group_data = []
+                    index_alrdy_deprecated = None
+
+                for i in obj.group_list[obj._index_ready_to_learn-1].group:
+                    
+                    if isinstance(i._knowledge, int):
+                        knowl = i._knowledge
+                    else:
+                        knowl = i._knowledge.__dict__
+                    
+                    group_data.append({'has_knowledge': i._has_knowledge, '_knowledge': knowl})
+
+                syllables_net_data.append({'index_bip': obj.group_list[obj._index_ready_to_learn-1]._index_bip})    
+                query_group = group_am_net(brain_am_net = syllables_net_data[0], index_bip = obj.group_list[obj._index_ready_to_learn-1]._index_bip, SyllaNetNeuron = group_data)
+                query_group.save()
+
+                syllables_net_data.update(index_ready_to_learn = obj._index_ready_to_learn, clack = obj._clack, indexes_recognized = obj._recognized_indexes)
+
+            if name == "am_net":
+                am_net_data = am_net.objects.filter(brain_am_net__pk = project_id)
+                if am_net_data[0].index_ready_to_learn < obj._index_ready_to_learn :
+                    knowl = None
+                    group_data = []
+                    index_alrdy_deprecated = None
+
+                for i in obj.group_list[obj._index_ready_to_learn-1].group:
+                    
+                    knowl = i._knowledge.__dict__
+                    group_data.append({'has_knowledge': i._has_knowledge, '_knowledge': knowl})
+
+                am_net_data.append({'index_bip': obj.group_list[obj._index_ready_to_learn-1]._index_bip})    
+                query_group = group_am_net(brain_am_net = am_net_data[0], index_bip = obj.group_list[obj._index_ready_to_learn-1]._index_bip, AmNetNeuron = group_data)
+                query_group.save()
+
+                am_net_data.update(index_ready_to_learn = obj._index_ready_to_learn, clack = obj._clack, indexes_recognized = obj._recognized_indexes)
+
+            if name == "words_net":
+                words_net_data = words_net.objects.filter(brain_words_net__pk = project_id)
+                if words_net_data[0].index_ready_to_learn < obj._index_ready_to_learn :
+                    knowl = None
+                    group_data = []
+                    index_alrdy_deprecated = None
+
+                for i in obj.group_list[obj._index_ready_to_learn-1].group:
+                    
+                    if isinstance(i._knowledge, int):
+                        knowl = i._knowledge
+                    else:
+                        knowl = i._knowledge.__dict__
+                    
+                    group_data.append({'has_knowledge': i._has_knowledge, '_knowledge': knowl})
+
+                words_net_data.append({'index_bip': obj.group_list[obj._index_ready_to_learn-1]._index_bip})    
+                query_group = group_am_net(brain_am_net = words_net_data[0], index_bip = obj.group_list[obj._index_ready_to_learn-1]._index_bip, WordNetNeuron = group_data)
+                query_group.save()
+
+                words_net_data.update(index_ready_to_learn = obj._index_ready_to_learn, clack = obj._clack, indexes_recognized = obj._recognized_indexes)
+
+
+
 
     @classmethod
     ## Deserialize object stored in given file
@@ -208,18 +292,18 @@ class CulturalNetwork:
         
 
         if name=="syllables_net":
-            brain_object=brain.objects.values('syllables_net','id').filter(id=project_id)
-            pickled_data = brain_object[0]['syllables_net']
+            brain_object=brain.objects.values('syllables_net_proto','id').filter(id=project_id)
+            pickled_data = brain_object[0]['syllables_net_proto']
             return pickle.loads(pickled_data)
 
         elif name=="am_net":
-            brain_object=brain.objects.values('am_net','id').filter(id=project_id)
-            pickled_data = brain_object[0]['am_net']
+            brain_object=brain.objects.values('am_net_proto','id').filter(id=project_id)
+            pickled_data = brain_object[0]['am_net_proto']
             return pickle.loads(pickled_data)
 
         elif name=="words_net":
-            brain_object=brain.objects.values('words_net','id').filter(id=project_id)
-            pickled_data = brain_object[0]['words_net']
+            brain_object=brain.objects.values('words_net_proto','id').filter(id=project_id)
+            pickled_data = brain_object[0]['words_net_proto']
             return pickle.loads(pickled_data)
         
 

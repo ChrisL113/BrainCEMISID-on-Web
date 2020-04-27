@@ -6,20 +6,20 @@ from images_collections.models import ImagesFromNeuron
 
 class brain(models.Model):
     name = models.CharField(default='', max_length=250)
-    am_net = models.BinaryField(null=True)
+    am_net_proto = models.BinaryField(null=True)
     gnb = models.BinaryField(null=True)
-    syllables_net = models.BinaryField(null=True)
-    words_net = models.BinaryField(null=True)
+    syllables_net_proto = models.BinaryField(null=True)
+    words_net_proto = models.BinaryField(null=True)
     decisions_block = models.BinaryField(null=True)
     internal_state = JSONField(null=True,blank=True)
     desired_state = JSONField(null=True,blank=True)
     user = models.ForeignKey(User, related_name="brain", on_delete=models.CASCADE, null=True)
 
 
-############################################################ Episodic Memories ##############################################
+############################################################ am_net ##############################################
 
-class episodic_memory(models.Model):
-    brain_episodic_memory=models.OneToOneField(
+class am_net(models.Model):
+    brain_am_net = models.OneToOneField(
         brain,
         on_delete = models.CASCADE,
         primary_key = True,
@@ -28,8 +28,62 @@ class episodic_memory(models.Model):
     clack = models.BooleanField()
     indexes_recognized = JSONField(null=True,blank=True)
 
-class Group(models.Model):
-    episodic_memory_group = models.ForeignKey(episodic_memory, related_name="group",on_delete=models.CASCADE, null=True)
+class group_am_net(models.Model):
+    am_net_group = models.ForeignKey(am_net, related_name="am_net_group",on_delete=models.CASCADE, null=True)
+    index_bip = models.IntegerField()
+    AmNetNeuron = JSONField(null=True,blank=True)
+
+
+############################################################ Syllables_net ##############################################
+
+class syllables_net(models.Model):
+    brain_syllables_net = models.OneToOneField(
+        brain,
+        on_delete = models.CASCADE,
+        primary_key = True,
+    )
+    index_ready_to_learn = models.IntegerField(default=0)
+    clack = models.BooleanField()
+    indexes_recognized = JSONField(null=True,blank=True)
+
+class group_syllables_net(models.Model):
+    syllables_net_group = models.ForeignKey(syllables_net, related_name="syllables_net_group",on_delete=models.CASCADE, null=True)
+    index_bip = models.IntegerField()
+    SyllaNetNeuron = JSONField(null=True,blank=True)
+
+
+############################################################ Words_net ##############################################
+
+class words_net(models.Model):
+    brain_words_net = models.OneToOneField(
+        brain,
+        on_delete = models.CASCADE,
+        primary_key = True,
+    )
+    index_ready_to_learn = models.IntegerField(default=0)
+    clack = models.BooleanField()
+    indexes_recognized = JSONField(null=True,blank=True)
+
+class group_words_net(models.Model):
+    words_net_group = models.ForeignKey(words_net, related_name="words_net_group",on_delete=models.CASCADE, null=True)
+    index_bip = models.IntegerField()
+    WordNetNeuron = JSONField(null=True,blank=True)
+
+
+############################################################ Episodic Memories ##############################################
+
+class episodic_memory(models.Model):
+    brain_episodic_memory = models.OneToOneField(
+        brain,
+        on_delete = models.CASCADE,
+        primary_key = True,
+    )
+    index_ready_to_learn = models.IntegerField(default=0)
+    clack = models.BooleanField()
+    indexes_recognized = JSONField(null=True,blank=True)
+
+class group_episode(models.Model):
+    episodic_memory_group = models.ForeignKey(episodic_memory, related_name="episode_group",on_delete=models.CASCADE, null=True)
     index_bip = models.IntegerField()
     episodicMemNeuron = JSONField(null=True,blank=True)
 

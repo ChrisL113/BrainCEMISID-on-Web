@@ -420,7 +420,7 @@ class KernelBrainCemisid():
         hearing_id = self.am_net.get_tail_knowledge(am_id)
         # Get hearing knowledge related to recognized sight pattern from BNS
         self.h_knowledge_out = self.snb.get_hearing_knowledge(hearing_id, True)
-        self._enable_bbcc = False
+        # self._enable_bbcc = False
 
     ## Check if either syllables net or words net has a piece of knowledge related to
     # the given bbcc input sequence
@@ -447,7 +447,7 @@ class KernelBrainCemisid():
             sight_id = self.ss_rnb.get_hearing_rels(syll_id)[0].get_s_id()
             self.s_knowledge_out = self.snb.get_sight_knowledge(sight_id, True)
             self.h_knowledge_out = hearing_knowledge
-            self._enable_bbcc = False
+            #self._enable_bbcc = False
             self._learning_words = False
         #
         self._learning_syllables = False
@@ -461,7 +461,7 @@ class KernelBrainCemisid():
                 self.state = "MISS"
                 return
             self.s_knowledge_out = self.words_net.get_tail_knowledge(word_id)
-            self._enable_bbcc = False
+            #self._enable_bbcc = False
             self._learning_syllables = False
         #
         self._learning_words = False
@@ -490,14 +490,14 @@ class KernelBrainCemisid():
             sight_class = "None"
             sight_knowledge = RbfKnowledge(sight_pattern, sight_class)
             self.words_net.clack(sight_knowledge)
-            CulturalNetwork.serialize(self.words_net, "words_net", self.project_id)
+            CulturalNetwork.serialize(self.words_net, "words_net", self.project_id, None)
             self._learning_words = False
         else:
             hearing_pattern = self.h_knowledge_in.get_pattern()
             hearing_class = self.h_knowledge_in.get_class()
             hearing_knowledge = RbfKnowledge(hearing_pattern, hearing_class)
             self.syllables_net.clack(hearing_knowledge)
-            CulturalNetwork.serialize(self.syllables_net, "syllables_net", self.project_id)
+            CulturalNetwork.serialize(self.syllables_net, "syllables_net", self.project_id, None)
             syll_hearing_id = self.syllables_net.get_last_clack_id()
             sight_pattern = self.s_knowledge_in.get_pattern()
             # Recognize
@@ -523,7 +523,7 @@ class KernelBrainCemisid():
         if self.state == "HIT":
             hearing_id = self._get_hearing_id_recognize()
             self.am_net.clack(hearing_id)
-            CulturalNetwork.serialize(self.am_net, "am_net", self.project_id)
+            CulturalNetwork.serialize(self.am_net, "am_net", self.project_id, None)
 
     ## Recognize either hearing or sight patterns.
     def recognize(self):
@@ -632,13 +632,13 @@ class KernelBrainCemisid():
         RelNetwork.serialize(self.rnb, "rnb", self.project_id, self.brain) 
         # Addition by memory network
         self.am_net = CulturalNetwork(100)
-        CulturalNetwork.serialize(self.am_net, "am_net", self.project_id)
+        CulturalNetwork.serialize(self.am_net, "am_net", self.project_id, self.brain)
         # Syllables net
         self.syllables_net = CulturalNetwork(100)
-        CulturalNetwork.serialize(self.syllables_net, "syllables_net", self.project_id)
+        CulturalNetwork.serialize(self.syllables_net, "syllables_net", self.project_id, self.brain)
         # Words net
         self.words_net = CulturalNetwork(100)
-        CulturalNetwork.serialize(self.words_net, "words_net", self.project_id)
+        CulturalNetwork.serialize(self.words_net, "words_net", self.project_id, self.brain)
         # Sight-Syllables rel network
         self.ss_rnb = RelNetwork(100)
         RelNetwork.serialize(self.ss_rnb, "ss_rnb", self.project_id, self.brain)

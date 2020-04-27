@@ -61,11 +61,11 @@ class EpisodicMemoriesBlock(CulturalNetwork):
             episodic_memory_data.save()
 
         else:
-            episodic_memory_data=episodic_memory.objects.filter(brain_episodic_memory__pk = project_id)
+            episodic_memory_data = episodic_memory.objects.filter(brain_episodic_memory__pk = project_id)
             if episodic_memory_data[0].index_ready_to_learn < obj._index_ready_to_learn :
                 knowl = None
                 group_data = []
-                index_alrdy_deprecated=None
+                index_alrdy_deprecated = None
 
                 for i in obj.group_list[obj._index_ready_to_learn-1].group:
 
@@ -77,7 +77,7 @@ class EpisodicMemoriesBlock(CulturalNetwork):
                     group_data.append({'has_knowledge': i._has_knowledge, '_knowledge': knowl})
                 
                 group_data.append({'index_bip': obj.group_list[obj._index_ready_to_learn-1]._index_bip})    
-                query_group = Group(episodic_memory_group = episodic_memory_data[0], index_bip = obj.group_list[obj._index_ready_to_learn-1]._index_bip, episodicMemNeuron = group_data)
+                query_group = group_episode(episodic_memory_group = episodic_memory_data[0], index_bip = obj.group_list[obj._index_ready_to_learn-1]._index_bip, episodicMemNeuron = group_data)
                 query_group.save()
 
                 episodic_memory_data.update(index_ready_to_learn = obj._index_ready_to_learn, clack = obj._clack, indexes_recognized = obj._recognized_indexes)
@@ -89,7 +89,7 @@ class EpisodicMemoriesBlock(CulturalNetwork):
     def deserialize(cls, name, project_id):
         
         episodic_memory_data = episodic_memory.objects.filter(brain_episodic_memory__pk = project_id)
-        group_from_db = Group.objects.filter(episodic_memory_group = episodic_memory_data[0]).order_by('id')
+        group_from_db = group_episode.objects.filter(episodic_memory_group = episodic_memory_data[0]).order_by('id')
 
         
         data = EpisodicMemoriesBlock()
