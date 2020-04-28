@@ -513,7 +513,7 @@ class KernelBrainCemisid():
             # Learn relation in new net
             rel_knowledge = RelKnowledge(syll_hearing_id, sight_id)
             self.ss_rnb.learn(rel_knowledge)
-            RelNetwork.serialize(self.ss_rnb, "ss_rnb", self.project_id, self.brain)
+            RelNetwork.serialize(self.ss_rnb, "ss_rnb", self.project_id, None)
             self._learning_syllables = False
 
     ##  Learn addition related to given bbcc sequence

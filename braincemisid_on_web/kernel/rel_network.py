@@ -279,7 +279,7 @@ class RelNetwork:
                 rnb_data=rnb.objects.filter(brain_rnb__pk=project_id)
                 rnb_data.update(index_ready_to_learn=obj._index_ready_to_learn)
 
-                index_db=RnbNeuron.objects.filter(rnb__brain_rnb__pk=project_id).values('id').earliest('id')
+                index_db=RnbNeuron.objects.filter(rnb=rnb_data[0]).values('id').earliest('id')
 
                 ind=0
                 while ind < obj._index_ready_to_learn:
@@ -298,7 +298,7 @@ class RelNetwork:
                 ss_rnb_data=ss_rnb.objects.filter(brain_ss_rnb__pk=project_id)
                 ss_rnb_data.update(index_ready_to_learn=obj._index_ready_to_learn)
 
-                index_db=SsRnbNeuron.objects.filter(ss_rnb_brain_ss_rnb__pk=project_id).values('id').earliest('id')
+                index_db=SsRnbNeuron.objects.filter(ss_rnb=ss_rnb_data[0]).values('id').earliest('id')
                 ind=0
                 while ind < obj._index_ready_to_learn:
                     if obj.neuron_list[ind].it_changed:

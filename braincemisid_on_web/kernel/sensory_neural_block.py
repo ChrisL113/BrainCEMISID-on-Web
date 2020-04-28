@@ -436,7 +436,7 @@ class RbfNetwork:
                 sight_network=snb_s.objects.filter(brain_s__pk=project_id)
                 sight_network.update(state=obj._state, index_ready_to_learn=obj._index_ready_to_learn, last_learned_id=obj._last_learned_id)
 
-                index_db=RbfNeuronSight.objects.filter(snb_sight_id=project_id).values('id').earliest('id')
+                index_db=RbfNeuronSight.objects.filter(snb_sight=sight_network[0]).values('id').earliest('id')
                 if obj._index_recognize:
                     qdel=IndexRecognizeSight.objects.filter(snb_sight=sight_network[0])
                     qdel.delete()
@@ -465,7 +465,7 @@ class RbfNetwork:
                 hearing_network=snb_h.objects.filter(brain_h__pk=project_id)
                 hearing_network.update(state=obj._state, index_ready_to_learn=obj._index_ready_to_learn, last_learned_id=obj._last_learned_id)
 
-                index_db=RbfNeuronHearing.objects.filter(snb_hearing_id=project_id).values('id').earliest('id')
+                index_db=RbfNeuronHearing.objects.filter(snb_hearing=hearing_network[0]).values('id').earliest('id')
                 if obj._index_recognize:
                     qdel=IndexRecognizeHearing.objects.filter(snb_hearing=hearing_network[0])
                     qdel.delete()

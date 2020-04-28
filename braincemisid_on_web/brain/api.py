@@ -53,6 +53,7 @@ class KernelViewSet(viewsets.ViewSet):
     def show_kernel_outputs(self):
         internal_status = self.kernel.get_internal_state().get_state()
         desired_status = self.kernel.get_desired_state().get_state()
+        print(self.kernel.state)
         if self.kernel.state == "HIT":
             self.h_knowledge = self.kernel.get_hearing_knowledge_out()
             self.s_knowledge = self.kernel.get_sight_knowledge_out()
@@ -63,11 +64,21 @@ class KernelViewSet(viewsets.ViewSet):
             if isinstance(self.h_knowledge, list):
                 for a in self.h_knowledge:
                     aux_h=a.__dict__
-                for a in self.s_knowledge:
-                    aux_s=a.__dict__
             else:
-                aux_h=self.h_knowledge.__dict__
-                aux_s=self.s_knowledge.__dict__
+                if self.h_knowledge == None:
+                    aux_h = self.h_knowledge
+                elif self.h_knowledge != None:
+                    aux_h = self.h_knowledge.__dict__
+                    
+            if isinstance(self.s_knowledge, list):
+                for a in self.s_knowledge:
+                    aux_s = a.__dict__
+            else:
+                if self.s_knowledge == None:
+                    aux_s = self.s_knowledge
+                elif self.s_knowledge != None:
+                    aux_s = self.s_knowledge.__dict__
+
             self.brain_output=[]
             #aux=RbfNeuronSight.objects.filter(snb_sight__brain_s__id=self.kernel.project_id).values('id').earliest('id')
             #num=int(self.s_knowledge._class)+aux['id'] 
@@ -185,7 +196,7 @@ class KernelViewSet(viewsets.ViewSet):
                 print("entering..CLACK")
                 if 'image_id' in index:
                     if  index['image_id']==-1:
-                            return Response({'message':'neuron saved but without image because of debugging option'})
+                            return Response({'message':'neuron saved but without image'})
                     # if index['image_id']< -1:
                     #     neuron_from_db=RbfNeuronSight.objects.filter(pk=self.kernel.snb.snb_s._last_learned_id_from_db).values('img_id')
                     #     if  (neuron_from_db[0]['img_id']==None and "image_id" in index) or ("image_id" in index and index['rename']==True):   
