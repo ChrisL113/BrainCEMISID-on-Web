@@ -6,18 +6,19 @@ from images_collections.models import ImagesFromNeuron
 
 class brain(models.Model):
     name = models.CharField(default='', max_length=250)
-    ######################################################## REVISION ###########################################################
+
+############################################################ NEEDS REVISION ###########################################################
     gnb = models.BinaryField(null=True)
     am_net_proto = models.BinaryField(null=True)
-    ################################################################################################################################
     decisions_block = models.BinaryField(null=True)
+#################################################################################################################################
 
     internal_state = JSONField(null=True,blank=True)
     desired_state = JSONField(null=True,blank=True)
     user = models.ForeignKey(User, related_name="brain", on_delete=models.CASCADE, null=True)
 
 
-############################################################ am_net ##############################################
+############################################################ am_net (ONLY SERIALIZING WORKING) ##############################################
 
 class am_net(models.Model):
     brain_am_net = models.OneToOneField(
@@ -169,78 +170,3 @@ class RbfNeuronHearing(models.Model):
 class IndexRecognizeHearing(models.Model):
     snb_hearing = models.ForeignKey(snb_h, related_name="index_recognize",on_delete=models.CASCADE, null=True)
     index_recognize = models.IntegerField()
-
-
-
-# ########### gnb
-# class knowledge_GNB(models.Model):
-#     neuron=models.OneToOneField(
-#         Neuron,
-#         on_delete=models.CASCADE,
-#         primary_key=True,
-#     )
-
-# class gnb(models.Model):
-#     _operation= models.CharField(default="COUNT", max_length=50)
-#     _op2_queue =
-# 	_zero =
-# 	_op1_queue =
-# 	_operator =
-# 	_add_operator =
-#     _equal_sign =
-
-# class QuantityOrderGroup(models.Model):
-#     _has_quantity = models.BooleanField(default=False)
-
-# class QuantityNeuron(models.Model):
-#     quantityOrderGroup=models.OneToOneField(
-#         QuantityOrderGroup,
-#         on_delete=models.CASCADE,
-#         primary_key=True,
-#     )
-#     ####################################POR DEFINIR###################################
-#     _has_knowledge= models.BooleanField(default=False)
-
-# class OrderNeuron(models.Model):
-#     quantityOrderGroup=models.OneToOneField(
-#         QuantityOrderGroup,
-#         on_delete=models.CASCADE,
-#         primary_key=True,
-#     )
-#     ####################################POR DEFINIR###################################
-#     _has_knowledge= models.BooleanField(default=False)
-
-# class QuantityOrderNetwork(models.Model):
-#     Gnb=models.OneToOneField(
-#         gnb,
-#         on_delete=models.CASCADE,
-#         primary_key=True,
-#     )
-#     group_list = models.ArrayModelField(
-#         model_container = QuantityOrderGroup
-#     )
-#     _index = models.IntegerField()
-
-
-# class AdditionStructure(models.Model):
-#     index = models.IntegerField()
-#     neurons = models.ArrayModelField(
-#         model_container = Neuron
-#     )
-#     Gnb=models.OneToOneField(
-#         gnb,
-#         on_delete=models.CASCADE,
-#         primary_key=True,
-#     )
-#     carry_over = models.BooleanField(default=False)
-
-# #################### decisions block
-
-# class decisions_block(models.Model):
-#     inputs_memories
-#     unconscious_block
-#     desired_state
-#     conscious_output
-#     internal_state
-#     conscious_block
-#     unconscious_output

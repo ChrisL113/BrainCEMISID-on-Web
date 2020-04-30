@@ -32,6 +32,52 @@ comprehension of their functionality. Run, for instance:
 * link of the frontend part of the project:
 https://github.com/PedrouV/BrainCEMISID-frontend
 
+## Support material
+
+* Postman queries
+
+In the root of the repo import the \Postman Queries\BrainCemisid_on_web.postman_collection.json
+
+* Manuals
+
+In the root of the repo the folder \Manuals\ contains several manuals to understand better the project
+
+## Legacy
+
+* Link of Braincemisid 2.0
+https://github.com/braincemisid/kernel
+* Link of Braincemisid 2.1 (Mudafar version)
+https://github.com/mudafar/Brain-CEMISID-Parallel
+
+## Demos videos
+
+* Basic Learning
+
+https://www.youtube.com/watch?v=BuB8OyYRkh4&feature=youtu.be
+
+* Recognition
+
+https://www.youtube.com/watch?v=OYY-w0j_ce4&feature=youtu.be
+
+* Letters
+
+https://www.youtube.com/watch?v=_OWHv3APHgQ&feature=youtu.be
+
+* Syllables
+
+https://www.youtube.com/watch?v=Zlsk-rDnqcQ&feature=youtu.be
+
+* Words
+
+https://www.youtube.com/watch?v=4M5qs4xYwpk&feature=youtu.be
+
+* Addition
+
+https://www.youtube.com/watch?v=cRCmvIEslIo&feature=youtu.be
+
+* learning 1 6
+
+https://www.youtube.com/watch?v=Rf_nd698rhs&feature=youtu.be
 
 ## Contributors
 

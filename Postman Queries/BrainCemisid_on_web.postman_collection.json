@@ -1,0 +1,2464 @@
+{
+	"info": {
+		"_postman_id": "3c9d0b18-182c-418a-a7f4-ea80d9f8cd6f",
+		"name": "BrainCemisid_on_web",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "basic stuffs",
+			"item": [
+				{
+					"name": "http://localhost:8000/api/auth/register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"kristo\",\n\t\"password\": \"1234\",\n\t\"email\": \"galileo.20@hotmail.com\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/auth/login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"kristo\",\n\t\"password\":\"1234\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/kernel/",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token 4ce7d764040c2735580bc7a553d94add166badddd86556a167b0001106b5055d",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/kernel/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token 5fbac32959538fd5ad1f0f144878100aa2267451edd7815cd5e6e5378357982f",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "project_name",
+									"value": "proyectprueba",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/kernel/",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "token d0972a78eb6b06249f5f2c7d3ee57ce917c25d095f37bdf9fb6f85561a0cf476",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t \"CLACK\":[{\r\n\t\"hearing_pattern\": [0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"helado\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [0.75,0.8,0.4],\r\n\t\"image_id\":-1,\r\n\t\"rename\":\"false\"\r\n\t }],\r\n\t\"mode\":\"EPISODES\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/kernel/",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "token 17089d5b21d19bc34865a299ed1f0bb2b789e677d5a1c753c573e0143d429a5d",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"CHECK\":[{\r\n\t\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0]\r\n\t}],\r\n\t\"mode\":\"INTENTIONS\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=43",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "43"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/kernel/",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "token 10212cfa062873c2f6605d7059df877eb1f4574cbca6df447fd782a990ea42f7",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t \"CLACK\":[{\r\n\t\"hearing_pattern\": [0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,15,15,15,15,15,15],\r\n\t\"hearing_class\": \"anything\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": [0.75,0.8,0.4],\r\n\t\"image_id\":-1,\r\n\t\"rename\":\"false\"\r\n\t}],\r\n\t\"mode\":\"EPISODES\"\r\n\t\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/kernel/",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "token 5eb64e50001c833997a8a1fa9ce871800eba4a14cf100c3e664d94fb69dab2db",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t \"CLACK\":[{\r\n\t\"hearing_pattern\": [0,0,0,15,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,15,15,15,15,15,15],\r\n\t\"hearing_class\": \"anyother\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": [0.75,0.8,0.4],\r\n\t\"image_id\":-1,\r\n\t\"rename\":\"false\"\r\n\t}],\r\n\t\"mode\":\"INTENTIONS\"\r\n\t\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/kernel/",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "token 9e57725bba069ea438e0030070a977ec7df30c0b680f7709a6c6c2f057f19884",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t \"CHECK\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": {\"biology\":0,\"cultural\":0,\"feelings\":0}\r\n\t}],\r\n\t\"mode\":\"INTENTIONS\"\r\n\t\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=37",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "37"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/kernel/",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "token c926374a8791505decb429c92f6351524464ed115af2f82c2715330da9749f84",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t \"CLACK\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,15,15,0,15,0,0],\r\n\t\"hearing_class\": \"brandnew\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": [0.75,0.8,0.4],\r\n\t\"desired_intentions_input\": [0.5,0.5,0],\r\n\t\"image_id\":-1,\r\n\t\"rename\":false\r\n\t}],\r\n\t\"mode\":\"INTENTIONS\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/desired_state/?project_id=1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token 9e57725bba069ea438e0030070a977ec7df30c0b680f7709a6c6c2f057f19884",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "biology",
+									"value": "0.9",
+									"type": "text"
+								},
+								{
+									"key": "culture",
+									"value": "0.9",
+									"type": "text"
+								},
+								{
+									"key": "feelings",
+									"value": "0.9",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/desired_state/?project_id=37",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"desired_state",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "37"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/desired_state/?project_id=1",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token 55d980fe3b4b5093f5211ad9a6be7c50e3d40ffc8ae61fd038d7acb41da23cb9",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/desired_state/?project_id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"desired_state",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/user_projects/",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token 55d980fe3b4b5093f5211ad9a6be7c50e3d40ffc8ae61fd038d7acb41da23cb9",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/user_projects/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user_projects",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/rel_net/?project_id=1",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token 4eccab7242e0c73fb3123cf220b7ae91a8b940e9228272ce713e5b39b8a18b07",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/rel_net/?project_id=23",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"rel_net",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "23"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/sight_net/",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token 4ce7d764040c2735580bc7a553d94add166badddd86556a167b0001106b5055d",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/sight_net/?project_id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"sight_net",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/hearing_net/",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token 4d20e1547a7708213302a1825301dbaaa0ec2be393caab84f599752f0f2d8c9a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/hearing_net/?project_id=36",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"hearing_net",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "36"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/episodicmemory/",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token 0f0ec8b321b13ec5fa8896f372bd50bf69de2a37c43790c463898a5e9dd33a04",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/episodicmemory/?project_id=23",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"episodicmemory",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "23"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/auth/logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token  394bef93b3a6a783a6feaf718248ba66632e6747503f8fb201fbe186af81e9c2",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/auth/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "image_settings",
+			"item": [
+				{
+					"name": "http://localhost:8000/api/images_settings_set/",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token 394bef93b3a6a783a6feaf718248ba66632e6747503f8fb201fbe186af81e9c2",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "r_tolerance",
+									"value": "0.3",
+									"type": "text"
+								},
+								{
+									"key": "g_tolerance",
+									"value": "0.8",
+									"type": "text"
+								},
+								{
+									"key": "b_tolerance",
+									"value": "0.4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/images_settings_set/2/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"images_settings_set",
+								"2",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/project_image_settings/?project_id=2",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token 394bef93b3a6a783a6feaf718248ba66632e6747503f8fb201fbe186af81e9c2",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/project_image_settings/?project_id=28",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"project_image_settings",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "28"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/user_collection/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token 4ce7d764040c2735580bc7a553d94add166badddd86556a167b0001106b5055d",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "another",
+									"type": "text"
+								},
+								{
+									"key": "name_class",
+									"value": "animals",
+									"type": "text"
+								},
+								{
+									"key": "img",
+									"type": "file",
+									"src": "/D:/OneDrive/Images/2018-03-18.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user_collection/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user_collection",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/user_collection",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "token 93891ea664c32ccfc550c6324ee45f50954cfdffc76536ccda259aa6281fd698"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/user_collection",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user_collection"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/user_collection/1/",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token 93891ea664c32ccfc550c6324ee45f50954cfdffc76536ccda259aa6281fd698",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/user_collection/44/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user_collection",
+								"44",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/api/all_collections/",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token 5ba07210751eca016d725091db937f3a8c67a49fac973802ea14c3b376bd0775",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/all_collections/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"all_collections",
+								""
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "expected_bbcc",
+			"item": [
+				{
+					"name": "clack 1",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "token 4d20e1547a7708213302a1825301dbaaa0ec2be393caab84f599752f0f2d8c9a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t \"CLACK\":[{\r\n\r\n\t\"_comment\": \"if you want to use this entire section (expected_bbcc you would need to modify the frontend part and the api in order to get the intentions input values with the form of  {biology: 0.1 , cultural: 0.3 ............. } instead of [0.3, 0.2, 0.9] ), you might want to erase this comment also after this.....\",\r\n\r\n\t \"hearing_pattern\": [0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"manzana\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": {\"biology\":1,\"cultural\":0.4,\"feelings\":0.75}\r\n\t \t}],\r\n\t\"mode\":\"EPISODES\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=36",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "36"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clack 2",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "token 4d20e1547a7708213302a1825301dbaaa0ec2be393caab84f599752f0f2d8c9a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t \"CLACK\":[{\r\n\t\"_comment\": \"if you want to use this entire section (expected_bbcc you would need to modify the frontend part and the api in order to get the intentions input values with the form of  {biology: 0.1 , cultural: 0.3 ............. } instead of [0.3, 0.2, 0.9] ), you might want to erase this comment also after this.....\",\r\n\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,15,15,0,15,0,0],\r\n\t\"hearing_class\": \"musica\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": {\"biology\":0.13,\"cultural\":0.91,\"feelings\":0.82}\r\n\t}],\r\n\t\"mode\":\"INTENTIONS\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=36",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "36"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clack 3",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "token 4d20e1547a7708213302a1825301dbaaa0ec2be393caab84f599752f0f2d8c9a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t \"CLACK\":[{\r\n\t\"_comment\": \"if you want to use this entire section (expected_bbcc you would need to modify the frontend part and the api in order to get the intentions input values with the form of  {biology: 0.1 , cultural: 0.3 ............. } instead of [0.3, 0.2, 0.9] ), you might want to erase this comment also after this.....\",\r\n\r\n\t\"hearing_pattern\": [0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,15,15,15,15,15,15],\r\n\t\"hearing_class\": \"futbol\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": {\"biology\":0.25,\"cultural\":0.37,\"feelings\":0.94}\r\n\t}],\r\n\t\"mode\":\"EPISODES\"\r\n\t\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=36",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "36"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clack all",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "token 9b01dc805a53de35ee6e3b9255c1b73457e50177749a17a17371f5dadb0c62d5",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t \"CLACK\":[{\r\n\t \t\r\n\t\"_comment\": \"if you want to use this entire section (expected_bbcc you would need to modify the frontend part and the api in order to get the intentions input values with the form of  {biology: 0.1 , cultural: 0.3 ............. } instead of [0.3, 0.2, 0.9] ), you might want to erase this comment also after this.....\",\r\n\r\n\t\"hearing_pattern\": [0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"helado\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": {\"biology\":1,\"cultural\":0.4,\"feelings\":0.75}\r\n\t },{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,15,15,0,15,0,0],\r\n\t\"hearing_class\": \"musica\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": {\"biology\":0.13,\"cultural\":0.91,\"feelings\":0.82}\r\n\t},{\r\n\t\"hearing_pattern\": [0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,15,15,15,15,15,15],\r\n\t\"hearing_class\": \"basketball\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": {\"biology\":0.25,\"cultural\":0.37,\"feelings\":0.94}\r\n\t}],\r\n\t\"mode\":\"EPISODES\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=42",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "42"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "token 9b01dc805a53de35ee6e3b9255c1b73457e50177749a17a17371f5dadb0c62d5",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t \"CHECK\":[{\r\n\t \t\r\n\t\"_comment\": \"if you want to use this entire section (expected_bbcc you would need to modify the frontend part and the api in order to get the intentions input values with the form of  {biology: 0.1 , cultural: 0.3 ............. } instead of [0.3, 0.2, 0.9] ), you might want to erase this comment also after this.....\",\r\n\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": {\"biology\":0,\"cultural\":0,\"feelings\":0}\r\n\t}],\r\n\t\"mode\":\"INTENTIONS\"\r\n\t\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=42",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "42"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "hearing_net",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token 5fbac32959538fd5ad1f0f144878100aa2267451edd7815cd5e6e5378357982f",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/hearing_net/?project_id=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"hearing_net",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bbc",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "token 9b01dc805a53de35ee6e3b9255c1b73457e50177749a17a17371f5dadb0c62d5",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t \"BUM\":[{\r\n\t \t\r\n\t\"_comment\": \"if you want to use this entire section (expected_bbcc you would need to modify the frontend part and the api in order to get the intentions input values with the form of  {biology: 0.1 , cultural: 0.3 ............. } instead of [0.3, 0.2, 0.9] ), you might want to erase this comment also after this.....\",\r\n\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": {\"biology\":0,\"cultural\":0,\"feelings\":0}\r\n\t}],\r\n\t\"BIP\":[{\r\n\t\"hearing_pattern\": [0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,15,15,15,15,15,15],\r\n\t\"hearing_class\": \"helado\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": {\"biology\":0,\"cultural\":0,\"feelings\":0}\r\n\t},\r\n\t{\r\n\t\"hearing_pattern\": [0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"basketball\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": {\"biology\":0,\"cultural\":0,\"feelings\":0}\r\n\t }\r\n\t],\r\n\t\"CHECK\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,15,15,0,15,0,0],\r\n\t\"hearing_class\": \"musica\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": {\"biology\":0,\"cultural\":0,\"feelings\":0}\r\n\t}],\r\n\t\"mode\":\"INTENTIONS\"\r\n\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=41",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "41"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "bbcc",
+			"item": [
+				{
+					"name": "clack 1",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "token b9fed7f785252449d0113d498d8495abf71fed43f1602ede0517dbc461e5a362"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t \"CLACK\":[{\r\n\t \t\"hearing_pattern\": [0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"manzana\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [1,0.4,0.75]\r\n\t \t}],\r\n\t\"mode\":\"EPISODES\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clack 2",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "token b9fed7f785252449d0113d498d8495abf71fed43f1602ede0517dbc461e5a362",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t \"CLACK\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,15,15,0,15,0,0],\r\n\t\"hearing_class\": \"musica\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": [0.13,0.91,0.82]\r\n\t}],\r\n\t\"mode\":\"INTENTIONS\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clack 3",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "token b9fed7f785252449d0113d498d8495abf71fed43f1602ede0517dbc461e5a362",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t \"CLACK\":[{\r\n\t\"hearing_pattern\": [0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,15,15,15,15,15,15],\r\n\t\"hearing_class\": \"futbol\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": [0.25,0.37,0.94] \r\n\t}],\r\n\t\"mode\":\"EPISODES\"\r\n\t\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clack all",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "token b9fed7f785252449d0113d498d8495abf71fed43f1602ede0517dbc461e5a362",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t \"CLACK\":[{\r\n\t\"hearing_pattern\": [0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"helado\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [1,0.4,0.75]\r\n\t },{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,15,15,0,15,0,0],\r\n\t\"hearing_class\": \"musica\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": [0.13,0.91,0.82]\r\n\t},{\r\n\t\"hearing_pattern\": [0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,15,15,15,15,15,15],\r\n\t\"hearing_class\": \"basketball\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": [0.25,0.37,0.94]\r\n\t}],\r\n\t\"mode\":\"EPISODES\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "token 55d980fe3b4b5093f5211ad9a6be7c50e3d40ffc8ae61fd038d7acb41da23cb9",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t \"CHECK\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0]\r\n\t}],\r\n\t\"mode\":\"INTENTIONS\"\r\n\t\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sight_net",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token 1ded7783b4861e8c604782c69b683601b0aa937c51c2f343c0f2e00d38afc72a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/sight_net/?project_id=66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"sight_net",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "66"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bbc",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "token 55d980fe3b4b5093f5211ad9a6be7c50e3d40ffc8ae61fd038d7acb41da23cb9",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t \"BUM\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0] \r\n\t}],\r\n\t\"BIP\":[{\r\n\t\"hearing_pattern\": [0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,15,15,15,15,15,15],\r\n\t\"hearing_class\": \"helado\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0]\r\n\t},\r\n\t{\r\n\t\"hearing_pattern\": [0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"basketball\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0]\r\n\t }\r\n\t],\r\n\t\"CHECK\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,15,15,0,15,0,0],\r\n\t\"hearing_class\": \"musica\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0]\r\n\t}],\r\n\t\"mode\":\"INTENTIONS\"\r\n\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "addition_and_counting",
+			"item": [
+				{
+					"name": "zero saving",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "token 5fbac32959538fd5ad1f0f144878100aa2267451edd7815cd5e6e5378357982f"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\r\n    \"CLACK\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,9],\r\n\t\"hearing_class\": \"0\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,3,0,0,0,0,5],\r\n\t\"intentions_input\": [0.5,0.5,0.5]\r\n\t}],\r\n\t\"mode\":\"INTENTIONS\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "set_zero",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "token 5fbac32959538fd5ad1f0f144878100aa2267451edd7815cd5e6e5378357982f"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\r\n    \"SET_ZERO\":{\r\n\t\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,3,0,0,0,0,5],\r\n\t\"intentions_input\": [0,0,0]\r\n\t},\r\n\t\"mode\":\"ADDITION\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "equal saving",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "token 5fbac32959538fd5ad1f0f144878100aa2267451edd7815cd5e6e5378357982f"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\r\n    \"CLACK\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10],\r\n\t\"hearing_class\": \"=\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,10,0,0,0,0,9],\r\n\t\"intentions_input\": [0.5,0.5,0.5]\r\n\t}],\r\n\t\"mode\":\"INTENTIONS\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "set_equal_sign",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "token 5fbac32959538fd5ad1f0f144878100aa2267451edd7815cd5e6e5378357982f"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\r\n    \"SET_EQUAL_SIGN\":{\r\n\t\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"=\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,10,0,0,0,0,9],\r\n\t\"intentions_input\": [0,0,0]\r\n\t},\r\n\t\"mode\":\"ADDITION\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_operator saving",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "token 5fbac32959538fd5ad1f0f144878100aa2267451edd7815cd5e6e5378357982f"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\r\n    \"CLACK\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6],\r\n\t\"hearing_class\": \"+\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,1,0,0,0,0,1],\r\n\t\"intentions_input\": [0.5,0.5,0.5]\r\n\t}],\r\n\t\"mode\":\"INTENTIONS\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "set_add_operator",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "token 5fbac32959538fd5ad1f0f144878100aa2267451edd7815cd5e6e5378357982f",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\r\n    \"SET_ADD_OPERATOR\":{\r\n\t\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,1,0,0,0,0,1],\r\n\t\"intentions_input\": [0,0,0]\r\n\t},\r\n\t\"mode\":\"ADDITION\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "one saving",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "token 5fbac32959538fd5ad1f0f144878100aa2267451edd7815cd5e6e5378357982f"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\r\n    \"CLACK\":[{\r\n\t\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7],\r\n\t\"hearing_class\": \"1\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,3,0,0,8,5,5],\r\n\t\"intentions_input\": [0,0,0]\r\n\t}],\r\n\t\"mode\":\"INTENTIONS\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "one saving  (counting)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "token 5fbac32959538fd5ad1f0f144878100aa2267451edd7815cd5e6e5378357982f"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"BUM\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0] \r\n\t}],\r\n\t\"BIP\":[\r\n\t{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0]\r\n\t }],\r\n    \"CLACK\":[{\r\n\t\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"1\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,3,0,0,8,5,5],\r\n\t\"intentions_input\": [0,0,0]\r\n\t}],\r\n\t\"mode\":\"COUNTING\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "two saving",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "token 5fbac32959538fd5ad1f0f144878100aa2267451edd7815cd5e6e5378357982f"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"CLACK\":[{\r\n\t\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,10,1,9,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7],\r\n\t\"hearing_class\": \"2\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,8,0,0,8,8,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,3,0,0,8,5,5],\r\n\t\"intentions_input\": [0,0,0]\r\n\t}],\r\n\t\"mode\":\"INTENTIONS\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "two saving (counting)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "token 5fbac32959538fd5ad1f0f144878100aa2267451edd7815cd5e6e5378357982f"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"BUM\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0] \r\n\t}],\r\n\t\"BIP\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0]\r\n\t },\r\n\t {\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0]\r\n\t }],\r\n\t\"CLACK\":[{\r\n\t\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"2\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,8,0,0,8,8,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,3,0,0,8,5,5],\r\n\t\"intentions_input\": [0,0,0]\r\n\t}],\r\n\t\"mode\":\"COUNTING\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bum bip 1+1=2",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "token 5fbac32959538fd5ad1f0f144878100aa2267451edd7815cd5e6e5378357982f"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"BUM\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0] \r\n\t}],\r\n\t\"BIP\":[\r\n\t{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"1\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,3,0,0,8,5,5],\r\n\t\"intentions_input\": [0,0,0]\r\n\t },\r\n\t {\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"+\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,1,0,0,0,0,1],\r\n\t\"intentions_input\": [0,0,0]\r\n\t },\r\n\t {\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"1\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,3,0,0,8,5,5],\r\n\t\"intentions_input\": [0,0,0]\r\n\t},{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"=\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,10,0,0,0,0,9],\r\n\t\"intentions_input\": [0,0,0]\r\n\t}\r\n\t],\r\n\t\"mode\":\"ADDITION\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "three saving",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "token 5fbac32959538fd5ad1f0f144878100aa2267451edd7815cd5e6e5378357982f"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"CLACK\":[{\r\n\t\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,10,1,9,0,8,0,0,0,0,0,3,0,0,3,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7],\r\n\t\"hearing_class\": \"3\",\r\n\t\"sight_pattern\": [0,0,0,3,0,0,0,3,0,3,0,8,0,0,8,8,0,3,15,15,15,15,15,0,0,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,3,0,0,8,5,5],\r\n\t\"intentions_input\": [0,0,0]\r\n\t}],\r\n\t\"mode\":\"INTENTIONS\"\r\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "three saving (counting)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "token 5fbac32959538fd5ad1f0f144878100aa2267451edd7815cd5e6e5378357982f"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"BUM\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0] \r\n\t}],\r\n\t\"BIP\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0]\r\n\t },\r\n\t\t{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0]\r\n\t },\r\n\t {\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0]\r\n\t }],\r\n\t\"CLACK\":[{\r\n\t\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"3\",\r\n\t\"sight_pattern\": [0,0,0,3,0,0,0,3,0,3,0,8,0,0,8,8,0,3,15,15,15,15,15,0,0,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,3,0,0,8,5,5],\r\n\t\"intentions_input\": [0,0,0]\r\n\t}],\r\n\t\"mode\":\"COUNTING\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bum bip 1+2=3",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "token 5fbac32959538fd5ad1f0f144878100aa2267451edd7815cd5e6e5378357982f"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"BUM\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0] \r\n\t}],\r\n\t\"BIP\":[\r\n\t{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"1\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,3,0,0,8,5,5],\r\n\t\"intentions_input\": [0,0,0]\r\n\t },\r\n\t {\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"+\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,1,0,0,0,0,1],\r\n\t\"intentions_input\": [0,0,0]\r\n\t },\r\n\t {\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"2\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,8,0,0,8,8,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,3,0,0,8,5,5],\r\n\t\"intentions_input\": [0,0,0]\r\n\t},{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"=\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,10,0,0,0,0,9],\r\n\t\"intentions_input\": [0,0,0]\r\n\t}\r\n\t],\r\n\t\"mode\":\"ADDITION\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Syllables_and_word",
+			"item": [
+				{
+					"name": "c-a-s saving",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "token 1ded7783b4861e8c604782c69b683601b0aa937c51c2f343c0f2e00d38afc72a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t \"CLACK\":[{\r\n\t\"hearing_pattern\": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],\r\n\t\"hearing_class\": \"c\",\r\n\t\"sight_pattern\": [7, 15, 15, 15, 6, 9, 15, 15, 6, 9, 7, 15, 6, 6, 7, 15, 6, 15, 7, 15, 6, 0, 7, 15, 6, 0, 3, 15, 6, 7, 9, 15, 6, 0, 0, 7, 7, 0, 0, 7, 6, 0, 2, 7, 6, 0, 2, 7, 7, 0, 1, 3, 7, 0, 1, 3, 7, 3, 1, 3, 7, 3, 9, 3],\r\n\t\"desired_intentions_input\": [0.75,0.75,0.75],\r\n\t\"intentions_input\": [1,0.4,0.75]\r\n\t },{\r\n\t\"hearing_pattern\": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],\r\n\t\"hearing_class\": \"a\",\r\n\t\"sight_pattern\": [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 8, 15, 15, 15, 15, 15, 15, 15, 15, 13, 15, 15, 15, 13, 15, 15, 15, 13, 13, 15, 15, 9, 12, 15, 15, 11, 13, 15, 15, 3, 11, 15, 15, 5, 7, 15, 14, 8, 15, 15, 14, 1, 13, 15, 14, 3, 14, 15, 0, 0, 0, 0],\r\n\t\"desired_intentions_input\": [0.75,0.75,0.75],\r\n\t\"intentions_input\": [0.1,0.4,0.6]\r\n\t},{\r\n\t\"hearing_pattern\": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3],\r\n\t\"hearing_class\": \"s\",\r\n\t\"sight_pattern\": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 15, 0, 0, 7, 15, 0, 5, 7, 15, 15, 4, 15, 15, 14, 0, 15, 15, 0, 1, 8, 0, 0, 0, 8, 0, 15, 1, 14, 0, 15, 1, 15, 0, 15, 13, 15, 12, 13, 15, 15, 13, 9, 14, 7, 14, 15, 15, 13, 9, 0, 0, 0, 0],\r\n\t\"desired_intentions_input\": [0.75,0.75,0.75],\r\n\t\"intentions_input\": [0.4,0.5,0.6]\r\n\t}],\r\n\t\"mode\":\"READING\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "66"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bbcc \"cas\" syllable",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "token 1ded7783b4861e8c604782c69b683601b0aa937c51c2f343c0f2e00d38afc72a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"BUM\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0] \r\n\t}],\r\n\t\"BIP\":[\r\n\t{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"c\",\r\n\t\"sight_pattern\": [7, 15, 15, 15, 6, 9, 15, 15, 6, 9, 7, 15, 6, 6, 7, 15, 6, 15, 7, 15, 6, 0, 7, 15, 6, 0, 3, 15, 6, 7, 9, 15, 6, 0, 0, 7, 7, 0, 0, 7, 6, 0, 2, 7, 6, 0, 2, 7, 7, 0, 1, 3, 7, 0, 1, 3, 7, 3, 1, 3, 7, 3, 9, 3],\r\n\t\"intentions_input\": [0,0,0]\r\n\t },\r\n\t {\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"a\",\r\n\t\"sight_pattern\": [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 8, 15, 15, 15, 15, 15, 15, 15, 15, 13, 15, 15, 15, 13, 15, 15, 15, 13, 13, 15, 15, 9, 12, 15, 15, 11, 13, 15, 15, 3, 11, 15, 15, 5, 7, 15, 14, 8, 15, 15, 14, 1, 13, 15, 14, 3, 14, 15, 0, 0, 0, 0],\r\n\t\"intentions_input\": [0,0,0]\r\n\t}\r\n\t],\r\n\t\"CHECK\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"s\",\r\n\t\"sight_pattern\": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 15, 0, 0, 7, 15, 0, 5, 7, 15, 15, 4, 15, 15, 14, 0, 15, 15, 0, 1, 8, 0, 0, 0, 8, 0, 15, 1, 14, 0, 15, 1, 15, 0, 15, 13, 15, 12, 13, 15, 15, 13, 9, 14, 7, 14, 15, 15, 13, 9, 0, 0, 0, 0],\r\n\t\"intentions_input\": [0,0,0]\r\n\t}],\r\n\t\"CLACK\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,15,15,0,15,0,0],\r\n\t\"hearing_class\": \"cas\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": [0.25,0.37,0.94]\r\n\t}],\r\n\t\"mode\":\"READING\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "66"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recognizing \"cas\" syllable",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "token 1ded7783b4861e8c604782c69b683601b0aa937c51c2f343c0f2e00d38afc72a"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"BUM\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0] \r\n\t}],\r\n\t\"BIP\":[\r\n\t{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"c\",\r\n\t\"sight_pattern\": [7, 15, 15, 15, 6, 9, 15, 15, 6, 9, 7, 15, 6, 6, 7, 15, 6, 15, 7, 15, 6, 0, 7, 15, 6, 0, 3, 15, 6, 7, 9, 15, 6, 0, 0, 7, 7, 0, 0, 7, 6, 0, 2, 7, 6, 0, 2, 7, 7, 0, 1, 3, 7, 0, 1, 3, 7, 3, 1, 3, 7, 3, 9, 3],\r\n\t\"intentions_input\": [0,0,0]\r\n\t },\r\n\t {\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"a\",\r\n\t\"sight_pattern\": [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 8, 15, 15, 15, 15, 15, 15, 15, 15, 13, 15, 15, 15, 13, 15, 15, 15, 13, 13, 15, 15, 9, 12, 15, 15, 11, 13, 15, 15, 3, 11, 15, 15, 5, 7, 15, 14, 8, 15, 15, 14, 1, 13, 15, 14, 3, 14, 15, 0, 0, 0, 0],\r\n\t\"intentions_input\": [0,0,0]\r\n\t}\r\n\t],\r\n\t\"CHECK\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"s\",\r\n\t\"sight_pattern\": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 15, 0, 0, 7, 15, 0, 5, 7, 15, 15, 4, 15, 15, 14, 0, 15, 15, 0, 1, 8, 0, 0, 0, 8, 0, 15, 1, 14, 0, 15, 1, 15, 0, 15, 13, 15, 12, 13, 15, 15, 13, 9, 14, 7, 14, 15, 15, 13, 9, 0, 0, 0, 0],\r\n\t\"intentions_input\": [0,0,0]\r\n\t}],\r\n\t\"mode\":\"READING\"\r\n\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "66"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "t-o saving",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "token 1ded7783b4861e8c604782c69b683601b0aa937c51c2f343c0f2e00d38afc72a"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t \"CLACK\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,15,15,15,0,15,15,15,15,15,15,15,15,15,15,15,0,15,15,15,0,0,0,15,15,15,15,15,15,15,15,0,0,0,0,0,15,15,15,15,15,15,15,15,15,0,15,15,15,0,15,15,15,0,0,15,15,15,15,15,15],\r\n\t\"hearing_class\": \"t\",\r\n\t\"sight_pattern\": [15,15,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,0,15,0,15,15,15,0,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": [1,0.4,0.75]\r\n\t },{\r\n\t\"hearing_pattern\": [0,15,15,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,15,15,15,15,15,15,15,15,15,15,0,0,0,15,15,15,15,0,0,0,0,0,0,0,15],\r\n\t\"hearing_class\": \"o\",\r\n\t\"sight_pattern\": [0,0,15,0,15,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,0,0,15,0,0,0,0,0,0,15,15],\r\n\t\"intentions_input\": [0.1,0.4,0.6]\r\n\t}],\r\n\t\"mode\":\"EPISODES\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "66"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bbcc \"to\" syllable",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "token 1ded7783b4861e8c604782c69b683601b0aa937c51c2f343c0f2e00d38afc72a"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"BUM\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0] \r\n\t}],\r\n\t\"BIP\":[\r\n\t{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"t\",\r\n\t\"sight_pattern\": [15,15,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,0,15,0,15,15,15,0,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0]\r\n\t }],\r\n\t\"CHECK\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"o\",\r\n\t\"sight_pattern\": [0,0,15,0,15,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,0,0,15,0,0,0,0,0,0,15,15],\r\n\t\"intentions_input\": [0,0,0]\r\n\t}],\r\n\t\"CLACK\":[{\r\n\t\"hearing_pattern\": [0,0,0,15,0,0,0,15,15,15,15,15,15,15,15,15,15,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,0,15,15,15,15,15,15,15,0,0,15,15,0,15,0,15],\r\n\t\"hearing_class\": \"to\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,0,15,15,15,15,15,15,15,0,0,0,0,15,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,0,15,15,15,15,0,0,0,0,15],\r\n\t\"intentions_input\": [0.25,0.37,0.94]\r\n\t}],\r\n\t\"mode\":\"READING\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "66"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recognizing \"to\" syllable",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "token 1ded7783b4861e8c604782c69b683601b0aa937c51c2f343c0f2e00d38afc72a"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"BUM\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0] \r\n\t}],\r\n\t\"BIP\":[\r\n\t{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"t\",\r\n\t\"sight_pattern\": [15,15,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,0,15,0,15,15,15,0,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0]\r\n\t }],\r\n\t\"CHECK\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"o\",\r\n\t\"sight_pattern\": [0,0,15,0,15,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,15,0,0,0,0,0,0,0,0,15,15,15,0,0,15,0,0,0,0,0,0,15,15],\r\n\t\"intentions_input\": [0,0,0]\r\n\t}],\r\n\t\"mode\":\"READING\"\r\n\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "66"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bbcc word",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "token 1ded7783b4861e8c604782c69b683601b0aa937c51c2f343c0f2e00d38afc72a"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"BUM\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0] \r\n\t}],\r\n\t\"BIP\":[\r\n\t{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"cas\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0]\r\n\t }],\r\n\t\"CHECK\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"to\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,0,15,15,15,15,15,15,15,0,0,0,0,15,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,0,15,15,15,15,0,0,0,0,15],\r\n\t\"intentions_input\": [0,0,0]\r\n\t}],\r\n\t\"CLACK\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,0,15,15,15,0,0,0,0,15,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,0,15,0,15,15,0,0,0,0,15],\r\n\t\"intentions_input\": [0,0,0]\r\n\t}],\r\n\t\"mode\":\"READING\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "66"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recognizing word",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "token 1ded7783b4861e8c604782c69b683601b0aa937c51c2f343c0f2e00d38afc72a"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"BUM\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0] \r\n\t}],\r\n\t\"BIP\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"cas\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,15,15,15,15,15,0,0,0,0,0],\r\n\t\"intentions_input\": [0,0,0]\r\n\t }],\r\n\t\"CHECK\":[{\r\n\t\"hearing_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n\t\"hearing_class\": \"to\",\r\n\t\"sight_pattern\": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,0,15,15,15,15,15,15,15,0,0,0,0,15,0,0,0,0,15,0,0,0,0,0,0,0,0,0,15,0,15,0,15,15,15,15,0,0,0,0,15],\r\n\t\"intentions_input\": [0,0,0]\r\n\t}],\r\n\t\"mode\":\"READING\"\r\n\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/kernel/?project_id=66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"kernel",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "66"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
