@@ -50,7 +50,7 @@ https://github.com/braincemisid/kernel
 * Link of Braincemisid 2.1 (Mudafar version)
 https://github.com/mudafar/Brain-CEMISID-Parallel
 
-## Demos videos
+###### Demos videos of the Braincemisid 2 versions
 
 * Basic Learning
 
