@@ -14,19 +14,20 @@ Kernel dependencies:
 * Virtual enviroment: to provide a virtual enviroment we recommend use pipenv, to install it just simply type the command ``` pip install pipenv```
 
 
-to install it, run the pipfile.lock with ``` pipenv install```
+to install the braincemisid run the pipfile.lock with ``` pipenv install```
 
 * Postgres:
 https://www.postgresql.org/download/
 
 * DB models: run the command ``` py .\manage.py migrate```
 
+** Note: Remember create a database in postgres in order to make the migration succesful, for dev branch use in psql terminal ``` create database braincemisid_db_dev;``` and for master branch use ``` create database braincemisid_db;``` , otherwise, you can change the name of the database, DBMS provider or some other configuration by editing the file ```settings.py``` in the address ```\braincemisid_on_web\braincemisid_on_web\```
 
 To Run:
 ```python manage.py runserver```
 
-Most of the modules, such as the MulticlassSingleLayerNetwork, contain independent tests that can be of help for the
-comprehension of their functionality. Run, for instance:
+Most of the modules, such as the MulticlassSingleLayerNetwork contains independent tests, so that can be helpful for the
+comprehension of his functionality. Run, for instance:
  ```python multiclass_single_layer_network.py```
 
 * link of the frontend part of the project:

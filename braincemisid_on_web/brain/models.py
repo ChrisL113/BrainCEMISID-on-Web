@@ -9,7 +9,6 @@ class brain(models.Model):
 
 ############################################################ NEEDS REVISION ###########################################################
     gnb = models.BinaryField(null=True)
-    am_net_proto = models.BinaryField(null=True)
     decisions_block = models.BinaryField(null=True)
 #################################################################################################################################
 
@@ -18,7 +17,7 @@ class brain(models.Model):
     user = models.ForeignKey(User, related_name="brain", on_delete=models.CASCADE, null=True)
 
 
-############################################################ am_net (ONLY SERIALIZING WORKING) ##############################################
+############################################################ am_net ##############################################
 
 class am_net(models.Model):
     brain_am_net = models.OneToOneField(

@@ -372,9 +372,9 @@ class GeometricNeuralBlock:
         # print(" ")
         # print("ADDITION STRUCTURE -> ",obj._addition_structure.__dict__)
         # print(" ")
-        # print("ADDITION STRUCTURE NEURONS-> ")
-        # for a in obj._addition_structure.neurons:
-        #     print(a.__dict__)
+        # print("ORDER STRUCTURE NEURONS-> ")
+        # for a in obj._order_structure.group_list:
+        #     print(a._quantity_neuron.__dict__,a._order_neuron.__dict__)
         # print(" ")
 
     @classmethod

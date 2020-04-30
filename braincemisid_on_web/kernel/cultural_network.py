@@ -1,4 +1,3 @@
-import pickle
 
 from neuron import Neuron
 
@@ -189,26 +188,26 @@ class CulturalNetwork:
     # @param cls CulturalNetwork class
     # @param obj CulturalNetwork object to be serialized
     # @param name Name of the file where the serialization is to be stored
-    def serialize(cls, obj, name, project_id, brainproto):
+    def serialize(cls, obj, name, project_id, brain):
         
-        pickled_obj = pickle.dumps(obj)
-        brain_object = brain.objects.filter(pk = project_id)
+        # pickled_obj = pickle.dumps(obj)
+        # brain_object = brain.objects.filter(pk = project_id)
         
-        if name == "am_net":
-            brain_object.update(am_net_proto = pickled_obj)
+        # if name == "am_net":
+        #     brain_object.update(am_net_proto = pickled_obj)
 
-        if brainproto:
+        if brain:
 
             if name == "am_net":
-                am_net_data = am_net(brain_am_net = brainproto, index_ready_to_learn = obj._index_ready_to_learn, clack = obj._clack, indexes_recognized = obj._recognized_indexes)
+                am_net_data = am_net(brain_am_net = brain, index_ready_to_learn = obj._index_ready_to_learn, clack = obj._clack, indexes_recognized = obj._recognized_indexes)
                 am_net_data.save()
 
             if name == "syllables_net":
-                syllables_net_data = syllables_net(brain_syllables_net = brainproto, index_ready_to_learn = obj._index_ready_to_learn, clack = obj._clack, indexes_recognized = obj._recognized_indexes) 
+                syllables_net_data = syllables_net(brain_syllables_net = brain, index_ready_to_learn = obj._index_ready_to_learn, clack = obj._clack, indexes_recognized = obj._recognized_indexes) 
                 syllables_net_data.save()
 
             if name == "words_net":
-                words_net_data = words_net(brain_words_net = brainproto, index_ready_to_learn = obj._index_ready_to_learn, clack = obj._clack, indexes_recognized = obj._recognized_indexes)
+                words_net_data = words_net(brain_words_net = brain, index_ready_to_learn = obj._index_ready_to_learn, clack = obj._clack, indexes_recognized = obj._recognized_indexes)
                 words_net_data.save()
 
         else:
@@ -222,11 +221,10 @@ class CulturalNetwork:
 
                     for i in obj.group_list[obj._index_ready_to_learn-1].group:
                         
-                        knowl = i._knowledge.__dict__
+                        knowl = i._knowledge
                         group_data.append({'has_knowledge': i._has_knowledge, '_knowledge': knowl})
-
-                    group_data.append({'index_bip': obj.group_list[obj._index_ready_to_learn-1]._index_bip})    
-                    query_group = group_am_net(brain_am_net = am_net_data[0], index_bip = obj.group_list[obj._index_ready_to_learn-1]._index_bip, AmNetNeuron = group_data)
+    
+                    query_group = group_am_net(am_net_group = am_net_data[0], index_bip = obj.group_list[obj._index_ready_to_learn-1]._index_bip, AmNetNeuron = group_data)
                     query_group.save()
 
                     am_net_data.update(index_ready_to_learn = obj._index_ready_to_learn, clack = obj._clack, indexes_recognized = obj._recognized_indexes)
@@ -248,7 +246,6 @@ class CulturalNetwork:
                         
                         group_data.append({'has_knowledge': i._has_knowledge, '_knowledge': knowl})
 
-                    group_data.append({'index_bip': obj.group_list[obj._index_ready_to_learn-1]._index_bip})    
                     query_group = group_syllables_net(syllables_net_group = syllables_net_data[0], index_bip = obj.group_list[obj._index_ready_to_learn-1]._index_bip, SyllaNetNeuron = group_data)
                     query_group.save()
 
@@ -269,8 +266,7 @@ class CulturalNetwork:
                             knowl = i._knowledge.__dict__
                         
                         group_data.append({'has_knowledge': i._has_knowledge, '_knowledge': knowl})
-
-                    group_data.append({'index_bip': obj.group_list[obj._index_ready_to_learn-1]._index_bip})    
+    
                     query_group = group_words_net(words_net_group = words_net_data[0], index_bip = obj.group_list[obj._index_ready_to_learn-1]._index_bip, WordNetNeuron = group_data)
                     query_group.save()
 
@@ -286,17 +282,44 @@ class CulturalNetwork:
     def deserialize(cls, name, project_id):
 
         if name == "am_net":
-            brain_object=brain.objects.values('am_net_proto','id').filter(id=project_id)
-            pickled_data = brain_object[0]['am_net_proto']
-            aux = pickle.loads(pickled_data)
+            # brain_object=brain.objects.values('am_net_proto','id').filter(id=project_id)
+            # pickled_data = brain_object[0]['am_net_proto']
+            # aux = pickle.loads(pickled_data)
             # print(" ")
             # print("############################################################################################### CULTURAL NETWORK ###########################################################")
             # print(" ")
-            # print("AM_NET -> ",aux.group_list[-1].__dict__)
+            # print("AM_NET -> ")
+            # for a in aux.group_list:
+            #     if a.group!=[]:
+            #         print(a.__dict__)
+            #         for k in a.group:
+            #             print(k.__dict__)
             # print(" ")
-            return pickle.loads(pickled_data)
 
+            # return pickle.loads(pickled_data)
+            am_net_data = am_net.objects.filter(brain_am_net__pk = project_id)
+            group_from_db = group_am_net.objects.filter(am_net_group = am_net_data[0]).order_by('id')
 
+            data=CulturalNetwork(100)
+
+            it = None
+            for i in group_from_db.values():
+
+                it =len(i['AmNetNeuron'])
+                data.bum()
+
+                for k in range(0, it-2):
+                    
+                    data.bip(i['AmNetNeuron'][k]['_knowledge'])
+
+                data.check(i['AmNetNeuron'][-2]['_knowledge'])
+                data.clack(i['AmNetNeuron'][-1]['_knowledge'])
+
+            data._index_ready_to_learn = am_net_data[0].index_ready_to_learn
+            data._clack = am_net_data[0].clack
+            data._recognized_indexes = am_net_data[0].indexes_recognized
+
+            return data
         
         elif name=="syllables_net":
 
@@ -311,12 +334,12 @@ class CulturalNetwork:
                 it = len(i['SyllaNetNeuron'])
                 data.bum()
 
-                for k in range(0, it-3):
+                for k in range(0, it-2):
 
                     data.bip(i['SyllaNetNeuron'][k]['_knowledge'])
                 
-                data.check(i['SyllaNetNeuron'][-3]['_knowledge'])
-                aux_knowledge=RbfKnowledge(i['SyllaNetNeuron'][-2]['_knowledge']['_pattern'], i['SyllaNetNeuron'][-2]['_knowledge']['_class'], i['SyllaNetNeuron'][-2]['_knowledge']['_set'])
+                data.check(i['SyllaNetNeuron'][-2]['_knowledge'])
+                aux_knowledge=RbfKnowledge(i['SyllaNetNeuron'][-1]['_knowledge']['_pattern'], i['SyllaNetNeuron'][-1]['_knowledge']['_class'], i['SyllaNetNeuron'][-1]['_knowledge']['_set'])
                 data.clack(aux_knowledge)
             
             data._index_ready_to_learn = syllables_net_data[0].index_ready_to_learn
@@ -338,12 +361,12 @@ class CulturalNetwork:
                 it = len(i['WordNetNeuron'])
                 data.bum()
 
-                for k in range(0, it-3):
+                for k in range(0, it-2):
 
                     data.bip(i['WordNetNeuron'][k]['_knowledge'])
                 
-                data.check(i['WordNetNeuron'][-3]['_knowledge'])
-                aux_knowledge=RbfKnowledge(i['WordNetNeuron'][-2]['_knowledge']['_pattern'], i['WordNetNeuron'][-2]['_knowledge']['_class'], i['WordNetNeuron'][-2]['_knowledge']['_set'])
+                data.check(i['WordNetNeuron'][-2]['_knowledge'])
+                aux_knowledge=RbfKnowledge(i['WordNetNeuron'][-1]['_knowledge']['_pattern'], i['WordNetNeuron'][-1]['_knowledge']['_class'], i['WordNetNeuron'][-1]['_knowledge']['_set'])
                 data.clack(aux_knowledge)
 
             data._index_ready_to_learn = words_net_data[0].index_ready_to_learn
