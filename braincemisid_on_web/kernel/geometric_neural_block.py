@@ -364,18 +364,18 @@ class GeometricNeuralBlock:
         pickled_obj = pickle.dumps(obj)
         brain_object=brain.objects.filter(pk=project_id)
         brain_object.update(gnb=pickled_obj)
-        print("############################################################################################### GEOMETRIC NEURAL BLOCK ###########################################################")
-        print(" ")
-        print("OVERALL -> ",obj.__dict__)
-        print(" ")
-        print("ORDER STRUCTURE -> ",obj._order_structure.__dict__)
-        print(" ")
-        print("ADDITION STRUCTURE -> ",obj._addition_structure.__dict__)
-        print(" ")
-        print("ADDITION STRUCTURE NEURONS-> ")
-        for a in obj._addition_structure.neurons:
-            print(a.__dict__)
-        print(" ")
+        # print("############################################################################################### GEOMETRIC NEURAL BLOCK ###########################################################")
+        # print(" ")
+        # print("OVERALL -> ",obj.__dict__)
+        # print(" ")
+        # print("ORDER STRUCTURE -> ",obj._order_structure.__dict__)
+        # print(" ")
+        # print("ADDITION STRUCTURE -> ",obj._addition_structure.__dict__)
+        # print(" ")
+        # print("ADDITION STRUCTURE NEURONS-> ")
+        # for a in obj._addition_structure.neurons:
+        #     print(a.__dict__)
+        # print(" ")
 
     @classmethod
     ## Deserialize object stored in given file
@@ -385,6 +385,23 @@ class GeometricNeuralBlock:
         
         brain_object=brain.objects.values('gnb','id').filter(id=project_id)
         pickled_data = brain_object[0]['gnb']
+        aux=pickle.loads(pickled_data)
+        # print("############################################################################################### GEOMETRIC NEURAL BLOCK ###########################################################")
+        # print(" ")
+        # print("OVERALL -> ",aux.__dict__)
+        # print(" ")
+        # print("ORDER STRUCTURE -> ",aux._order_structure.__dict__)
+        # for a in aux._order_structure.group_list:
+        #     print(a.__dict__)
+        #     print(a._quantity_neuron.__dict__)
+        #     print(a._order_neuron.__dict__)
+        # print(" ")
+        # print("ADDITION STRUCTURE -> ",aux._addition_structure.__dict__)
+        # print(" ")
+        # print("ADDITION STRUCTURE NEURONS-> ")
+        # for a in aux._addition_structure.neurons:
+        #     print(a.__dict__)
+        # print(" ")
         return pickle.loads(pickled_data)
 
 
@@ -494,7 +511,7 @@ if __name__ == '__main__':
     gnb.bip()
     gnb.bip()
     gnb.bip()
-    gnb.clack('7')
+    gnb.clack('8')
 
     gnb.bum()
     gnb.bip()

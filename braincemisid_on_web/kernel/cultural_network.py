@@ -196,19 +196,6 @@ class CulturalNetwork:
         
         if name == "am_net":
             brain_object.update(am_net_proto = pickled_obj)
-            print(" ")
-            print("############################################################################################### CULTURAL NETWORK ###########################################################")
-            print(" ")
-            print("AM_NET -> ",obj.group_list[-1].__dict__)
-            print(" ")
-        elif name == "syllables_net":
-            brain_object.update(syllables_net_proto = pickled_obj)
-            print("SYLLABLES_NET -> ", obj.group_list[-1].__dict__)
-            print(" ")
-        elif name == "words_net":
-            brain_object.update(words_net_proto = pickled_obj)
-            print("WORDS_NET -> ",obj.group_list[-1].__dict__)
-            print(" ")
 
         if brainproto:
 
@@ -298,9 +285,15 @@ class CulturalNetwork:
     # @param name Name of the file where the object is serialize
     def deserialize(cls, name, project_id):
 
-        if name=="am_net":
+        if name == "am_net":
             brain_object=brain.objects.values('am_net_proto','id').filter(id=project_id)
             pickled_data = brain_object[0]['am_net_proto']
+            aux = pickle.loads(pickled_data)
+            # print(" ")
+            # print("############################################################################################### CULTURAL NETWORK ###########################################################")
+            # print(" ")
+            # print("AM_NET -> ",aux.group_list[-1].__dict__)
+            # print(" ")
             return pickle.loads(pickled_data)
 
 
@@ -312,7 +305,7 @@ class CulturalNetwork:
 
             data=CulturalNetwork(100)
 
-            it=None
+            it = None
             for i in group_from_db.values():
 
                 it = len(i['SyllaNetNeuron'])
@@ -333,9 +326,31 @@ class CulturalNetwork:
             return data
 
         elif name=="words_net":
-            brain_object=brain.objects.values('words_net_proto','id').filter(id=project_id)
-            pickled_data = brain_object[0]['words_net_proto']
-            return pickle.loads(pickled_data)
+            
+            words_net_data = words_net.objects.filter(brain_words_net__pk = project_id)
+            group_from_db = group_words_net.objects.filter(words_net_group = words_net_data[0]).order_by('id')
+
+            data = CulturalNetwork(100)
+
+            it = None
+            for i in group_from_db.values():
+
+                it = len(i['WordNetNeuron'])
+                data.bum()
+
+                for k in range(0, it-3):
+
+                    data.bip(i['WordNetNeuron'][k]['_knowledge'])
+                
+                data.check(i['WordNetNeuron'][-3]['_knowledge'])
+                aux_knowledge=RbfKnowledge(i['WordNetNeuron'][-2]['_knowledge']['_pattern'], i['WordNetNeuron'][-2]['_knowledge']['_class'], i['WordNetNeuron'][-2]['_knowledge']['_set'])
+                data.clack(aux_knowledge)
+
+            data._index_ready_to_learn = words_net_data[0].index_ready_to_learn
+            data._clack = words_net_data[0].clack
+            data._recognized_indexes = words_net_data[0].indexes_recognized
+            
+            return data
         
 
 ## @}

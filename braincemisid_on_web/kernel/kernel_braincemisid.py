@@ -284,14 +284,14 @@ class KernelBrainCemisid():
             elif self._working_domain == "ADDITION":
                 self._bip_addition()
             # Else, transmit it to counting net
-            elif self._working_domain == "COUNTING":
-                self._bip_counting()
             # ################### INTENTIONS ################################################################################
             # Else, episodic memory
             elif self._working_domain == "EPISODES":
                 self._bip_episodes()
             else:
                 self._bip_intentions()
+        elif self._working_domain == "COUNTING":
+            self._bip_counting()
     ## Check if there is knowledge associated with the given sequence of patterns from
     # bbcc protocol when self._enable_bbcc is True. Check if the Sensory Neural Block recognizes the
     # given pattern when self._enable_bbcc is False
@@ -664,7 +664,6 @@ class KernelBrainCemisid():
             self.hearing_id = self._get_hearing_id_recognize()
             self.gnb.set_add_operator(self.hearing_id)
             GeometricNeuralBlock.serialize(self.gnb, "gnb", self.project_id)
-            #print("entering !......")
             return True
         return False
 
@@ -703,10 +702,13 @@ class KernelBrainCemisid():
 
     ## Pass clack signal to Geometric Neural Block
     def _clack_counting(self):
-        hearing_id = self._get_hearing_id_recognize()
-        self.gnb.clack(hearing_id)
-        GeometricNeuralBlock.serialize(self.gnb, "gnb", self.project_id)
-        return
+        self.state = self.snb.recognize_sight(self.s_knowledge_in.get_pattern())
+        if self.state == "HIT":
+            hearing_id = self._get_hearing_id_recognize()
+            self.gnb.clack(hearing_id)
+            GeometricNeuralBlock.serialize(self.gnb, "gnb", self.project_id)
+            return True
+        return False
 
     # ######################### INTENTIONS ##############################################################################
     ## Pass bum signal to episodic memory

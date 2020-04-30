@@ -45,7 +45,6 @@ class KernelViewSet(viewsets.ViewSet):
         feelings_in= intentions_input[2]
         hearing_knowledge = RbfKnowledge(hearing_pattern, hearing_class)
         sight_knowledge = RbfKnowledge(sight_pattern, "NoClass")
-
         self.kernel.set_hearing_knowledge_in(hearing_knowledge)
         self.kernel.set_sight_knowledge_in(sight_knowledge)
         self.kernel.set_internal_state_in([biology_in, culture_in, feelings_in])
@@ -53,7 +52,7 @@ class KernelViewSet(viewsets.ViewSet):
     def show_kernel_outputs(self):
         internal_status = self.kernel.get_internal_state().get_state()
         desired_status = self.kernel.get_desired_state().get_state()
-        print(self.kernel.state)
+        # print(self.kernel.state)
         if self.kernel.state == "HIT":
             self.h_knowledge = self.kernel.get_hearing_knowledge_out()
             self.s_knowledge = self.kernel.get_sight_knowledge_out()
@@ -170,30 +169,25 @@ class KernelViewSet(viewsets.ViewSet):
         if "BUM" in request.data:
             for index in request.data['BUM']:
                 self.bum(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'], request.data['mode'])
-                print("entering.. BUM")
-                #return Response({'message':'BBCC Protocole Initialized'})
+                # print("entering.. BUM")
 
         if "BIP" in request.data:
             for index in request.data['BIP']:
-                print("entering..BIP")
+                # print("entering..BIP")
                 self.bip(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'], request.data['mode'])
-                #return Response(serializer.data)
             
         if "CHECK" in request.data:
             for index in request.data['CHECK']:
-                print("entering..CHECK")
+                # print("entering..CHECK")
                 self.check(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'], request.data['mode'])
             
         if "CLACK" in request.data:
-            # qifn=ImagesFromNeuron(owner=user,name="lo que sea", name_class="asdfjksl")
-            # print(qifn)
-            # qifn.save()
 
             #qifn.save()
             for index in request.data['CLACK']:
                 self.clack(index['hearing_pattern'],index['sight_pattern'],index['hearing_class'],index['intentions_input'], request.data['mode'])
 
-                print("entering..CLACK")
+                # print("entering..CLACK")
                 if 'image_id' in index:
                     if  index['image_id']==-1:
                             return Response({'message':'neuron saved but without image'})
@@ -249,12 +243,6 @@ class KernelViewSet(viewsets.ViewSet):
                 return Response({'message':'NOT BRAIN WAS FOUND TO DELETE'})
             query.delete()
             return Response({'message':'BRAIN SUCCESFULLY DELETED'})
-    
-# class testViewSet(viewsets.ViewSet):
-#     serializer_class = testSerializer
-#     def list(self, request):
-#         serializer = testSerializer()
-#         return Response(serializer.data)
 
 class DesiredStateViewset(viewsets.ModelViewSet):
     permission_classes = [

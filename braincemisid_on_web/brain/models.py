@@ -6,11 +6,12 @@ from images_collections.models import ImagesFromNeuron
 
 class brain(models.Model):
     name = models.CharField(default='', max_length=250)
-    am_net_proto = models.BinaryField(null=True)
+    ######################################################## REVISION ###########################################################
     gnb = models.BinaryField(null=True)
-    syllables_net_proto = models.BinaryField(null=True)
-    words_net_proto = models.BinaryField(null=True)
+    am_net_proto = models.BinaryField(null=True)
+    ################################################################################################################################
     decisions_block = models.BinaryField(null=True)
+
     internal_state = JSONField(null=True,blank=True)
     desired_state = JSONField(null=True,blank=True)
     user = models.ForeignKey(User, related_name="brain", on_delete=models.CASCADE, null=True)
